@@ -1,0 +1,99 @@
+.metric {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.metric span {
+  color: var(--foreground);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.metric strong {
+  font-size: 30px;
+}
+
+.payment-focus {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, .9fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.payment-focus--compact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.payment-focus-card {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  min-height: 150px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.payment-focus-card > div {
+  display: inline-grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, var(--card));
+}
+
+.payment-focus-card span {
+  color: var(--foreground);
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.payment-focus-card strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 32px;
+  line-height: 1.08;
+}
+
+.payment-focus-card small {
+  color: var(--foreground);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.payment-focus-card--money {
+  border-color: color-mix(in srgb, var(--status-success-strong) 34%, var(--border));
+  background: color-mix(in srgb, var(--status-success-strong) 8%, var(--card));
+}
+
+.payment-focus-card--invoice {
+  border-color: color-mix(in srgb, var(--status-warning-strong) 34%, var(--border));
+  background: color-mix(in srgb, var(--status-warning-strong) 7%, var(--card));
+}
+
+.payment-focus-card--docs {
+  border-color: color-mix(in srgb, var(--status-info-strong) 30%, var(--border));
+  background: color-mix(in srgb, var(--status-info-strong) 7%, var(--card));
+}
+
+.payment-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, .85fr);
+  gap: 16px;
+  align-items: start;
+  margin-top: 16px;
+}
+
+.payment-lane {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--card) 88%, var(--background));
+}

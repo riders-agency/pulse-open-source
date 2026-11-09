@@ -1,0 +1,96 @@
+.work-task-card.is-overdue {
+  border-color: color-mix(in srgb, var(--danger) 36%, var(--border));
+}
+
+.work-task-card-open {
+  display: grid;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.work-task-card-open strong {
+  overflow-wrap: anywhere;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.work-task-card-open span {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.work-task-meta,
+.work-task-footer,
+.work-task-badges,
+.work-task-icons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  color: var(--foreground);
+  font-size: 13px;
+}
+
+.work-task-badges {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.work-task-facts {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-color: transparent;
+  background: transparent;
+}
+
+.work-task-facts span {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  max-width: 100%;
+  padding: 0 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--muted) 45%, var(--card));
+  font-size: 12px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.work-task-icons {
+  justify-content: flex-start;
+}
+
+.work-task-icons span,
+.work-task-icons button,
+.work-danger {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.work-task-icons button {
+  width: 28px;
+  height: 28px;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--card);
+  cursor: pointer;
+}

@@ -1,0 +1,167 @@
+.live-event-timeline.is-compact {
+  max-height: 300px;
+  min-height: 0;
+}
+
+.live-event-timeline article {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.live-event-timeline span,
+.live-event-timeline p,
+.live-facts span {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+.live-event-timeline p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.live-facts {
+  display: grid;
+  gap: 8px;
+}
+
+.live-facts > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.live-facts strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.live-settings-drawer {
+  position: fixed;
+  z-index: 90;
+  top: 0;
+  right: 0;
+  width: min(420px, 100vw);
+  height: 100vh;
+  overflow: auto;
+  padding: 16px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.live-settings-drawer > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.live-fullscreen {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: var(--background);
+  transition: none;
+}
+
+.live-fullscreen > header {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+}
+
+.live-fullscreen > header > div:first-child {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.live-fullscreen > header span {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.live-fullscreen > main {
+  display: grid;
+  grid-template-columns: minmax(340px, 430px) minmax(0, 1fr);
+  gap: 12px;
+  min-height: 0;
+  padding: 12px;
+}
+
+.live-fullscreen-chat,
+.live-fullscreen-view {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.live-fullscreen-chat {
+  display: flex;
+  flex-direction: column;
+}
+
+.live-fullscreen-incoming {
+  flex: 0 0 auto;
+  margin: 10px;
+}
+
+.live-fullscreen-chat > .live-chat-panel {
+  flex: 1 1 auto;
+}
+
+.live-fullscreen .live-chat-panel,
+.live-fullscreen .cobrowse-panel {
+  height: 100%;
+  min-height: 0;
+}
+
+.live-fullscreen .live-chat-thread {
+  min-height: 0;
+}
+
+.live-fullscreen .live-chat-composer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background: var(--card);
+}
+
+.live-fullscreen .live-chat-composer textarea {
+  min-height: 76px;
+  max-height: 160px;
+}
+
+.live-fullscreen-view {
+  position: relative;
+}
+
+.live-fullscreen-call {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 4;
+  width: min(340px, calc(100% - 28px));
+  pointer-events: none;
+}
+
+.live-fullscreen-call .ui-card {
+  pointer-events: auto;
+  box-shadow: 0 18px 44px color-mix(in srgb, var(--foreground) 16%, transparent);
+}

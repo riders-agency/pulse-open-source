@@ -1,0 +1,30 @@
+Problem:
+  type: object
+  additionalProperties: false
+  required:
+    - status
+    - title
+    - detail
+    - action
+    - validate
+    - request_id
+  properties:
+    status:
+      type: string
+      enum: [fix_required, error]
+      example: fix_required
+    title:
+      type: string
+      example: Validation required
+    detail:
+      type: string
+      example: Исправьте email и повторите запрос.
+    action:
+      type: string
+      example: Проверьте validate email
+    validate:
+      type: string
+      example: email
+    request_id:
+      type: string
+      example: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ

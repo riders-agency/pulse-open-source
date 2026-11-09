@@ -1,0 +1,37 @@
+[
+  {
+    "name": "pulse_read.client_projects_v1",
+    "owner": "clients",
+    "table": "client_projects",
+    "columns": [
+      "client_id",
+      "project_id",
+      "company_id"
+    ],
+    "consumers": [
+      "ai"
+    ]
+  },
+  {
+    "name": "pulse_read.clients_v1",
+    "owner": "clients",
+    "table": "clients",
+    "columns": [
+      "client_id",
+      "company_id",
+      "status",
+      "name",
+      "full_name",
+      "created_at",
+      "updated_at",
+      "email",
+      "telegram",
+      "source",
+      "search_vector"
+    ],
+    "consumers": [
+      "ai",
+      "worktracker"
+    ]
+  }
+]

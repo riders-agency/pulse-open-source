@@ -1,0 +1,171 @@
+.payment-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 16px;
+  align-items: start;
+  margin-top: 16px;
+}
+
+.payment-detail-main {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.payment-document-list {
+  display: grid;
+  gap: 10px;
+}
+
+.payment-document-slot {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--background) 58%, var(--card));
+}
+
+.payment-document-slot.is-done {
+  border-color: color-mix(in srgb, var(--status-success-strong) 30%, var(--border));
+}
+
+.payment-document-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, var(--card));
+}
+
+.payment-document-main {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.payment-document-main strong,
+.payment-document-main span,
+.payment-document-main small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.payment-document-main span,
+.payment-document-main small {
+  color: var(--foreground);
+  font-size: 13px;
+}
+
+.payment-document-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.document-upload-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  gap: 6px;
+  padding: 7px 11px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  background: var(--card);
+}
+
+.document-upload-button:hover {
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+  background: var(--accent);
+}
+
+.document-upload-button.is-busy {
+  opacity: .65;
+  pointer-events: none;
+}
+
+.payment-source-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.payment-source-line span {
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.payment-run-summary {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--status-success-strong) 28%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--status-success-strong) 7%, var(--card));
+}
+
+.payment-run-head {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.payment-run-head strong,
+.payment-run-head span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.payment-run-head strong {
+  font-size: 18px;
+}
+
+.payment-run-head span,
+.payment-run-summary p {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.payment-run-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.payment-run-groups > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.payment-run-groups span {
+  color: var(--foreground);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.payment-run-groups strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

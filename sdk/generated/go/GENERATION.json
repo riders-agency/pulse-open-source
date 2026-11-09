@@ -1,0 +1,7 @@
+{
+  "generator": "go",
+  "version": "7.20.0",
+  "generator_sha256": "871e0155287a87b579ff31096b2d45b1f95a115edfe631411ec6cff4848d0f03",
+  "schema_sha256": "3be06ddb427642ecd205ff3526d6b2a71455b19bb88c6b74447f974ea30022ef",
+  "reproduction_image": "openapitools/openapi-generator-cli@sha256:fa4add01856e44becf70674164df354d61bd37ba0f444d27be949801e013921b"
+}

@@ -1,0 +1,14 @@
+services:
+  Riders\Pulse\Symfony\RequestFactory:
+    arguments:
+      $requests: '@request_stack'
+      $baseUrl: '%env(PULSE_URL)%'
+  Riders\Pulse\Integration\ClientFactory:
+    factory: ['@Riders\Pulse\Symfony\RequestFactory', 'create']
+    shared: false
+  Riders\Pulse\Api\TasksApi:
+    factory: ['@Riders\Pulse\Integration\ClientFactory', 'tasks']
+    shared: false
+  Riders\Pulse\Api\AIApi:
+    factory: ['@Riders\Pulse\Integration\ClientFactory', 'ai']
+    shared: false

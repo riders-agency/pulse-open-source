@@ -1,0 +1,153 @@
+.integration-doc-results {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--background);
+}
+
+.integration-doc-results > .between strong {
+  font-size: 13px;
+}
+
+.integration-doc-result {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--card);
+  cursor: pointer;
+}
+
+.integration-doc-result input {
+  margin-top: 3px;
+}
+
+.integration-doc-result span {
+  min-width: 0;
+}
+
+.integration-doc-title {
+  display: block;
+  color: var(--foreground);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.integration-doc-result small {
+  display: block;
+  margin-top: 3px;
+  color: var(--foreground);
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.scenario-export-details {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--background);
+}
+
+.scenario-export-details summary {
+  padding: 9px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.scenario-export-details .code-block {
+  max-height: 220px;
+  margin: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 0;
+  border-radius: 0;
+}
+
+.scenario-import {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.scenario-import .ui-textarea {
+  min-height: 150px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+}
+
+.version-description-control {
+  width: 180px;
+}
+
+.version-description-toggle {
+  width: 100%;
+  height: 36px;
+  overflow: hidden;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--background);
+  color: var(--foreground);
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: text;
+}
+
+.version-description-open {
+  width: min(320px, 36vw);
+}
+
+.version-description-control .ui-textarea {
+  min-height: 72px;
+  max-height: 120px;
+  resize: vertical;
+  font-size: 14px;
+}
+
+.version-history {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+
+.version-list {
+  display: grid;
+  gap: 8px;
+}
+
+.version-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: start;
+  padding: 9px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--background);
+}
+
+.version-title {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.version-row p {
+  margin: 4px 0;
+  color: var(--foreground);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.version-row small {
+  color: var(--foreground);
+  font-size: 12px;
+}

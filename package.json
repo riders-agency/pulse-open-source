@@ -1,0 +1,10 @@
+{
+  "name": "riders-pulse",
+  "private": true,
+  "packageManager": "pnpm@10.34.5",
+  "scripts": {
+    "dev": "bash ./scripts/dev.sh",
+    "dev:api": "bash ./scripts/dev-api.sh",
+    "dev:web": "pnpm --dir apps/web exec next dev -p 9821"
+  }
+}

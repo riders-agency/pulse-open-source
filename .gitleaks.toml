@@ -1,0 +1,12 @@
+title = "Riders Pulse secret scanning"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Literal placeholder in the generated webhook installation example"
+targetRules = ["curl-auth-header"]
+condition = "AND"
+paths = ['''apps/api/internal/modules/webhooks/transport/http/handlers\.go$''']
+regexTarget = "secret"
+regexes = ['''^PROJECT_SECRET_HERE$''']

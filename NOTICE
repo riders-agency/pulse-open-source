@@ -1,0 +1,12 @@
+Riders Pulse — Riders Agency, 2026.
+Project structure originally generated from vibecoding-base (go-next-postgres).
+Third-party Go, JavaScript and Python dependencies retain their own licenses.
+Generated OpenAPI/protobuf clients retain generator attribution.
+Bundled name dictionaries originate from the existing Riders Pulse source tree.
+
+LangGraph is a trademark of LangChain. The unmodified LangGraph logo at
+apps/web/public/tech/brands/langgraph.svg is from the official brand assets:
+https://www.langchain.com/brand-assets
+Its use follows those brand guidelines; the project MIT license does not
+grant rights to this third-party mark. It identifies the framework used by
+Pulse and does not imply endorsement or affiliation.

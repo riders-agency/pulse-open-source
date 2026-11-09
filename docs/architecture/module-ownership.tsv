@@ -1,0 +1,22 @@
+# module	http	runtime_actions	runtime_triggers	outbox_events	primary_tables
+action_dependencies	/projects/{project_id}/action-dependencies	-	-	-	action_dependencies,action_dependency_types,secrets
+ai	/api/v1/ai,/projects/{project_id}/ai	-	-	ai.tool.approved,ai.tool.applied,ai.tool.failed,ai.tool.rejected	ai_agent_audit_events,ai_agent_events,ai_agent_runs,ai_channel_bindings,ai_chat_cards,ai_chat_messages,ai_chat_sessions,ai_model_catalog_cache,ai_model_evaluations,ai_patch_proposals,ai_prompt_snapshots,ai_session_context_frames,ai_tool_call_edits,ai_tool_calls,ai_tool_idempotency,ai_tool_plan_steps,ai_tool_plans,ai_usage_events,project_ai_employees
+apikeys	/api/v1/api-keys	-	-	-	api_key_grants,api_keys
+auth	/api/v1/auth	-	-	-	auth_events,auth_identities,auth_identity_versions,device_credential_versions,device_credentials,sessions,user_versions,user_workspace_contexts,users
+catalog	/api/v1/catalog	-	-	-	action_types
+clients	/api/v1/companies/{company_id}/clients,/api/v1/clients,/projects/{project_id}/clients	clients.manual_payment.trigger,clients.payment_due.trigger,clients.payment_cycle.collect	-	-	bank_invoice_drafts,client_contacts,client_projects,client_responsibles,client_service_types,client_services,clients,company_legal_entities,payment_action_documents,payment_action_items,payment_actions,payment_events,payment_facts,workflow_client_payment_due_state
+companies	/api/v1/companies	-	-	-	companies,company_membership_versions,company_memberships,company_versions
+desktop	/api/v1/desktop	-	-	-	desktop_auth_requests,desktop_devices,desktop_messages,desktop_tokens
+httpclient	-	http.request	-	-	-
+ingest	/hooks/{hook_key}/{endpoint_key},/hooks/{hook_key}/{endpoint_key}/runs/{workflow_run_id}/receipt	webhook.trigger	-	-	webhook_events
+integrationdocs	/api/v1/integration-docs,/projects/{project_id}/integration-docs	-	-	-	integration_doc_chunks,integration_docs
+person	-	person.fio.normalize,person.phone.normalize	-	-	-
+projects	/api/v1/companies/{company_id}/projects,/projects/{project_id}	-	-	-	project_member_versions,project_members,project_versions,projects
+providers	-	telegram.send_message,telegram.send_document,max.send_message,email.send,uon.create_lead	-	-	-
+runs	/api/v1/workflows/{workflow_id}/runs,/api/v1/runs	manual.trigger	-	-	action_attempts,action_runs,run_events,workflow_action_dead_letters,workflow_runs
+sitechat	/widget.js,/api/v1/site-chat,/projects/{project_id}/site-chat	-	site_chat.message	site_chat.conversation.updated,site_chat.message.created	site_call_sessions,site_chat_attachments,site_chat_conversations,site_chat_messages,site_chat_widgets,site_cobrowse_frames,site_visit_connections,site_visit_sessions,site_visitor_events,site_visitors
+telegramrelay	/hooks/telegram-relay,/api/v1/telegram-relay	-	telegram.relay.trigger	telegram.relay.update.received	bot_sessions,telegram_relay_configs,telegram_relay_events,telegram_relay_forwards
+templates	/projects/{project_id}/email-templates,/projects/{project_id}/message-templates	-	-	-	email_templates,message_templates
+webhooks	/api/v1/workflows/{workflow_id}/webhooks,/api/v1/webhook-endpoints,/api/v1/webhook-events	-	-	-	webhook_endpoints
+workflows	/projects/{project_id}/workflows,/api/v1/workflows	condition.branch,delay.wait,stop	schedule.trigger	workflow.run.requested	automation_rules,module_channel_bindings,module_workflow_triggers,workflow_schedule_state,workflow_versions,workflows
+worktracker	/api/v1/work	-	task.event	-	employee_profiles,task_activity_events,task_attachments,task_boards,task_checklist_items,task_comments,task_custom_field_values,task_custom_fields,task_process_memberships,task_process_roles,task_status_history,task_views,task_watchers,task_workflow_statuses,task_workflow_transitions,task_workflows,tasks,team_members,teams,time_entries,timer_sessions

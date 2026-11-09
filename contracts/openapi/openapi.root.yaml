@@ -1,0 +1,549 @@
+openapi: 3.2.0
+info:
+  title: Generated Stack API
+  version: 1.1.0
+  summary: Modular OpenAPI contract for the generated stack
+  description: |
+    Source-of-truth API contract.
+    Generated bundle is served by docs endpoints.
+  license:
+    name: MIT
+    identifier: MIT
+servers:
+  - url: https://api.example.test
+    description: Production
+  - url: https://staging-api.example.test
+    description: Staging
+security: []
+tags:
+  - name: auth
+    summary: Authentication and session lifecycle
+    description: Registration, login, session lifecycle, OAuth, native exchange.
+  - name: company
+    summary: Company context and switching
+    description: Company listing, creation, and active company switching.
+  - name: clients
+    summary: Clients, services and payments
+    description: Client workspace, client services, payment actions and idempotent payment events.
+  - name: docs
+    summary: API documentation and testing assets
+    description: Bundled OpenAPI artifacts, endpoint catalog, and testing collection metadata.
+  - name: catalog
+    summary: Конструктор workflow — типы действий и зависимостей
+    description: |
+      Каталог поддерживаемых типов узлов графа (action_types) и типов секретов/подключений проекта
+      (action_dependency_types).
+  - name: runs
+    summary: Запуски workflow и наблюдение исполнения
+    description: |
+      Обзор выполнения workflow_run и по шагам — записи исполнений действий (action_runs) и события.
+  - name: site_chat
+    summary: Чат на сайте, посетители и webvisor-lite
+    description: Lightweight widget, visitor/session analytics, monitoring commands and chat conversations.
+  - name: ai
+    summary: AI-сотрудник проекта и model providers
+    description: Project-scoped AI employee, model provider catalog, chat sessions, prompt proposals and model cache.
+paths:
+  /site-chat/widget.js:
+    $ref: ./modules/sitechat.yaml#/paths/~1site-chat~1widget.js
+  /api/v1/auth/register:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1register
+  /api/v1/auth/activate:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1activate
+  /api/v1/auth/login:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1login
+  /api/v1/auth/logout:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1logout
+  /api/v1/auth/refresh:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1refresh
+  /api/v1/auth/refresh/csrf:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1refresh~1csrf
+  /api/v1/auth/csrf:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1csrf
+  /api/v1/auth/me:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1me
+  /api/v1/auth/workspace-context:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1workspace-context
+  /api/v1/auth/oauth/{provider}/start:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1oauth~1{provider}~1start
+  /api/v1/auth/oauth/{provider}/callback:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1oauth~1{provider}~1callback
+  /api/v1/auth/telegram/miniapp:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1telegram~1miniapp
+  /api/v1/auth/native/exchange:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1native~1exchange
+  /api/v1/auth/sessions:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1sessions
+  /api/v1/auth/sessions/{session_id}:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1sessions~1{session_id}
+  /api/v1/auth/sessions/revoke-others:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1sessions~1revoke-others
+  /api/v1/auth/password-reset/request:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1password-reset~1request
+  /api/v1/auth/password-reset/confirm:
+    $ref: ./modules/auth.yaml#/paths/~1api~1v1~1auth~1password-reset~1confirm
+  /api/v1/companies:
+    $ref: ./modules/company.yaml#/paths/~1api~1v1~1companies
+  /api/v1/companies/{company_id}/switch:
+    $ref: ./modules/company.yaml#/paths/~1api~1v1~1companies~1{company_id}~1switch
+  /api/v1/client-service-types:
+    $ref: ./modules/clients.yaml#/paths/~1api~1v1~1client-service-types
+  /api/v1/clients/{client_id}:
+    $ref: ./modules/clients.yaml#/paths/~1api~1v1~1clients~1{client_id}
+  /api/v1/clients/{client_id}/services:
+    $ref: ./modules/clients.yaml#/paths/~1api~1v1~1clients~1{client_id}~1services
+  /api/v1/client-services/{client_service_id}:
+    $ref: ./modules/clients.yaml#/paths/~1api~1v1~1client-services~1{client_service_id}
+  /api/v1/clients/{client_id}/payment-actions:
+    $ref: ./modules/clients.yaml#/paths/~1api~1v1~1clients~1{client_id}~1payment-actions
+  /api/v1/clients/{client_id}/payments/manual:
+    $ref: ./modules/clients.yaml#/paths/~1api~1v1~1clients~1{client_id}~1payments~1manual
+  /api/v1/payment-actions/{payment_action_id}:
+    $ref: ./modules/clients.yaml#/paths/~1api~1v1~1payment-actions~1{payment_action_id}
+  /api/v1/payment-actions/{payment_action_id}/bank-invoice:
+    $ref: ./modules/bank-invoices.yaml#/paths/~1api~1v1~1payment-actions~1{payment_action_id}~1bank-invoice
+  /api/v1/payment-actions/{payment_action_id}/confirm:
+    $ref: ./modules/clients.yaml#/paths/~1api~1v1~1payment-actions~1{payment_action_id}~1confirm
+  /api/v1/payment-actions/{payment_action_id}/snooze:
+    $ref: ./modules/clients.yaml#/paths/~1api~1v1~1payment-actions~1{payment_action_id}~1snooze
+  /api/v1/public/site-chat/widgets/{public_key}/config:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1public~1site-chat~1widgets~1{public_key}~1config
+  /api/v1/public/site-chat/ws:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1public~1site-chat~1ws
+  /api/v1/public/site-chat/presence:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1public~1site-chat~1presence
+  /api/v1/public/site-chat/events:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1public~1site-chat~1events
+  /api/v1/public/site-chat/conversations:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1public~1site-chat~1conversations
+  /api/v1/public/site-chat/messages:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1public~1site-chat~1messages
+  /api/v1/public/site-chat/conversations/{conversation_id}/messages:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1public~1site-chat~1conversations~1{conversation_id}~1messages
+  /api/v1/public/site-chat/calls/request:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1public~1site-chat~1calls~1request
+  /api/v1/public/site-chat/calls/{call_session_id}/accept:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1public~1site-chat~1calls~1{call_session_id}~1accept
+  /api/v1/public/site-chat/calls/{call_session_id}/reject:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1public~1site-chat~1calls~1{call_session_id}~1reject
+  /api/v1/public/site-chat/calls/{call_session_id}/end:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1public~1site-chat~1calls~1{call_session_id}~1end
+  /api/v1/projects/{project_id}/site-chat-widgets:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1projects~1{project_id}~1site-chat-widgets
+  /api/v1/site-chat-widgets/{chat_widget_id}:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1site-chat-widgets~1{chat_widget_id}
+  /api/v1/projects/{project_id}/site-visitors/active:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1projects~1{project_id}~1site-visitors~1active
+  /api/v1/site-visit-sessions/{visit_session_id}/monitoring/start:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1site-visit-sessions~1{visit_session_id}~1monitoring~1start
+  /api/v1/site-visit-sessions/{visit_session_id}/monitoring/stop:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1site-visit-sessions~1{visit_session_id}~1monitoring~1stop
+  /api/v1/site-visit-sessions/{visit_session_id}/invite:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1site-visit-sessions~1{visit_session_id}~1invite
+  /api/v1/site-visit-sessions/{visit_session_id}/call-offer:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1site-visit-sessions~1{visit_session_id}~1call-offer
+  /api/v1/site-visit-sessions/{visit_session_id}/events:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1site-visit-sessions~1{visit_session_id}~1events
+  /api/v1/site-visit-sessions/{visit_session_id}/snapshot:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1site-visit-sessions~1{visit_session_id}~1snapshot
+  /api/v1/site-chat/ws/operator:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1site-chat~1ws~1operator
+  /api/v1/site-chat/calls/{call_session_id}/accept:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1site-chat~1calls~1{call_session_id}~1accept
+  /api/v1/site-chat/calls/{call_session_id}/reject:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1site-chat~1calls~1{call_session_id}~1reject
+  /api/v1/site-chat/calls/{call_session_id}/end:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1site-chat~1calls~1{call_session_id}~1end
+  /api/v1/site-chat-conversations/{conversation_id}/messages:
+    $ref: ./modules/sitechat.yaml#/paths/~1api~1v1~1site-chat-conversations~1{conversation_id}~1messages
+  /api/v1/projects/{project_id}/client-service-types:
+    $ref: ./modules/clients.yaml#/paths/~1api~1v1~1projects~1{project_id}~1client-service-types
+  /api/v1/projects/{project_id}/client-service-types/{client_service_type_id}:
+    $ref: ./modules/clients.yaml#/paths/~1api~1v1~1projects~1{project_id}~1client-service-types~1{client_service_type_id}
+  /api/v1/docs/openapi.json:
+    $ref: ./modules/docs.yaml#/paths/~1api~1v1~1docs~1openapi.json
+  /api/v1/docs/openapi.yaml:
+    $ref: ./modules/docs.yaml#/paths/~1api~1v1~1docs~1openapi.yaml
+  /api/v1/docs/endpoints:
+    $ref: ./modules/docs.yaml#/paths/~1api~1v1~1docs~1endpoints
+  /api/v1/docs/testing/postman:
+    $ref: ./modules/docs.yaml#/paths/~1api~1v1~1docs~1testing~1postman
+  /api/v1/action-types:
+    $ref: ./modules/catalog.yaml#/paths/~1api~1v1~1action-types
+  /api/v1/action-types/{action_type_key}:
+    $ref: ./modules/catalog.yaml#/paths/~1api~1v1~1action-types~1{action_type_key}
+  /api/v1/action-dependency-types:
+    $ref: ./modules/catalog.yaml#/paths/~1api~1v1~1action-dependency-types
+  /api/v1/action-dependency-types/{dependency_type_key}:
+    $ref: ./modules/catalog.yaml#/paths/~1api~1v1~1action-dependency-types~1{dependency_type_key}
+  /api/v1/ai/runtime/readiness:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1ai~1runtime~1readiness
+  /api/v1/ai/agent/readiness:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1ai~1agent~1readiness
+  /api/v1/ai/runtime/capabilities:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1ai~1runtime~1capabilities
+  /api/v1/projects/{project_id}/ai/model-providers:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1projects~1{project_id}~1ai~1model-providers
+  /api/v1/projects/{project_id}/ai/employee:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1projects~1{project_id}~1ai~1employee
+  /api/v1/projects/{project_id}/ai/employee/capability:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1projects~1{project_id}~1ai~1employee~1capability
+  /api/v1/projects/{project_id}/ai/employee/sessions:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1projects~1{project_id}~1ai~1employee~1sessions
+  /api/v1/projects/{project_id}/ai/employee/sessions/{session_id}:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1projects~1{project_id}~1ai~1employee~1sessions~1{session_id}
+  /api/v1/projects/{project_id}/ai/employee/sessions/{session_id}/messages:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1projects~1{project_id}~1ai~1employee~1sessions~1{session_id}~1messages
+  /api/v1/projects/{project_id}/ai/employee/sessions/{session_id}/cancel:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1projects~1{project_id}~1ai~1employee~1sessions~1{session_id}~1cancel
+  /api/v1/projects/{project_id}/ai/tool-calls/{tool_call_id}/approve:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1projects~1{project_id}~1ai~1tool-calls~1{tool_call_id}~1approve
+  /api/v1/projects/{project_id}/ai/tool-calls/{tool_call_id}/reject:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1projects~1{project_id}~1ai~1tool-calls~1{tool_call_id}~1reject
+  /api/v1/projects/{project_id}/action-dependencies/{action_dependency_id}/models:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1projects~1{project_id}~1action-dependencies~1{action_dependency_id}~1models
+  /api/v1/projects/{project_id}/action-dependencies/{action_dependency_id}/models/refresh:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1projects~1{project_id}~1action-dependencies~1{action_dependency_id}~1models~1refresh
+  /api/v1/projects/{project_id}/action-dependencies/{action_dependency_id}/models/evaluate:
+    $ref: ./modules/ai.yaml#/paths/~1api~1v1~1projects~1{project_id}~1action-dependencies~1{action_dependency_id}~1models~1evaluate
+  /api/v1/runs/{workflow_run_id}/actions:
+    $ref: ./modules/runs.yaml#/paths/~1api~1v1~1runs~1{workflow_run_id}~1actions
+  /hooks/{hook_key}/{endpoint_key}/runs/{workflow_run_id}/receipt:
+    $ref: ./modules/ingest.yaml#/paths/~1hooks~1{hook_key}~1{endpoint_key}~1runs~1{workflow_run_id}~1receipt
+  /api/v1/work/tasks:
+    $ref: ./modules/worktracker.yaml#/paths/~1api~1v1~1work~1tasks
+  /api/v1/work/tasks/{task_id}:
+    $ref: ./modules/worktracker.yaml#/paths/~1api~1v1~1work~1tasks~1{task_id}
+  /api/v1/work/tasks/{task_id}/restore:
+    $ref: ./modules/worktracker.yaml#/paths/~1api~1v1~1work~1tasks~1{task_id}~1restore
+  # BEGIN generated runtime inventory paths
+  /api/v1/auth/api-keys:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1auth~1api-keys
+  /api/v1/auth/api-keys/{api_key_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1auth~1api-keys~1{api_key_id}
+  /api/v1/auth/profile:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1auth~1profile
+  /api/v1/clients/{client_id}/contacts:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1clients~1{client_id}~1contacts
+  /api/v1/clients/{client_id}/contacts/{client_contact_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1clients~1{client_id}~1contacts~1{client_contact_id}
+  /api/v1/clients/{client_id}/projects:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1clients~1{client_id}~1projects
+  /api/v1/clients/{client_id}/projects/{project_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1clients~1{client_id}~1projects~1{project_id}
+  /api/v1/clients/{client_id}/responsibles:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1clients~1{client_id}~1responsibles
+  /api/v1/clients/{client_id}/responsibles/{client_responsible_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1clients~1{client_id}~1responsibles~1{client_responsible_id}
+  /api/v1/companies/{company_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1companies~1{company_id}
+  /api/v1/companies/{company_id}/clients:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1companies~1{company_id}~1clients
+  /api/v1/companies/{company_id}/clients/dadata/find-party:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1companies~1{company_id}~1clients~1dadata~1find-party
+  /api/v1/companies/{company_id}/integrations/dadata:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1companies~1{company_id}~1integrations~1dadata
+  /api/v1/companies/{company_id}/legal-entities:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1companies~1{company_id}~1legal-entities
+  /api/v1/companies/{company_id}/projects:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1companies~1{company_id}~1projects
+  /api/v1/company-legal-entities/{company_legal_entity_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1company-legal-entities~1{company_legal_entity_id}
+  /api/v1/desktop/auth/poll:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1desktop~1auth~1poll
+  /api/v1/desktop/auth/start:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1desktop~1auth~1start
+  /api/v1/desktop/messages:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1desktop~1messages
+  /api/v1/desktop/messages/stream:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1desktop~1messages~1stream
+  /api/v1/desktop/messages/{desktop_message_id}/ack:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1desktop~1messages~1{desktop_message_id}~1ack
+  /api/v1/docs/ai-tools.json:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1docs~1ai-tools.json
+  /api/v1/docs/integrations/search:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1docs~1integrations~1search
+  /api/v1/docs/integrations/{public_slug}.md:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1docs~1integrations~1{public_slug}.md
+  /api/v1/payment-action-documents/{payment_action_document_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1payment-action-documents~1{payment_action_document_id}
+  /api/v1/payment-actions/{payment_action_id}/documents:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1payment-actions~1{payment_action_id}~1documents
+  /api/v1/projects/{project_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}
+  /api/v1/projects/{project_id}/action-dependencies:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1action-dependencies
+  /api/v1/projects/{project_id}/action-dependencies/{action_dependency_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1action-dependencies~1{action_dependency_id}
+  /api/v1/projects/{project_id}/action-dependencies/{action_dependency_id}/rotate-secret:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1action-dependencies~1{action_dependency_id}~1rotate-secret
+  /api/v1/projects/{project_id}/action-dependencies/{action_dependency_id}/telegram-relay-polling:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1action-dependencies~1{action_dependency_id}~1telegram-relay-polling
+  /api/v1/projects/{project_id}/action-dependencies/{action_dependency_id}/telegram-relay-webhook-secret/rotate:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1action-dependencies~1{action_dependency_id}~1telegram-relay-webhook-secret~1rotate
+  /api/v1/projects/{project_id}/action-dependencies/{action_dependency_id}/test:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1action-dependencies~1{action_dependency_id}~1test
+  /api/v1/projects/{project_id}/ai/employee/sessions/{session_id}/messages/stream:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1ai~1employee~1sessions~1{session_id}~1messages~1stream
+  /api/v1/projects/{project_id}/ai/tool-calls/{tool_call_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1ai~1tool-calls~1{tool_call_id}
+  /api/v1/projects/{project_id}/email-templates:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1email-templates
+  /api/v1/projects/{project_id}/email-templates/{email_template_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1email-templates~1{email_template_id}
+  /api/v1/projects/{project_id}/hook-secret/rotate:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1hook-secret~1rotate
+  /api/v1/projects/{project_id}/integration-docs/search:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1integration-docs~1search
+  /api/v1/projects/{project_id}/integrations/dadata:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1integrations~1dadata
+  /api/v1/projects/{project_id}/message-templates:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1message-templates
+  /api/v1/projects/{project_id}/message-templates/{message_template_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1message-templates~1{message_template_id}
+  /api/v1/projects/{project_id}/payment-actions:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1payment-actions
+  /api/v1/projects/{project_id}/payment-actions/manual:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1payment-actions~1manual
+  /api/v1/projects/{project_id}/payment-schedule:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1payment-schedule
+  /api/v1/projects/{project_id}/workflows:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1projects~1{project_id}~1workflows
+  /api/v1/providers/catalog:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1providers~1catalog
+  /api/v1/public/site-chat/conversations/{conversation_id}/attachments:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1public~1site-chat~1conversations~1{conversation_id}~1attachments
+  /api/v1/public/site-chat/voice-config:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1public~1site-chat~1voice-config
+  /api/v1/runs/{workflow_run_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1runs~1{workflow_run_id}
+  /api/v1/runs/{workflow_run_id}/cancel:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1runs~1{workflow_run_id}~1cancel
+  /api/v1/runs/{workflow_run_id}/events:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1runs~1{workflow_run_id}~1events
+  /api/v1/runs/{workflow_run_id}/events/stream:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1runs~1{workflow_run_id}~1events~1stream
+  /api/v1/runs/{workflow_run_id}/graph:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1runs~1{workflow_run_id}~1graph
+  /api/v1/runs/{workflow_run_id}/replay:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1runs~1{workflow_run_id}~1replay
+  /api/v1/runs/{workflow_run_id}/retry-action:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1runs~1{workflow_run_id}~1retry-action
+  /api/v1/site-chat-conversations/{conversation_id}/attachments:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1site-chat-conversations~1{conversation_id}~1attachments
+  /api/v1/site-chat/attachments/{attachment_id}/{download_token}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1site-chat~1attachments~1{attachment_id}~1{download_token}
+  /api/v1/site-chat/calls/{call_session_id}/recordings:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1site-chat~1calls~1{call_session_id}~1recordings
+  /api/v1/site-chat/voice-config:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1site-chat~1voice-config
+  /api/v1/telegram/bot-api/{relay_key}/{method}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1telegram~1bot-api~1{relay_key}~1{method}
+  /api/v1/telegram/relay/{relay_key}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1telegram~1relay~1{relay_key}
+  /api/v1/webhook-endpoints/{webhook_endpoint_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1webhook-endpoints~1{webhook_endpoint_id}
+  /api/v1/webhook-endpoints/{webhook_endpoint_id}/events:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1webhook-endpoints~1{webhook_endpoint_id}~1events
+  /api/v1/webhook-endpoints/{webhook_endpoint_id}/rotate-secret:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1webhook-endpoints~1{webhook_endpoint_id}~1rotate-secret
+  /api/v1/webhook-endpoints/{webhook_endpoint_id}/snippets:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1webhook-endpoints~1{webhook_endpoint_id}~1snippets
+  /api/v1/webhook-events/{webhook_event_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1webhook-events~1{webhook_event_id}
+  /api/v1/webhook-events/{webhook_event_id}/replay:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1webhook-events~1{webhook_event_id}~1replay
+  /api/v1/work/access:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1access
+  /api/v1/work/boards:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1boards
+  /api/v1/work/boards/{task_board_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1boards~1{task_board_id}
+  /api/v1/work/employees:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1employees
+  /api/v1/work/overview:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1overview
+  /api/v1/work/presets:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1presets
+  /api/v1/work/projects/{project_id}/members:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1projects~1{project_id}~1members
+  /api/v1/work/reports:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1reports
+  /api/v1/work/task-attachments/{task_attachment_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1task-attachments~1{task_attachment_id}
+  /api/v1/work/task-workflows:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1task-workflows
+  /api/v1/work/task-workflows/{task_workflow_id}/roles:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1task-workflows~1{task_workflow_id}~1roles
+  /api/v1/work/task-workflows/{task_workflow_id}/roles/reset:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1task-workflows~1{task_workflow_id}~1roles~1reset
+  /api/v1/work/task-workflows/{task_workflow_id}/roles/{task_process_role_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1task-workflows~1{task_workflow_id}~1roles~1{task_process_role_id}
+  /api/v1/work/tasks/{task_id}/attachments:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1tasks~1{task_id}~1attachments
+  /api/v1/work/tasks/{task_id}/checklist:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1tasks~1{task_id}~1checklist
+  /api/v1/work/tasks/{task_id}/checklist/{task_checklist_item_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1tasks~1{task_id}~1checklist~1{task_checklist_item_id}
+  /api/v1/work/tasks/{task_id}/comments:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1tasks~1{task_id}~1comments
+  /api/v1/work/tasks/{task_id}/custom-fields/{task_custom_field_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1tasks~1{task_id}~1custom-fields~1{task_custom_field_id}
+  /api/v1/work/tasks/{task_id}/move:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1tasks~1{task_id}~1move
+  /api/v1/work/tasks/{task_id}/timer/start:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1tasks~1{task_id}~1timer~1start
+  /api/v1/work/time:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1time
+  /api/v1/work/timer/active:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1timer~1active
+  /api/v1/work/timer/stop:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1work~1timer~1stop
+  /api/v1/workflow-versions/{workflow_version_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1workflow-versions~1{workflow_version_id}
+  /api/v1/workflows/{workflow_id}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1workflows~1{workflow_id}
+  /api/v1/workflows/{workflow_id}/draft:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1workflows~1{workflow_id}~1draft
+  /api/v1/workflows/{workflow_id}/publish:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1workflows~1{workflow_id}~1publish
+  /api/v1/workflows/{workflow_id}/runs:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1workflows~1{workflow_id}~1runs
+  /api/v1/workflows/{workflow_id}/runs/manual:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1workflows~1{workflow_id}~1runs~1manual
+  /api/v1/workflows/{workflow_id}/test-runs:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1workflows~1{workflow_id}~1test-runs
+  /api/v1/workflows/{workflow_id}/validate:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1workflows~1{workflow_id}~1validate
+  /api/v1/workflows/{workflow_id}/versions:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1workflows~1{workflow_id}~1versions
+  /api/v1/workflows/{workflow_id}/versions/{workflow_version_id}/restore:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1workflows~1{workflow_id}~1versions~1{workflow_version_id}~1restore
+  /api/v1/workflows/{workflow_id}/webhook-endpoints:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1api~1v1~1workflows~1{workflow_id}~1webhook-endpoints
+  /healthz:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1healthz
+  /hooks/{hook_key}/{endpoint_key}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1hooks~1{hook_key}~1{endpoint_key}
+  /telegram/relay/{relay_key}:
+    $ref: ./modules/runtime-inventory.generated.yaml#/paths/~1telegram~1relay~1{relay_key}
+  # END generated runtime inventory paths
+components:
+  schemas:
+    Problem:
+      $ref: ./components/schemas/common.yaml#/Problem
+    SessionView:
+      $ref: ./components/schemas/auth.yaml#/SessionView
+    UserMe:
+      $ref: ./components/schemas/auth.yaml#/UserMe
+    WorkspaceContext:
+      $ref: ./components/schemas/auth.yaml#/WorkspaceContext
+    WorkspaceContextPatch:
+      $ref: ./components/schemas/auth.yaml#/WorkspaceContextPatch
+    CompanyView:
+      $ref: ./components/schemas/company.yaml#/CompanyView
+    ClientView:
+      $ref: ./components/schemas/clients.yaml#/ClientView
+    ClientServiceView:
+      $ref: ./components/schemas/clients.yaml#/ClientServiceView
+    ClientServiceInput:
+      $ref: ./components/schemas/clients.yaml#/ClientServiceInput
+    ClientServicePatch:
+      $ref: ./components/schemas/clients.yaml#/ClientServicePatch
+    ClientServiceTypeView:
+      $ref: ./components/schemas/clients.yaml#/ClientServiceTypeView
+    ClientServiceTypeInput:
+      $ref: ./components/schemas/clients.yaml#/ClientServiceTypeInput
+    ClientServiceTypePatch:
+      $ref: ./components/schemas/clients.yaml#/ClientServiceTypePatch
+    PaymentActionView:
+      $ref: ./components/schemas/clients.yaml#/PaymentActionView
+    PaymentActionConfirmRequest:
+      $ref: ./components/schemas/clients.yaml#/PaymentActionConfirmRequest
+    PaymentActionSnoozeRequest:
+      $ref: ./components/schemas/clients.yaml#/PaymentActionSnoozeRequest
+    ManualPaymentRecordRequest:
+      $ref: ./components/schemas/clients.yaml#/ManualPaymentRecordRequest
+    ManualPaymentRecordResponse:
+      $ref: ./components/schemas/clients.yaml#/ManualPaymentRecordResponse
+    SiteChatWidget:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatWidget
+    SiteChatWidgetInput:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatWidgetInput
+    SiteChatWidgetPatch:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatWidgetPatch
+    SiteChatPublicConfig:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatPublicConfig
+    SiteChatPresenceRequest:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatPresenceRequest
+    SiteChatPresenceResponse:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatPresenceResponse
+    SiteChatEventBatch:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatEventBatch
+    VisitorStateSnapshot:
+      $ref: ./components/schemas/sitechat.yaml#/VisitorStateSnapshot
+    SiteVisitorSession:
+      $ref: ./components/schemas/sitechat.yaml#/SiteVisitorSession
+    SiteChatConversation:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatConversation
+    SiteChatMessage:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatMessage
+    SiteChatMessageInput:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatMessageInput
+    SiteChatInviteInput:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatInviteInput
+    SiteChatCallInput:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatCallInput
+    SiteChatCallSession:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatCallSession
+    SiteCobrowseFrame:
+      $ref: ./components/schemas/sitechat.yaml#/SiteCobrowseFrame
+    SiteChatWSEnvelope:
+      $ref: ./components/schemas/sitechat.yaml#/SiteChatWSEnvelope
+    EndpointDoc:
+      $ref: ./components/schemas/docs.yaml#/EndpointDoc
+    EndpointDocList:
+      $ref: ./components/schemas/docs.yaml#/EndpointDocList
+    TestingCollection:
+      $ref: ./components/schemas/docs.yaml#/TestingCollection
+    ActionTypeCatalogItem:
+      $ref: ./components/schemas/catalog.yaml#/ActionTypeCatalogItem
+    DependencyTypeCatalogItem:
+      $ref: ./components/schemas/catalog.yaml#/DependencyTypeCatalogItem
+    ActionRunView:
+      $ref: ./components/schemas/catalog.yaml#/ActionRunView
+  headers:
+    X-Request-Id:
+      description: Unique request identifier
+      required: true
+      schema:
+        type: string
+        example: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+    X-App-Result:
+      description: Result status (`ok`, `fix_required`, `error`)
+      required: true
+      schema:
+        type: string
+        enum: [ok, fix_required, error]
+    X-App-Action:
+      description: Action hint in imperative tone (e.g. "Проверьте validate email")
+      required: false
+      schema:
+        type: string
+    X-App-Validate:
+      description: Comma-separated fields for validation
+      required: false
+      schema:
+        type: string
+        example: email,password
+    Content-Language:
+      description: Response language code
+      required: true
+      schema:
+        type: string
+        example: ru-RU
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,74 @@
+EndpointDoc:
+  type: object
+  additionalProperties: false
+  required:
+    - method
+    - path
+    - summary
+    - tag
+    - operation_id
+    - curl_examples
+    - test_hints
+  properties:
+    method:
+      type: string
+      example: POST
+    path:
+      type: string
+      example: /api/v1/auth/login
+    summary:
+      type: string
+      example: Login with email/password
+    tag:
+      type: string
+      example: auth
+    operation_id:
+      type: string
+      example: authLogin
+    curl_examples:
+      type: array
+      items:
+        type: string
+      minItems: 1
+    test_hints:
+      type: array
+      items:
+        type: string
+      minItems: 1
+
+EndpointDocList:
+  type: object
+  additionalProperties: false
+  required:
+    - generated_at
+    - version
+    - endpoints
+  properties:
+    generated_at:
+      type: string
+      format: date-time
+    version:
+      type: string
+      example: 1.1.0
+    endpoints:
+      type: array
+      items:
+        $ref: '#/EndpointDoc'
+
+TestingCollection:
+  type: object
+  additionalProperties: false
+  required:
+    - format
+    - version
+    - download_url
+  properties:
+    format:
+      type: string
+      example: postman-v2.1
+    version:
+      type: string
+      example: 1.1.0
+    download_url:
+      type: string
+      example: https://api.example.test/api/v1/docs/testing/postman

@@ -1,0 +1,26 @@
+export type AIRuntimeThreadState = {
+  status?: "ok" | "unavailable" | "not_found" | "corrupt" | string;
+  runtime?: string;
+  thread_id?: string;
+  run_id?: string;
+  thread_revision?: number;
+  checkpoint_enabled?: boolean;
+  checkpoint_found?: boolean;
+  state_schema_version?: number;
+  current_step?: string;
+  active_mode?: string;
+  active_topic?: Record<string, unknown>;
+  suspended_topics?: unknown[];
+  resolved_entities?: unknown[];
+  unresolved_slots?: Record<string, unknown>;
+  active_card_id?: string;
+  active_tool_call_id?: string;
+  active_patch_proposal_id?: string;
+  active_proposal_id?: string;
+  pending_interrupt?: boolean;
+  next_nodes?: string[];
+  last_error?: string;
+  error_code?: string;
+  error_text?: string;
+  cards?: Record<string, unknown>[];
+};

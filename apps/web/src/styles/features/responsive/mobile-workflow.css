@@ -1,0 +1,24 @@
+@media (max-width: 640px) {
+  .runtime-canvas,
+  .flow-canvas {
+    min-height: 520px;
+  }
+
+  .flow-palette {
+    max-height: 320px;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .flow-node {
+    width: 220px;
+    min-width: 160px;
+    max-width: 220px;
+  }
+
+  .code-block {
+    max-width: 100%;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+  }
+}

@@ -1,0 +1,308 @@
+ClientView:
+  type: object
+  additionalProperties: false
+  required: [client_id, company_id, client_type, status, name]
+  properties:
+    client_id: {type: string, format: uuid}
+    company_id: {type: string, format: uuid}
+    client_type:
+      type: string
+      enum: [individual, individual_entrepreneur, legal_entity]
+    status:
+      type: string
+      enum: [active, archived, deleted]
+    name: {type: string}
+    short_name: {type: string}
+    full_name: {type: string}
+    inn: {type: string}
+    kpp: {type: string}
+    ogrn: {type: string}
+    ogrnip: {type: string}
+    legal_address: {type: string}
+    actual_address: {type: string}
+    okved: {type: string}
+    comment: {type: string}
+    projects_count: {type: integer}
+    services_count: {type: integer}
+
+ClientServiceView:
+  type: object
+  additionalProperties: false
+  required:
+    - client_service_id
+    - company_id
+    - client_id
+    - project_id
+    - client_service_type_id
+    - service_type_key
+    - service_type_name
+    - name
+    - status
+    - amount
+    - currency
+    - billing_period
+  properties:
+    client_service_id: {type: string, format: uuid}
+    company_id: {type: string, format: uuid}
+    client_id: {type: string, format: uuid}
+    project_id: {type: string, format: uuid}
+    client_service_type_id: {type: string, format: uuid}
+    service_type_key: {type: string}
+    service_type_name: {type: string}
+    name: {type: string}
+    status:
+      type: string
+      enum: [active, paused, completed, archived, deleted]
+    amount: {type: number, format: double}
+    raw_price_text: {type: string}
+    currency: {type: string, example: RUB}
+    billing_period:
+      type: string
+      enum: [once, weekly, monthly, quarterly, semiannual, yearly]
+    next_due_date: {type: string, format: date}
+    remind_days_before:
+      type: integer
+      deprecated: true
+      description: Backward compatibility only. Reminder settings belong to workflow action config.
+    remind_every_days:
+      type: integer
+      deprecated: true
+      description: Backward compatibility only. Reminder settings belong to workflow action config.
+
+ClientServiceInput:
+  type: object
+  additionalProperties: false
+  required: [project_id, name]
+  properties:
+    project_id: {type: string, format: uuid}
+    client_service_type_id: {type: string, format: uuid}
+    service_type_key: {type: string}
+    name: {type: string}
+    status: {type: string}
+    amount: {type: number, format: double}
+    raw_price_text: {type: string}
+    currency: {type: string, default: RUB}
+    billing_period: {type: string, default: monthly}
+    next_due_date: {type: string, format: date}
+    metadata_json: {type: object}
+
+ClientServicePatch:
+  type: object
+  additionalProperties: false
+  properties:
+    project_id: {type: string, format: uuid}
+    client_service_type_id: {type: string, format: uuid}
+    service_type_key: {type: string}
+    name: {type: string}
+    status: {type: string}
+    amount: {type: number, format: double}
+    raw_price_text: {type: string}
+    currency: {type: string}
+    billing_period: {type: string}
+    next_due_date: {type: string, format: date}
+    metadata_json: {type: object}
+
+ClientServiceTypeView:
+  type: object
+  additionalProperties: false
+  required: [client_service_type_id, service_type_key, display_name, sort_order]
+  properties:
+    client_service_type_id: {type: string, format: uuid}
+    company_id: {type: string, format: uuid}
+    project_id: {type: string, format: uuid}
+    scope_kind:
+      type: string
+      enum: [global, company, project]
+    service_type_key: {type: string}
+    display_name: {type: string}
+    description: {type: string}
+    status:
+      type: string
+      enum: [active, archived, deleted]
+    sort_order: {type: integer}
+
+ClientServiceTypeInput:
+  type: object
+  additionalProperties: false
+  required: [display_name]
+  properties:
+    service_type_key: {type: string}
+    display_name: {type: string}
+    description: {type: string}
+    sort_order: {type: integer}
+    status:
+      type: string
+      enum: [active, archived, deleted]
+
+ClientServiceTypePatch:
+  type: object
+  additionalProperties: false
+  properties:
+    service_type_key: {type: string}
+    display_name: {type: string}
+    description: {type: string}
+    sort_order: {type: integer}
+    status:
+      type: string
+      enum: [active, archived, deleted]
+
+PaymentActionView:
+  type: object
+  additionalProperties: false
+  required:
+    - payment_action_id
+    - company_id
+    - client_id
+    - client_name
+    - project_id
+    - project_name
+    - status
+    - source
+    - payment_method
+    - period_start
+    - period_end
+    - due_date
+    - total_amount
+    - currency
+  properties:
+    payment_action_id: {type: string, format: uuid}
+    company_id: {type: string, format: uuid}
+    client_id: {type: string, format: uuid}
+    client_name: {type: string}
+    project_id: {type: string, format: uuid}
+    project_name: {type: string}
+    workflow_run_id: {type: string, format: uuid}
+    status:
+      type: string
+      enum: [pending, sent, snoozed, paid, cancelled, needs_decision]
+    source:
+      type: string
+      enum: [manual, api_key, bank, workflow, email, incoming_email, kontur_elba, integration, other_integration]
+    payment_method:
+      type: string
+      enum: [cash, legal_invoice, bank_transfer, card, other]
+    period_start: {type: string, format: date}
+    period_end: {type: string, format: date}
+    due_date: {type: string, format: date}
+    total_amount: {type: number, format: double}
+    currency: {type: string, example: RUB}
+    confirmed_at: {type: string, format: date-time}
+    comment: {type: string}
+    items:
+      type: array
+      items:
+        $ref: '#/PaymentActionItem'
+    facts:
+      type: array
+      items:
+        $ref: '#/PaymentFactView'
+
+PaymentActionItem:
+  type: object
+  additionalProperties: false
+  required: [payment_action_item_id, client_service_id, title, due_date, amount, currency]
+  properties:
+    payment_action_item_id: {type: string, format: uuid}
+    client_service_id: {type: string, format: uuid}
+    service_type_key: {type: string}
+    title: {type: string}
+    due_date: {type: string, format: date}
+    amount: {type: number, format: double}
+    currency: {type: string}
+
+PaymentFactView:
+  type: object
+  additionalProperties: false
+  required: [payment_fact_id, source, payment_method, amount, currency, paid_at]
+  properties:
+    payment_fact_id: {type: string, format: uuid}
+    source:
+      type: string
+      enum: [manual, api_key, bank, workflow, email, incoming_email, kontur_elba, integration, other_integration]
+    payment_method:
+      type: string
+      enum: [cash, legal_invoice, bank_transfer, card, other]
+    amount: {type: number, format: double}
+    currency: {type: string}
+    paid_at: {type: string, format: date-time}
+    created_at: {type: string, format: date-time}
+
+PaymentActionConfirmRequest:
+  type: object
+  additionalProperties: false
+  properties:
+    amount: {type: number, format: double}
+    source:
+      type: string
+      default: manual
+      enum: [manual, api_key, bank, workflow, email, incoming_email, kontur_elba, integration, other_integration]
+    payment_method:
+      type: string
+      description: How the client actually paid. This is distinct from source, which says how Pulse learned about the payment.
+      enum: [cash, legal_invoice, bank_transfer, card, other]
+    paid_at: {type: string, format: date-time}
+    next_due_date:
+      type: string
+      format: date
+      description: Optional explicit next payment date for all services in this payment action after the payment is recorded.
+    comment: {type: string}
+    items:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          payment_action_item_id: {type: string, format: uuid}
+          amount: {type: number, format: double}
+
+PaymentActionSnoozeRequest:
+  type: object
+  additionalProperties: false
+  required: [snoozed_until]
+  properties:
+    snoozed_until: {type: string, format: date}
+    comment: {type: string}
+
+ManualPaymentRecordRequest:
+  type: object
+  additionalProperties: false
+  required: [client_service_id, amount, period_start, paid_at, payment_method, idempotency_key]
+  properties:
+    project_id: {type: string, format: uuid}
+    client_service_id: {type: string, format: uuid}
+    amount: {type: number, format: double}
+    currency: {type: string, default: RUB}
+    period_start: {type: string, format: date}
+    period_end: {type: string, format: date}
+    paid_at: {type: string, format: date-time}
+    payment_method:
+      type: string
+      description: How the client actually paid. This is distinct from source, which says how Pulse learned about the payment.
+      enum: [cash, legal_invoice, bank_transfer, card, other]
+    next_due_date:
+      type: string
+      format: date
+      description: Optional explicit next payment date for the selected service after the payment is recorded.
+    comment: {type: string}
+    idempotency_key:
+      type: string
+      description: Stable key for retry safety. The Idempotency-Key header may also be used.
+    metadata:
+      type: object
+
+ManualPaymentRecordResponse:
+  type: object
+  additionalProperties: false
+  required: [event_id, event_type, event_source, idempotency_key, payment_action_id, payment_fact_id, status, duplicate]
+  properties:
+    event_id: {type: string, format: uuid}
+    event_type: {type: string, example: payment.recorded}
+    event_source: {type: string, example: manual}
+    event_subject:
+      type: string
+      example: client/{client_id}/service/{client_service_id}
+    idempotency_key: {type: string}
+    payment_action_id: {type: string, format: uuid}
+    payment_fact_id: {type: string, format: uuid}
+    status: {type: string, enum: [processed, processing, failed]}
+    duplicate: {type: boolean}

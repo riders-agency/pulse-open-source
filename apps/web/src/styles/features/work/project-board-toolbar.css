@@ -1,0 +1,37 @@
+.sidebar-subnav {
+  display: grid;
+  gap: 4px;
+  margin-left: 10px;
+  padding-left: 8px;
+  border-left: 1px solid var(--border);
+}
+
+.sidebar-subnav .sidebar-link {
+  min-height: 32px;
+  font-size: 13px;
+}
+
+.work-task-toolbar,
+.work-board-toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 220px auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.work-search {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-search .ui-input {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}

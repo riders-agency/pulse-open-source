@@ -1,0 +1,150 @@
+.integration-filters {
+  display: grid;
+  gap: 12px;
+}
+
+.integration-search {
+  max-width: 560px;
+}
+
+.integration-search .row {
+  flex-wrap: nowrap;
+}
+
+.integration-search .ui-input {
+  width: auto;
+  flex: 1 1 auto;
+}
+
+.integration-category-list {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.integration-category-chip {
+  min-height: 38px;
+  padding: 0 13px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--foreground);
+  font-size: 14px;
+  font-weight: 650;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.integration-category-chip:hover,
+.integration-category-chip.is-active {
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  background: var(--accent);
+}
+
+.integration-grid,
+.provider-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 12px;
+}
+
+.provider-card {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 22px;
+  gap: 12px;
+  align-items: start;
+  width: 100%;
+  max-width: 100%;
+  min-height: 156px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--foreground);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+.provider-card:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  background: var(--accent);
+}
+
+.provider-card:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.provider-card--connected {
+  min-height: 140px;
+}
+
+.provider-card--loading {
+  min-height: 132px;
+  background: linear-gradient(90deg, var(--card), var(--accent), var(--card));
+  background-size: 220% 100%;
+  animation: provider-loading 1.4s linear infinite;
+}
+
+.provider-logo {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--background);
+  object-fit: contain;
+}
+
+.provider-logo--fallback {
+  color: var(--foreground);
+}
+
+.provider-card-main {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.provider-card-main .between {
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+}
+
+.provider-card-main strong {
+  font-size: 17px;
+  line-height: 1.2;
+  min-width: 0;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+
+.provider-card-main p,
+.provider-card-main small {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 14px;
+  line-height: 1.4;
+  min-height: 40px;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.provider-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+}
+
+.integration-empty {
+  min-height: 180px;
+  padding: 24px;
+}

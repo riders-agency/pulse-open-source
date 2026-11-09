@@ -1,0 +1,26 @@
+.tech-recorded-runtime { max-width: 1200px; padding-top: 54px; }
+.tech-run-receipt { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 22px; padding: 16px 20px; border: 1px solid var(--status-success-strong); border-radius: 10px; background: var(--surface-success); color: var(--status-success-text); font-size: 13px; }
+.tech-run-receipt span:first-child { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.tech-run-receipt code { font-size: 12px; }
+.tech-run-phases { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 12px; }
+.tech-run-phases button { min-height: 42px; padding: 10px 16px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--muted-foreground); font-size: 12px; cursor: pointer; }
+.tech-run-phases button[aria-pressed="true"] { background: var(--palette-ink); color: var(--palette-surface); border-color: var(--palette-ink); }
+.tech-run-usage { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px; margin: 24px 0 10px; }
+.tech-run-usage > div { padding: 16px 0; border-top: 1px solid var(--border); }
+.tech-run-usage dt { font-size: 12px; color: var(--muted-foreground); }
+.tech-run-usage dd { margin: 7px 0 0; font-size: 24px; font-weight: 550; overflow-wrap: anywhere; }
+.tech-run-usage > div:first-child dd { font-size: 18px; }
+.tech-run-caption { font-size: 12px; color: var(--muted-foreground); }
+.tech-run-controls { margin-top: 26px; border-top: 1px solid var(--border); }
+.tech-run-controls > summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; font-size: 14px; font-weight: 600; cursor: pointer; }
+.tech-run-controls > div { max-width: 850px; font-size: 14px; line-height: 1.8; }
+.tech-run-controls p { margin-bottom: 12px; }
+.tech-run-controls a { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; }
+@media (max-width: 600px) {
+ .tech-run-usage { grid-template-columns: 1fr 1fr; gap: 10px; }
+ .tech-run-usage > div:first-child { grid-column: 1 / -1; }
+ .tech-run-receipt { padding: 14px; gap: 8px 16px; }
+ .tech-run-receipt > span:last-child { width: 100%; }
+ .tech-run-phases { display: grid; grid-template-columns: 1fr; }
+ .tech-run-phases button { text-align: left; }
+}

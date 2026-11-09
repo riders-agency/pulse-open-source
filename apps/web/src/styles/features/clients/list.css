@@ -1,0 +1,81 @@
+.clients-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+
+.clients-toolbar h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.05;
+}
+
+.clients-toolbar p {
+  margin: 8px 0 0;
+  color: var(--foreground);
+  font-size: 16px;
+}
+
+.client-search {
+  max-width: 420px;
+}
+
+.client-card-list {
+  display: grid;
+  gap: 10px;
+}
+
+.client-row-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  min-height: 96px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+.client-row-card:hover,
+.client-row-card.is-active {
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  background: var(--accent);
+}
+
+tr.is-active td {
+  background: var(--accent);
+}
+
+.client-row-title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+}
+
+.client-row-title strong {
+  overflow-wrap: anywhere;
+  font-size: 18px;
+}
+
+.client-row-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 8px;
+  color: var(--foreground);
+  font-size: 15px;
+}
+
+.client-row-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}

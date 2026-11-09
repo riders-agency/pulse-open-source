@@ -1,0 +1,29 @@
+.ui-switch {
+  position: relative;
+  width: 46px;
+  height: 26px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  cursor: pointer;
+}
+
+.ui-switch span {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--foreground) 18%, transparent);
+  transition: transform 120ms ease;
+}
+
+.ui-switch.is-checked {
+  background: var(--primary);
+}
+
+.ui-switch.is-checked span {
+  transform: translateX(20px);
+}

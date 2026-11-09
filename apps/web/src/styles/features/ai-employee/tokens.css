@@ -1,0 +1,10 @@
+:root {
+  --ai-widget-radius: var(--radius);
+  --ai-widget-shadow: 0 18px 56px color-mix(in srgb, var(--foreground) 22%, transparent);
+  --ai-widget-primary: var(--primary);
+  --ai-widget-success: var(--success);
+  --ai-widget-warning: var(--warning);
+  --ai-widget-danger: var(--danger);
+  --ai-widget-surface: var(--card);
+  --ai-widget-border: var(--border);
+}

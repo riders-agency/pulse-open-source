@@ -1,0 +1,8 @@
+:root {
+  --palette-surface: #ffffff;
+  --palette-ink: #0b1220;
+  --palette-brand: #e85d04;
+  --palette-success: #047857;
+  --palette-danger: #b91c1c;
+  --radius-sm: 8px;
+}

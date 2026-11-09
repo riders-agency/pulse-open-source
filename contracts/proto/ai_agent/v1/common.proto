@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package ai_agent.v1;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "riders.agency/pulse/api/internal/gen/ai_agent/v1;aiagentv1";
+
+message TraceContext {
+  string trace_id = 1;
+  string span_id = 2;
+  string request_id = 3;
+  map<string, string> baggage = 4;
+}
+
+message AuthContext {
+  string company_id = 1;
+  string project_id = 2;
+  string user_id = 3;
+  repeated string permissions = 4;
+  string role = 5;
+  google.protobuf.Struct policy_json = 6;
+}
+
+message RuntimePolicy {
+  string runtime = 1;
+  int32 max_graph_steps = 2;
+  int32 max_model_calls = 3;
+  int32 max_tool_calls = 4;
+  int32 max_write_proposals = 5;
+  int32 timeout_ms = 6;
+  bool allow_read_tools_without_approval = 7;
+}
+
+message ChatMessage {
+  string message_id = 1;
+  string role = 2;
+  string body = 3;
+  google.protobuf.Struct payload_json = 4;
+  google.protobuf.Timestamp created_at = 5;
+}
+
+message EntityLink {
+  string entity_type = 1;
+  string entity_id = 2;
+  string label = 3;
+  string url = 4;
+}
+
+message Usage {
+  string provider_key = 1;
+  string model_id = 2;
+  int64 input_tokens = 3;
+  int64 output_tokens = 4;
+  int64 latency_ms = 5;
+  google.protobuf.Struct metadata_json = 6;
+}
+
+enum RiskLevel {
+  RISK_LEVEL_UNSPECIFIED = 0;
+  RISK_LEVEL_READ = 1;
+  RISK_LEVEL_MEDIUM = 2;
+  RISK_LEVEL_HIGH = 3;
+  RISK_LEVEL_CRITICAL = 4;
+}
+
+enum ToolExecutionStatus {
+  TOOL_EXECUTION_STATUS_UNSPECIFIED = 0;
+  TOOL_EXECUTION_STATUS_SUCCEEDED = 1;
+  TOOL_EXECUTION_STATUS_FAILED = 2;
+  TOOL_EXECUTION_STATUS_DENIED = 3;
+  TOOL_EXECUTION_STATUS_NEEDS_APPROVAL = 4;
+  TOOL_EXECUTION_STATUS_CONFLICT = 5;
+}
+
+message ToolRetryPolicy {
+  int32 max_attempts = 1;
+  int32 initial_backoff_ms = 2;
+  int32 max_backoff_ms = 3;
+}

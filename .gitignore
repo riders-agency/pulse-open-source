@@ -1,0 +1,36 @@
+.env
+.env.*
+!.env.example
+.dev/postgres/data/
+node_modules/
+dist/
+!contracts/openapi/dist/
+!contracts/openapi/dist/openapi.yaml
+.next/
+apps/web/.next/
+*.tsbuildinfo
+__pycache__/
+*.py[cod]
+.venv/
+bin/
+logs/
+.runtime/
+.idea/
+.vscode/
+
+# TLS private keys (self-signed bootstrap under deploy/ssl/)
+deploy/ssl/*.key
+apps/api/tmp/
+
+# Local verification artifacts and private signing material
+artifacts/
+playwright-report/
+test-results/
+*.p12
+*.pfx
+*.key
+
+# Python tooling caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/

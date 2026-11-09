@@ -1,0 +1,398 @@
+paths:
+  /api/v1/client-service-types:
+    get:
+      tags: [clients]
+      summary: List default client service types
+      operationId: clientServiceTypeList
+      security: [{bearerAuth: []}]
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Default and shared client service types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/ClientServiceTypeView
+
+  /api/v1/clients/{client_id}:
+    get:
+      tags: [clients]
+      summary: Get client workspace root by client_id
+      operationId: clientGet
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/client_id'
+      responses:
+        '200':
+          description: Client
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/ClientView
+        '404':
+          $ref: '#/components/responses/problem'
+    patch:
+      tags: [clients]
+      summary: Update client
+      operationId: clientPatch
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/client_id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '204': {description: Updated}
+        '404':
+          $ref: '#/components/responses/problem'
+    delete:
+      tags: [clients]
+      summary: Archive client
+      operationId: clientDelete
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/client_id'
+      responses:
+        '204': {description: Archived}
+        '404':
+          $ref: '#/components/responses/problem'
+
+  /api/v1/clients/{client_id}/services:
+    get:
+      tags: [clients]
+      summary: List services inside client workspace
+      operationId: clientServiceList
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/client_id'
+        - name: project_id
+          in: query
+          required: false
+          schema: {type: string, format: uuid}
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Client services
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/ClientServiceView
+    post:
+      tags: [clients]
+      summary: Create client service
+      operationId: clientServiceCreate
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/client_id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/ClientServiceInput
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [client_service_id]
+                properties:
+                  client_service_id: {type: string, format: uuid}
+
+  /api/v1/client-services/{client_service_id}:
+    get:
+      tags: [clients]
+      summary: Get client service by client_service_id
+      operationId: clientServiceGet
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/client_service_id'
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Service
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/ClientServiceView
+    patch:
+      tags: [clients]
+      summary: Update client service by client_service_id
+      operationId: clientServicePatch
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/client_service_id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/ClientServicePatch
+      responses:
+        '204': {description: Updated}
+        '404':
+          $ref: '#/components/responses/problem'
+    delete:
+      tags: [clients]
+      summary: Archive client service by client_service_id
+      operationId: clientServiceDelete
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/client_service_id'
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '204': {description: Archived}
+
+  /api/v1/clients/{client_id}/payment-actions:
+    get:
+      tags: [clients]
+      summary: List client payments/accruals inside client workspace
+      operationId: clientPaymentActionList
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/client_id'
+        - name: project_id
+          in: query
+          required: false
+          schema: {type: string, format: uuid}
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Payment actions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/PaymentActionView
+
+  /api/v1/clients/{client_id}/payments/manual:
+    post:
+      tags: [clients]
+      summary: Record received money manually and emit payment event
+      operationId: clientManualPaymentRecord
+      description: |
+        Command endpoint for the client workspace. It creates or reuses a payment action for the
+        service period, records a payment fact, stores an idempotent payment event, and lets the
+        workflow payment_due action rebuild the full project snapshot.
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/client_id'
+        - name: Idempotency-Key
+          in: header
+          required: false
+          schema: {type: string}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/ManualPaymentRecordRequest
+      responses:
+        '201':
+          description: Payment event processed
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/ManualPaymentRecordResponse
+        '200':
+          description: Duplicate idempotency key; existing event returned
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/ManualPaymentRecordResponse
+        '409':
+          $ref: '#/components/responses/problem'
+
+  /api/v1/payment-actions/{payment_action_id}:
+    get:
+      tags: [clients]
+      summary: Get payment action by payment_action_id
+      operationId: paymentActionGet
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/payment_action_id'
+      responses:
+        '200':
+          description: Payment action
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/PaymentActionView
+        '404':
+          $ref: '#/components/responses/problem'
+
+  /api/v1/payment-actions/{payment_action_id}/confirm:
+    post:
+      tags: [clients]
+      summary: Confirm received money for an existing payment action
+      operationId: paymentActionConfirm
+      description: |
+        Command endpoint for existing accrual/payment actions. It records the payment fact,
+        stores source and payment method, optionally overrides the next service due date,
+        and lets connected payment_due workflows rebuild the full project snapshot.
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/payment_action_id'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/PaymentActionConfirmRequest
+      responses:
+        '204': {description: Confirmed}
+        '404':
+          $ref: '#/components/responses/problem'
+        '409':
+          $ref: '#/components/responses/problem'
+
+  /api/v1/payment-actions/{payment_action_id}/snooze:
+    post:
+      tags: [clients]
+      summary: Snooze payment action reminder
+      operationId: paymentActionSnooze
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/payment_action_id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/PaymentActionSnoozeRequest
+      responses:
+        '204': {description: Snoozed}
+        '404':
+          $ref: '#/components/responses/problem'
+
+  /api/v1/projects/{project_id}/client-service-types:
+    get:
+      tags: [clients]
+      summary: List editable project service types
+      operationId: projectClientServiceTypeList
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/project_id'
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Project service types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/ClientServiceTypeView
+    post:
+      tags: [clients]
+      summary: Create or reuse a project service type
+      operationId: projectClientServiceTypeCreate
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/project_id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/ClientServiceTypeInput
+      responses:
+        '201':
+          description: Created or existing active type returned
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [client_service_type_id]
+                properties:
+                  client_service_type_id: {type: string, format: uuid}
+        '409':
+          $ref: '#/components/responses/problem'
+
+  /api/v1/projects/{project_id}/client-service-types/{client_service_type_id}:
+    patch:
+      tags: [clients]
+      summary: Update a project service type
+      operationId: projectClientServiceTypePatch
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/client_service_type_id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/ClientServiceTypePatch
+      responses:
+        '204': {description: Updated}
+        '404':
+          $ref: '#/components/responses/problem'
+        '409':
+          $ref: '#/components/responses/problem'
+    delete:
+      tags: [clients]
+      summary: Archive a project service type
+      operationId: projectClientServiceTypeArchive
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/project_id'
+        - $ref: '#/components/parameters/client_service_type_id'
+      responses:
+        '204': {description: Archived}
+        '404':
+          $ref: '#/components/responses/problem'
+
+components:
+  parameters:
+    project_id:
+      name: project_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    client_id:
+      name: client_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    client_service_id:
+      name: client_service_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    client_service_type_id:
+      name: client_service_type_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    payment_action_id:
+      name: payment_action_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+  responses:
+    problem:
+      description: Problem Details error
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.root.yaml#/components/schemas/Problem

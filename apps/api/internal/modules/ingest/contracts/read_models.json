@@ -1,0 +1,24 @@
+[
+  {
+    "name": "pulse_read.webhook_events_v1",
+    "owner": "ingest",
+    "table": "webhook_events",
+    "columns": [
+      "webhook_event_id",
+      "project_id",
+      "webhook_endpoint_id",
+      "workflow_id",
+      "workflow_version_id",
+      "workflow_run_id",
+      "method",
+      "path",
+      "payload_json",
+      "status",
+      "received_at",
+      "error"
+    ],
+    "consumers": [
+      "webhooks"
+    ]
+  }
+]

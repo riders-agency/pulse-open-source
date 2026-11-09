@@ -1,0 +1,30 @@
+.work-nav,
+.work-column-picker {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  overflow-x: auto;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-nav a,
+.work-column-picker label {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 10px;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.work-nav a.is-active,
+.work-nav a:hover,
+.work-column-picker label:hover {
+  background: var(--accent);
+}

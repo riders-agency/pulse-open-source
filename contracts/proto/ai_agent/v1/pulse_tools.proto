@@ -1,0 +1,202 @@
+syntax = "proto3";
+
+package ai_agent.v1;
+
+import "ai_agent/v1/common.proto";
+import "google/protobuf/struct.proto";
+
+option go_package = "riders.agency/pulse/api/internal/gen/ai_agent/v1;aiagentv1";
+
+service PulseToolService {
+  rpc ListTools(ListToolsRequest) returns (ListToolsResponse);
+  rpc ReadContext(ReadContextRequest) returns (ReadContextResponse);
+  rpc ValidateToolCall(ValidateToolCallRequest) returns (ValidateToolCallResponse);
+  rpc CreateProposal(CreateProposalRequest) returns (ToolProposalResponse);
+  rpc PatchProposal(PatchProposalRequest) returns (ToolProposalResponse);
+  rpc ApproveProposal(ApprovalRequest) returns (ExecuteToolResponse);
+  rpc RejectProposal(ApprovalRequest) returns (ExecuteToolResponse);
+  rpc ExecuteTool(ExecuteToolRequest) returns (ExecuteToolResponse);
+  rpc ResolveEntity(ResolveEntityRequest) returns (ResolveEntityResponse);
+}
+
+message ListToolsRequest {
+  string request_id = 1;
+  string company_id = 2;
+  string project_id = 3;
+  string user_id = 4;
+  AuthContext auth_context = 5;
+  TraceContext trace_context = 6;
+}
+
+message ToolSpec {
+  string tool_key = 1;
+  string display_name = 2;
+  string description = 3;
+  RiskLevel risk_level = 4;
+  google.protobuf.Struct input_schema_json = 5;
+  google.protobuf.Struct output_schema_json = 6;
+  repeated string required_permissions = 7;
+  bool requires_approval = 8;
+  bool supports_dry_run = 9;
+  bool idempotency_required = 10;
+  string ui_card_type = 11;
+  int32 timeout_ms = 12;
+  ToolRetryPolicy retry_policy = 13;
+}
+
+message ListToolsResponse {
+  repeated ToolSpec tools = 1;
+}
+
+message ReadContextRequest {
+  string request_id = 1;
+  string company_id = 2;
+  string project_id = 3;
+  string user_id = 4;
+  string session_id = 5;
+  google.protobuf.Struct page_context_json = 6;
+  AuthContext auth_context = 7;
+  TraceContext trace_context = 8;
+}
+
+message ReadContextResponse {
+  google.protobuf.Struct context_json = 1;
+  repeated ToolSpec allowed_tools = 2;
+}
+
+message ValidateToolCallRequest {
+  string request_id = 1;
+  string company_id = 2;
+  string project_id = 3;
+  string user_id = 4;
+  string session_id = 5;
+  string thread_id = 6;
+  string tool_call_id = 7;
+  string tool_key = 8;
+  google.protobuf.Struct input_json = 9;
+  bool dry_run = 10;
+  AuthContext auth_context = 11;
+  TraceContext trace_context = 12;
+}
+
+message ValidateToolCallResponse {
+  bool ok = 1;
+  google.protobuf.Struct normalized_input_json = 2;
+  repeated google.protobuf.Struct missing_fields = 3;
+  string user_message = 4;
+  string error_code = 5;
+  string error_message = 6;
+}
+
+message CreateProposalRequest {
+  string request_id = 1;
+  string company_id = 2;
+  string project_id = 3;
+  string user_id = 4;
+  string session_id = 5;
+  string thread_id = 6;
+  string tool_call_id = 7;
+  string tool_key = 8;
+  string intent_key = 9;
+  RiskLevel risk_level = 10;
+  bool requires_approval = 11;
+  google.protobuf.Struct input_json = 12;
+  google.protobuf.Struct page_context_json = 13;
+  string idempotency_key = 14;
+  string expected_card_type = 15;
+  string parent_plan_id = 16;
+  string step_id = 17;
+  AuthContext auth_context = 18;
+  TraceContext trace_context = 19;
+}
+
+message PatchProposalRequest {
+  string request_id = 1;
+  string company_id = 2;
+  string project_id = 3;
+  string user_id = 4;
+  string session_id = 5;
+  string thread_id = 6;
+  string tool_call_id = 7;
+  string card_id = 8;
+  int32 base_revision = 9;
+  google.protobuf.Struct patch_json = 10;
+  google.protobuf.Struct page_context_json = 11;
+  AuthContext auth_context = 12;
+  TraceContext trace_context = 13;
+}
+
+message ApprovalRequest {
+  string request_id = 1;
+  string company_id = 2;
+  string project_id = 3;
+  string user_id = 4;
+  string session_id = 5;
+  string thread_id = 6;
+  string tool_call_id = 7;
+  string card_id = 8;
+  int32 card_revision = 9;
+  string decision = 10;
+  string idempotency_key = 11;
+  AuthContext auth_context = 12;
+  TraceContext trace_context = 13;
+}
+
+message ToolProposalResponse {
+  string tool_call_id = 1;
+  string tool_key = 2;
+  string card_id = 3;
+  string card_type = 4;
+  int32 revision = 5;
+  string status = 6;
+  google.protobuf.Struct input_json = 7;
+  google.protobuf.Struct card_json = 8;
+  string user_message = 9;
+  string error_code = 10;
+  string error_message = 11;
+}
+
+message ExecuteToolRequest {
+  string request_id = 1;
+  string idempotency_key = 2;
+  string company_id = 3;
+  string project_id = 4;
+  string user_id = 5;
+  string session_id = 6;
+  string thread_id = 7;
+  string tool_call_id = 8;
+  string tool_key = 9;
+  google.protobuf.Struct input_json = 10;
+  string approval_token = 11;
+  bool dry_run = 12;
+  AuthContext auth_context = 13;
+  TraceContext trace_context = 14;
+}
+
+message ExecuteToolResponse {
+  bool ok = 1;
+  ToolExecutionStatus status = 2;
+  google.protobuf.Struct output_json = 3;
+  string error_code = 4;
+  string error_message = 5;
+  string user_message = 6;
+  string audit_event_id = 7;
+  repeated EntityLink entity_links = 8;
+}
+
+message ResolveEntityRequest {
+  string request_id = 1;
+  string company_id = 2;
+  string project_id = 3;
+  string user_id = 4;
+  string entity_type = 5;
+  string query = 6;
+  int32 limit = 7;
+  AuthContext auth_context = 8;
+  TraceContext trace_context = 9;
+}
+
+message ResolveEntityResponse {
+  repeated google.protobuf.Struct matches = 1;
+  string status = 2;
+}

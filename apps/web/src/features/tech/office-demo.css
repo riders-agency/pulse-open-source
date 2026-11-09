@@ -1,0 +1,62 @@
+.office-demo { --office-accent: var(--palette-brand); min-height: 100dvh; color: var(--foreground); background: var(--background); font-family: var(--font-geist-sans), sans-serif; }
+.office-header { height: 64px; display: flex; align-items: center; gap: 24px; padding: 0 30px; border-bottom: 1px solid var(--border); font-size: 13px; }
+.office-header a { display: inline-flex; align-items: center; gap: 8px; font-weight: 650; font-size: 19px; }
+.office-header small { margin-left: auto; color: var(--muted-foreground); }
+.office-layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(320px, 1fr); max-width: 1400px; margin: auto; height: calc(100dvh - 64px); }
+.office-conversation { display: flex; flex-direction: column; min-height: 0; border-right: 1px solid var(--border); }
+.office-conversation > header { display: flex; gap: 14px; align-items: center; padding: 25px 32px; border-bottom: 1px solid var(--border); }
+.office-conversation h1 { font-size: 22px; font-weight: 600; letter-spacing: -.5px; }
+.office-conversation > header p { margin-top: 5px; color: var(--muted-foreground); font-size: 13px; }
+.office-messages { overflow-y: auto; flex: 1; padding: 25px 32px; scrollbar-width: thin; }
+.office-message { width: fit-content; max-width: 95%; padding: 14px 17px; margin-bottom: 15px; border-radius: 14px; background: var(--muted); font-size: 14px; line-height: 1.6; }
+.office-message > span { font-size: 11px; font-weight: 650; color: var(--muted-foreground); }
+.office-message > p { margin: 5px 0; }
+.office-message > small { font-size: 11px; font-family: monospace; color: var(--muted-foreground); }
+.office-message.is-human { margin-left: auto; background: color-mix(in srgb, var(--office-accent) 15%, var(--background)); border: 1px solid color-mix(in srgb, var(--office-accent) 25%, var(--border)); }
+.office-message blockquote { margin-top: 12px; padding: 12px; background: var(--background); border-radius: 8px; font-size: 13px; }
+.office-message blockquote strong { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+.office-conversation > footer { padding: 16px 32px; border-top: 1px solid var(--border); }
+.office-conversation > footer > small { display: block; font-size: 11px; line-height: 1.5; margin-top: 10px; color: var(--muted-foreground); }
+.office-demo button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; border: 1px solid var(--border); border-radius: 9px; padding: 11px 17px; font-size: 13px; }
+.office-conversation footer button { background: var(--office-accent); color: var(--palette-ink); border-color: var(--office-accent); font-weight: 600; }
+.office-conversation footer button.is-secondary { color: var(--foreground); background: transparent; border-color: var(--border); }
+.office-demo button:disabled { opacity: .55; cursor: default; }
+.office-demo button:focus-visible { outline: 2px solid var(--office-accent); outline-offset: 3px; }
+.office-actions { display: flex; flex-wrap: wrap; gap: 10px; font-size: 14px; }
+.office-graph { padding: 28px 26px; overflow-y: auto; }
+.office-graph > header { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 22px; }
+.office-graph h2 { font-size: 16px; font-weight: 600; }
+.office-graph header span { font: 11px monospace; color: var(--muted-foreground); }
+ .office-flow { height: 540px; }
+.office-flow .office-flow-node { width: 270px; text-align: left; padding: 12px 18px; border: 1px solid var(--border); border-radius: 10px; background: var(--background); color: var(--foreground); }
+.office-flow-node strong { display: block; font-size: 14px; font-weight: 550; }
+.office-flow-node small { display: block; font: 10px monospace; color: var(--muted-foreground); margin-top: 4px; }
+.office-flow-node em { position: absolute; top: 15px; right: 14px; font-size: 11px; font-style: normal; color: var(--muted-foreground); }
+.office-flow-node.is-completed { border-color: var(--office-accent); }
+.office-flow-node.is-waiting, .office-flow-node.is-running { background: color-mix(in srgb, var(--office-accent) 15%, var(--background)); border-color: var(--office-accent); }
+.office-flow .is-traversed .react-flow__edge-path { stroke: var(--office-accent); stroke-width: 2; }
+.office-flow .react-flow__edge-text { font-size: 9px; }
+.office-flow .react-flow__edge-textbg { fill: var(--background); }
+.office-flow .react-flow__node.selected { box-shadow: 0 0 0 1px var(--office-accent); }
+.office-node-detail { margin-top: 14px; padding: 16px; border: 1px solid var(--border); border-radius: 10px; font-size: 12px; line-height: 1.65; }
+.office-node-detail strong { font-size: 14px; }
+.office-node-detail p { margin: 6px 0; color: var(--muted-foreground); }
+.office-node-detail code { font-size: 11px; }
+.office-usage { display: flex; flex-wrap: wrap; gap: 5px 12px; font-size: 12px; margin-top: 16px; }
+.office-usage small { width: 100%; color: var(--muted-foreground); }
+.office-artifacts { display: grid; gap: 12px; margin: 18px 0; }
+.office-artifacts article { border: 1px solid color-mix(in srgb, var(--office-accent) 35%, var(--border)); padding: 18px; border-radius: 12px; }
+.office-artifacts h3 { font-size: 17px; font-weight: 600; margin: 8px 0; }
+.office-artifacts small, .office-artifacts code { font-size: 11px; color: var(--muted-foreground); }
+.office-artifacts p { font-size: 13px; line-height: 1.7; margin-bottom: 8px; }
+.office-artifacts strong { font-size: 22px; }
+@media (max-width: 760px) {
+ .office-header { padding: 0 16px; gap: 14px; }
+ .office-header > span { display: none; }
+ .office-header small { font-size: 10px; }
+ .office-layout { display: block; height: auto; }
+ .office-conversation { border-right: 0; height: 760px; max-height: calc(100dvh - 64px); }
+ .office-conversation > header, .office-conversation > footer, .office-messages { padding: 16px; }
+ .office-conversation h1 { font-size: 20px; }
+ .office-graph { border-top: 1px solid var(--border); padding: 24px 16px; }
+}

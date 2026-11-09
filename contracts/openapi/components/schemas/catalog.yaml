@@ -1,0 +1,155 @@
+ActionTypeCatalogItem:
+  type: object
+  description: Строка каталога действий узла workflow (совпадает с ответом ListActionTypes)
+  additionalProperties: true
+  required:
+    - action_key
+    - display_name
+    - category
+    - requires_dependency
+    - provider_key
+    - config_schema_json
+    - result_schema_json
+  properties:
+    action_key:
+      type: string
+      description: Идентификатор типа действия для графа (JSON config)
+      example: http.request
+    display_name:
+      type: string
+      example: HTTP-запрос
+    category:
+      type: string
+      example: integration
+    requires_dependency:
+      type: boolean
+    provider_key:
+      type: string
+      description: Связка с зависимостью проекта, если нужна (иначе пустая строка)
+      example: ""
+    config_schema_json:
+      type: object
+      description: JSON Schema параметров узла для конструктора
+      additionalProperties: true
+    result_schema_json:
+      type: object
+      description: JSON Schema результата шага для подсказок и валидации
+      additionalProperties: true
+
+DependencyTypeCatalogItem:
+  type: object
+  description: Строка каталога зависимостей (SMTP, Telegram и т.д.)
+  additionalProperties: true
+  required:
+    - dependency_type_key
+    - display_name
+    - provider_key
+    - auth_schema_json
+    - metadata_schema_json
+  properties:
+    dependency_type_key:
+      type: string
+      example: smtp.generic
+    display_name:
+      type: string
+    provider_key:
+      type: string
+    auth_schema_json:
+      type: object
+      description: Поля авторизации зависимости
+      additionalProperties: true
+    metadata_schema_json:
+      type: object
+      description: Дополнительные поля конфигурации
+      additionalProperties: true
+
+ActionRunView:
+  type: object
+  description: Исполнение одного узла workflow внутри запуска
+  additionalProperties: true
+  required:
+    - action_run_id
+    - action_key
+    - action_type_key
+    - status
+    - attempt_count
+    - input_json
+    - output_json
+    - provider_response_json
+  properties:
+    action_run_id:
+      type: string
+      format: uuid
+    action_key:
+      type: string
+      description: Ключ узла в графе workflow
+      example: node_a1
+    action_type_key:
+      type: string
+      description: Тип действия из каталога
+      example: http.request
+    status:
+      type: string
+      example: succeeded
+    attempt_count:
+      type: integer
+      minimum: 0
+    input_json:
+      type: object
+      description: Контекст и параметры на вход узла
+      additionalProperties: true
+    output_json:
+      type: object
+      description: Результат узла после исполнения
+      additionalProperties: true
+    provider_response_json:
+      type: object
+      description: Ответ провайдера при наличии
+      additionalProperties: true
+    diagnostics:
+      type: object
+      description: "Человекочитаемая интерпретация выполнения действия: причина, критерии успеха, retryable и next action."
+      additionalProperties: true
+      properties:
+        summary:
+          type: string
+          example: Telegram подтвердил отправку сообщения.
+        status:
+          type: string
+          example: success
+        provider:
+          type: string
+          example: telegram
+        reason_code:
+          type: string
+          example: telegram_invalid_token
+        human_reason:
+          type: string
+          example: Telegram отклонил токен бота.
+        next_action:
+          type: string
+          example: Проверьте bot_token в интеграции Telegram и сохраните его заново.
+        retryable:
+          type: boolean
+        criteria_results:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    error:
+      type:
+        - string
+        - "null"
+      description: Текст ошибки при неуспехе
+    started_at:
+      type:
+        - string
+        - "null"
+      format: date-time
+      description: Время начала исполнения
+    finished_at:
+      type:
+        - string
+        - "null"
+      format: date-time
+      description: Время завершения

@@ -1,0 +1,8 @@
+@import "./live-assist/shell.css";
+@import "./live-assist/shell-visitors.css";
+@import "./live-assist/shell-calls.css";
+@import "./live-assist/chat.css";
+@import "./live-assist/chat-attachments.css";
+@import "./live-assist/cobrowse.css";
+@import "./live-assist/cobrowse-status.css";
+@import "./live-assist/events-fullscreen.css";

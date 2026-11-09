@@ -1,0 +1,22 @@
+CompanyView:
+  type: object
+  additionalProperties: false
+  required:
+    - company_id
+    - slug
+    - name
+    - role
+  properties:
+    company_id:
+      type: string
+      format: uuid
+      example: b98772dd-7cf7-455d-a750-9ef142546b37
+    slug:
+      type: string
+      example: example-core
+    name:
+      type: string
+      example: Example Core
+    role:
+      type: string
+      example: owner

@@ -1,0 +1,10 @@
+.site-chat-side {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.site-chat-side textarea {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+}

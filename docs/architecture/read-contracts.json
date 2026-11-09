@@ -1,0 +1,421 @@
+[
+  {
+    "name": "pulse_read.action_dependencies_v1",
+    "owner": "action_dependencies",
+    "table": "action_dependencies",
+    "columns": [
+      "action_dependency_id",
+      "project_id",
+      "action_dependency_type_id",
+      "name",
+      "status",
+      "metadata_json",
+      "created_by_user_id",
+      "created_at",
+      "updated_at",
+      "company_id"
+    ],
+    "consumers": [
+      "ai",
+      "integrationdocs",
+      "providers",
+      "runs",
+      "telegramrelay"
+    ]
+  },
+  {
+    "name": "pulse_read.action_dependency_types_v1",
+    "owner": "action_dependencies",
+    "table": "action_dependency_types",
+    "columns": [
+      "action_dependency_type_id",
+      "dependency_type_key",
+      "display_name",
+      "provider_key",
+      "auth_schema_json",
+      "metadata_schema_json",
+      "created_at",
+      "updated_at"
+    ],
+    "consumers": [
+      "ai",
+      "catalog",
+      "integrationdocs",
+      "providers",
+      "runs"
+    ]
+  },
+  {
+    "name": "pulse_read.client_projects_v1",
+    "owner": "clients",
+    "table": "client_projects",
+    "columns": [
+      "client_id",
+      "project_id",
+      "company_id"
+    ],
+    "consumers": [
+      "ai"
+    ]
+  },
+  {
+    "name": "pulse_read.clients_v1",
+    "owner": "clients",
+    "table": "clients",
+    "columns": [
+      "client_id",
+      "company_id",
+      "status",
+      "name",
+      "full_name",
+      "created_at",
+      "updated_at",
+      "email",
+      "telegram",
+      "source",
+      "search_vector"
+    ],
+    "consumers": [
+      "ai",
+      "worktracker"
+    ]
+  },
+  {
+    "name": "pulse_read.companies_v1",
+    "owner": "companies",
+    "table": "companies",
+    "columns": [
+      "company_id",
+      "slug",
+      "name",
+      "status",
+      "created_at",
+      "updated_at",
+      "created_by_user_id"
+    ],
+    "consumers": [
+      "ai",
+      "worktracker"
+    ]
+  },
+  {
+    "name": "pulse_read.company_memberships_v1",
+    "owner": "companies",
+    "table": "company_memberships",
+    "columns": [
+      "company_id",
+      "user_id",
+      "role",
+      "created_at"
+    ],
+    "consumers": [
+      "action_dependencies",
+      "auth",
+      "clients",
+      "integrationdocs",
+      "projects",
+      "runs",
+      "templates",
+      "webhooks",
+      "workflows",
+      "worktracker"
+    ]
+  },
+  {
+    "name": "pulse_read.email_templates_v1",
+    "owner": "templates",
+    "table": "email_templates",
+    "columns": [
+      "email_template_id",
+      "subject_template",
+      "body_template",
+      "body_format"
+    ],
+    "consumers": [
+      "providers"
+    ]
+  },
+  {
+    "name": "pulse_read.message_templates_v1",
+    "owner": "templates",
+    "table": "message_templates",
+    "columns": [
+      "message_template_id",
+      "body_template",
+      "body_format",
+      "metadata_json"
+    ],
+    "consumers": [
+      "providers"
+    ]
+  },
+  {
+    "name": "pulse_read.module_workflow_triggers_v1",
+    "owner": "workflows",
+    "table": "module_workflow_triggers",
+    "columns": [
+      "module_workflow_trigger_id",
+      "company_id",
+      "project_id",
+      "module_key",
+      "event_key",
+      "workflow_id",
+      "workflow_version_id",
+      "enabled",
+      "config_json",
+      "created_at"
+    ],
+    "consumers": [
+      "clients",
+      "sitechat",
+      "worktracker"
+    ]
+  },
+  {
+    "name": "pulse_read.project_members_v1",
+    "owner": "projects",
+    "table": "project_members",
+    "columns": [
+      "project_id",
+      "user_id",
+      "role",
+      "created_at",
+      "client_id",
+      "status"
+    ],
+    "consumers": [
+      "clients",
+      "worktracker"
+    ]
+  },
+  {
+    "name": "pulse_read.projects_v1",
+    "owner": "projects",
+    "table": "projects",
+    "columns": [
+      "project_id",
+      "company_id",
+      "name",
+      "slug",
+      "hook_key",
+      "created_by_user_id",
+      "created_at",
+      "updated_at",
+      "description",
+      "status",
+      "priority",
+      "start_date",
+      "task_workflow_id"
+    ],
+    "consumers": [
+      "action_dependencies",
+      "ai",
+      "auth",
+      "clients",
+      "integrationdocs",
+      "runs",
+      "sitechat",
+      "templates",
+      "webhooks",
+      "workflows",
+      "worktracker"
+    ]
+  },
+  {
+    "name": "pulse_read.task_workflow_statuses_v1",
+    "owner": "worktracker",
+    "table": "task_workflow_statuses",
+    "columns": [
+      "task_workflow_status_id",
+      "task_workflow_id",
+      "name",
+      "category",
+      "position",
+      "is_start",
+      "is_done",
+      "updated_at"
+    ],
+    "consumers": [
+      "ai"
+    ]
+  },
+  {
+    "name": "pulse_read.task_workflows_v1",
+    "owner": "worktracker",
+    "table": "task_workflows",
+    "columns": [
+      "task_workflow_id",
+      "project_id",
+      "client_id",
+      "name",
+      "description",
+      "is_default"
+    ],
+    "consumers": [
+      "ai"
+    ]
+  },
+  {
+    "name": "pulse_read.tasks_v1",
+    "owner": "worktracker",
+    "table": "tasks",
+    "columns": [
+      "task_id",
+      "company_id",
+      "project_id",
+      "client_id",
+      "task_key",
+      "title",
+      "description",
+      "type",
+      "task_workflow_status_id",
+      "task_workflow_id",
+      "priority",
+      "assignee_user_id",
+      "due_date",
+      "archived_at",
+      "position",
+      "rank",
+      "client_visible",
+      "billable",
+      "labels",
+      "updated_at",
+      "search_vector"
+    ],
+    "consumers": [
+      "ai"
+    ]
+  },
+  {
+    "name": "pulse_read.telegram_relay_configs_v1",
+    "owner": "telegramrelay",
+    "table": "telegram_relay_configs",
+    "columns": [
+      "action_dependency_id",
+      "relay_key",
+      "public_url",
+      "allowed_updates",
+      "status",
+      "updated_at",
+      "polling_enabled",
+      "polling_timeout_seconds",
+      "polling_limit",
+      "polling_next_offset",
+      "polling_last_update_id",
+      "polling_last_started_at",
+      "polling_last_ok_at",
+      "polling_last_error",
+      "polling_delete_webhook",
+      "polling_drop_pending_updates",
+      "polling_webhook_deleted_at"
+    ],
+    "consumers": [
+      "action_dependencies"
+    ]
+  },
+  {
+    "name": "pulse_read.users_v1",
+    "owner": "auth",
+    "table": "users",
+    "columns": [
+      "user_id",
+      "email",
+      "first_name",
+      "created_at",
+      "updated_at",
+      "display_name"
+    ],
+    "consumers": [
+      "clients",
+      "worktracker"
+    ]
+  },
+  {
+    "name": "pulse_read.webhook_events_v1",
+    "owner": "ingest",
+    "table": "webhook_events",
+    "columns": [
+      "webhook_event_id",
+      "project_id",
+      "webhook_endpoint_id",
+      "workflow_id",
+      "workflow_version_id",
+      "workflow_run_id",
+      "method",
+      "path",
+      "payload_json",
+      "status",
+      "received_at",
+      "error"
+    ],
+    "consumers": [
+      "webhooks"
+    ]
+  },
+  {
+    "name": "pulse_read.workflow_runs_v1",
+    "owner": "runs",
+    "table": "workflow_runs",
+    "columns": [
+      "workflow_run_id",
+      "project_id",
+      "workflow_id",
+      "workflow_version_id",
+      "source_type",
+      "status",
+      "started_at",
+      "error"
+    ],
+    "consumers": [
+      "clients",
+      "workflows"
+    ]
+  },
+  {
+    "name": "pulse_read.workflow_versions_v1",
+    "owner": "workflows",
+    "table": "workflow_versions",
+    "columns": [
+      "workflow_version_id",
+      "project_id",
+      "workflow_id",
+      "status",
+      "definition_json",
+      "graph_json",
+      "created_by_user_id",
+      "created_at"
+    ],
+    "consumers": [
+      "clients",
+      "runs",
+      "telegramrelay",
+      "webhooks"
+    ]
+  },
+  {
+    "name": "pulse_read.workflows_v1",
+    "owner": "workflows",
+    "table": "workflows",
+    "columns": [
+      "workflow_id",
+      "project_id",
+      "name",
+      "slug",
+      "status",
+      "current_workflow_version_id",
+      "created_by_user_id",
+      "created_at",
+      "updated_at",
+      "test_input_json"
+    ],
+    "consumers": [
+      "ai",
+      "clients",
+      "runs",
+      "sitechat",
+      "telegramrelay",
+      "webhooks",
+      "worktracker"
+    ]
+  }
+]

@@ -1,0 +1,98 @@
+.work-drawer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.work-props {
+  display: grid;
+  gap: 8px;
+}
+
+.work-props div {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.work-props dt {
+  color: var(--foreground);
+  font-size: 13px;
+}
+
+.work-props dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.work-activity,
+.work-process-list,
+.work-status-chain {
+  display: grid;
+  gap: 8px;
+}
+
+.work-activity span,
+.work-status-chain span {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  width: max-content;
+  max-width: 100%;
+  padding: 0 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 13px;
+}
+
+.work-timer-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 58px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-timer-strip div {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+}
+
+.work-active-timers {
+  display: grid;
+  gap: 8px;
+}
+
+.work-active-timers article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-active-timers article > div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.work-active-timers span {
+  overflow: hidden;
+  color: var(--muted-foreground);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

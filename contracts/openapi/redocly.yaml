@@ -1,0 +1,16 @@
+apis:
+  ai-app@v1:
+    root: ./openapi.root.yaml
+
+extends:
+  - recommended
+
+rules:
+  operation-operationId: error
+  operation-2xx-response: error
+  operation-4xx-response: error
+  tag-description: error
+  info-license: error
+  info-license-strict: error
+  no-server-example.com: error
+  no-unused-components: warn

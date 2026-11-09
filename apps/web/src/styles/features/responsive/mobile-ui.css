@@ -1,0 +1,39 @@
+@media (max-width: 640px) {
+  .ui-card-header {
+    display: grid;
+    padding: 14px 14px 0;
+  }
+
+  .ui-card-content {
+    padding: 14px;
+  }
+
+  .ui-sheet {
+    padding: 14px;
+    min-width: 0;
+  }
+
+  .ui-sheet *,
+  .ui-card * {
+    min-width: 0;
+  }
+
+  .ui-sheet-title {
+    font-size: 18px;
+    overflow-wrap: anywhere;
+  }
+
+  .ui-table {
+    min-width: 520px;
+  }
+
+  .ui-dialog-content {
+    width: calc(100vw - 18px);
+    max-height: calc(100vh - 18px);
+    padding: 18px 14px;
+  }
+
+  .ui-dialog-title {
+    font-size: 24px;
+  }
+}

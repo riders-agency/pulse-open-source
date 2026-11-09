@@ -1,0 +1,715 @@
+paths:
+  /api/v1/ai/runtime/readiness:
+    get:
+      tags: [ai]
+      summary: Проверить готовность AI runtime и Python gRPC health
+      operationId: aiRuntimeReadiness
+      responses:
+        "200":
+          description: AI runtime readiness
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIRuntimeReadiness"
+        "503":
+          description: AI runtime is not ready when langgraph runtime requires Python gRPC
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIRuntimeReadiness"
+  /api/v1/ai/agent/readiness:
+    get:
+      tags: [ai]
+      summary: Alias for AI runtime readiness
+      operationId: aiAgentReadiness
+      responses:
+        "200":
+          description: AI runtime readiness
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIRuntimeReadiness"
+        "503":
+          description: AI runtime is not ready when langgraph runtime requires Python gRPC
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIRuntimeReadiness"
+  /api/v1/ai/runtime/capabilities:
+    get:
+      tags: [ai]
+      summary: Получить capability state AI runtime
+      operationId: aiRuntimeCapabilities
+      responses:
+        "200":
+          description: AI runtime capability state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIRuntimeReadiness"
+        "503":
+          description: AI runtime is disabled or unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIRuntimeReadiness"
+  /api/v1/projects/{project_id}/ai/model-providers:
+    get:
+      tags: [ai]
+      summary: Список AI-провайдеров моделей для проекта
+      operationId: aiModelProviders
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+      responses:
+        "200":
+          description: Model provider catalog
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AIModelProvider"
+        "401":
+          $ref: "#/components/responses/Problem"
+  /api/v1/projects/{project_id}/ai/employee:
+    get:
+      tags: [ai]
+      summary: Получить или lazy-create AI-сотрудника проекта
+      operationId: aiEmployeeGet
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+      responses:
+        "200":
+          description: Project AI employee envelope
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIEmployeeEnvelope"
+        "401":
+          $ref: "#/components/responses/Problem"
+    patch:
+      tags: [ai]
+      summary: Обновить настройки AI-сотрудника проекта
+      operationId: aiEmployeePatch
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                display_name:
+                  type: string
+                status:
+                  type: string
+                  enum: [active, disabled, archived]
+                action_dependency_id:
+                  type: string
+                  format: uuid
+                model_id:
+                  type: string
+                profile_json:
+                  type: object
+                tool_policy_json:
+                  type: object
+                memory_policy_json:
+                  type: object
+                ui_settings_json:
+                  type: object
+      responses:
+        "200":
+          description: Updated employee envelope
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIEmployeeEnvelope"
+        "401":
+          $ref: "#/components/responses/Problem"
+  /api/v1/projects/{project_id}/ai/employee/capability:
+    get:
+      tags: [ai]
+      summary: Получить capability state AI-сотрудника проекта
+      operationId: aiEmployeeCapability
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+      responses:
+        "200":
+          description: AI employee capability envelope
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  capability:
+                    $ref: "#/components/schemas/AICapability"
+        "401":
+          $ref: "#/components/responses/Problem"
+  /api/v1/projects/{project_id}/ai/employee/sessions:
+    post:
+      tags: [ai]
+      summary: Создать chat session AI-сотрудника
+      operationId: aiEmployeeSessionCreate
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AISessionCreate"
+      responses:
+        '401':
+          $ref: '#/components/responses/Problem'
+        "201":
+          description: Created session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIChatSession"
+  /api/v1/projects/{project_id}/ai/employee/sessions/{session_id}:
+    get:
+      tags: [ai]
+      summary: Получить AI chat session
+      operationId: aiEmployeeSessionGet
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+        - $ref: "#/components/parameters/session_id"
+      responses:
+        '401':
+          $ref: '#/components/responses/Problem'
+        "200":
+          description: Session with messages
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIChatSession"
+  /api/v1/projects/{project_id}/ai/employee/sessions/{session_id}/messages:
+    post:
+      tags: [ai]
+      summary: Отправить сообщение AI-сотруднику
+      operationId: aiEmployeeMessagePost
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+        - $ref: "#/components/parameters/session_id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [body]
+              properties:
+                body:
+                  type: string
+                page_context_json:
+                  $ref: "#/components/schemas/AIPageContext"
+                client_context_json:
+                  type: object
+                  additionalProperties: true
+                ui_state_json:
+                  type: object
+                  additionalProperties: true
+                active_tool_call_id:
+                  type: string
+                  format: uuid
+                active_patch_proposal_id:
+                  type: string
+                  format: uuid
+                reply_to_message_id:
+                  type: string
+                  format: uuid
+                client_command:
+                  type: string
+                local_date:
+                  type: string
+                timezone:
+                  type: string
+      responses:
+        '401':
+          $ref: '#/components/responses/Problem'
+        "200":
+          description: Updated session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIChatSession"
+  /api/v1/projects/{project_id}/ai/employee/sessions/{session_id}/messages/stream:
+    post:
+      tags: [ai]
+      summary: Отправить сообщение AI-сотруднику и получить stream событий
+      operationId: aiEmployeeMessageStreamPost
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+        - $ref: "#/components/parameters/session_id"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [body]
+              properties:
+                body:
+                  type: string
+                page_context_json:
+                  $ref: "#/components/schemas/AIPageContext"
+                client_context_json:
+                  type: object
+                  additionalProperties: true
+                ui_state_json:
+                  type: object
+                  additionalProperties: true
+                active_tool_call_id:
+                  type: string
+                  format: uuid
+                active_patch_proposal_id:
+                  type: string
+                  format: uuid
+                reply_to_message_id:
+                  type: string
+                  format: uuid
+                client_command:
+                  type: string
+                local_date:
+                  type: string
+                timezone:
+                  type: string
+      responses:
+        '401':
+          $ref: '#/components/responses/Problem'
+        "200":
+          description: text/event-stream with STATUS, MESSAGE_DELTA, MESSAGE_FINAL and DONE events
+          content:
+            text/event-stream:
+              schema:
+                type: string
+  /api/v1/projects/{project_id}/ai/employee/sessions/{session_id}/cancel:
+    post:
+      tags: [ai]
+      summary: Отменить AI chat session
+      operationId: aiEmployeeSessionCancel
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+        - $ref: "#/components/parameters/session_id"
+      responses:
+        '401':
+          $ref: '#/components/responses/Problem'
+        "200":
+          description: Canceled session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIChatSession"
+  /api/v1/projects/{project_id}/ai/tool-calls/{tool_call_id}/approve:
+    post:
+      tags: [ai]
+      summary: Подтвердить и выполнить AI tool call
+      operationId: aiToolCallApprove
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+        - $ref: "#/components/parameters/tool_call_id"
+      responses:
+        '401':
+          $ref: '#/components/responses/Problem'
+        "200":
+          description: Updated AI session after tool execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIChatSession"
+  /api/v1/projects/{project_id}/ai/tool-calls/{tool_call_id}/reject:
+    post:
+      tags: [ai]
+      summary: Отклонить AI tool call без side effect
+      operationId: aiToolCallReject
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+        - $ref: "#/components/parameters/tool_call_id"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+      responses:
+        '401':
+          $ref: '#/components/responses/Problem'
+        "200":
+          description: Updated AI session after rejection
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIChatSession"
+  /api/v1/projects/{project_id}/action-dependencies/{action_dependency_id}/models:
+    get:
+      tags: [ai]
+      summary: Список моделей для project integration
+      operationId: aiModelsByDependency
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+        - $ref: "#/components/parameters/action_dependency_id"
+      responses:
+        '401':
+          $ref: '#/components/responses/Problem'
+        "200":
+          description: Models
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIModelList"
+  /api/v1/projects/{project_id}/action-dependencies/{action_dependency_id}/models/refresh:
+    post:
+      tags: [ai]
+      summary: Обновить model cache для integration
+      operationId: aiModelsRefresh
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+        - $ref: "#/components/parameters/action_dependency_id"
+      responses:
+        '401':
+          $ref: '#/components/responses/Problem'
+        "200":
+          description: Refreshed models
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIModelList"
+  /api/v1/projects/{project_id}/action-dependencies/{action_dependency_id}/models/evaluate:
+    post:
+      tags: [ai]
+      summary: Оценить модели провайдера и выбрать дефолты для AI-сотрудника
+      operationId: aiModelsEvaluate
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+        - $ref: "#/components/parameters/action_dependency_id"
+      responses:
+        '401':
+          $ref: '#/components/responses/Problem'
+        "200":
+          description: Model evaluation result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIModelEvaluationResult"
+components:
+  parameters:
+    project_id:
+      name: project_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    session_id:
+      name: session_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    action_dependency_id:
+      name: action_dependency_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    tool_call_id:
+      name: tool_call_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    Problem:
+      description: Problem
+      content:
+        application/problem+json:
+          schema:
+            $ref: ../openapi.root.yaml#/components/schemas/Problem
+  schemas:
+    AIRuntimeReadiness:
+      type: object
+      required: [ok, runtime, go_api, python_grpc, checked_at]
+      properties:
+        ok:
+          type: boolean
+        runtime:
+          type: string
+        go_api:
+          type: object
+          additionalProperties: true
+        python_grpc:
+          type: object
+          additionalProperties: true
+        checked_at:
+          type: string
+          format: date-time
+        ready_policy:
+          type: string
+        endpoint_note:
+          type: string
+        capability:
+          $ref: "#/components/schemas/AICapability"
+    AICapability:
+      type: object
+      required: [state, runtime, production, allows_read, allows_proposals, allows_writes, reasons, dependencies]
+      properties:
+        state:
+          type: string
+          enum: [disabled, deterministic_preview, read_only, proposal_only, ready]
+        runtime:
+          type: string
+        production:
+          type: boolean
+        allows_read:
+          type: boolean
+        allows_proposals:
+          type: boolean
+        allows_writes:
+          type: boolean
+        reasons:
+          type: array
+          items:
+            type: string
+        dependencies:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              status:
+                type: string
+              detail:
+                type: string
+    AIModelProvider:
+      type: object
+      properties:
+        provider_key:
+          type: string
+        dependency_type_key:
+          type: string
+        display_name:
+          type: string
+        status:
+          type: string
+        default_base_url:
+          type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+        tool_loop:
+          type: string
+        docs_url:
+          type: string
+    AIEmployeeEnvelope:
+      type: object
+      properties:
+        employee:
+          type: object
+        project:
+          type: object
+        model_providers:
+          type: array
+          items:
+            $ref: "#/components/schemas/AIModelProvider"
+        configured_dependencies:
+          type: array
+          items:
+            type: object
+        setup_required:
+          type: boolean
+        capability:
+          $ref: "#/components/schemas/AICapability"
+    AISessionCreate:
+      type: object
+      properties:
+        screen_scope:
+          type: string
+        screen_entity_type:
+          type: string
+        screen_entity_id:
+          type: string
+        workflow_id:
+          type: string
+          format: uuid
+        workflow_run_id:
+          type: string
+          format: uuid
+        task_id:
+          type: string
+          format: uuid
+        client_id:
+          type: string
+          format: uuid
+        action_dependency_id:
+          type: string
+          format: uuid
+        model_id:
+          type: string
+        page_context_json:
+          $ref: "#/components/schemas/AIPageContext"
+    AIChatSession:
+      type: object
+      properties:
+        ai_chat_session_id:
+          type: string
+          format: uuid
+        project_id:
+          type: string
+          format: uuid
+        company_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+        agent_runtime:
+          type: string
+        langgraph_thread_id:
+          type: string
+        screen_scope:
+          type: string
+        session_revision:
+          type: integer
+        page_context_json:
+          $ref: "#/components/schemas/AIPageContext"
+        last_page_context_json:
+          $ref: "#/components/schemas/AIPageContext"
+        active_tool_call_id:
+          type: string
+          format: uuid
+        active_patch_proposal_id:
+          type: string
+          format: uuid
+        working_memory_json:
+          type: object
+          additionalProperties: true
+        runtime_state_json:
+          type: object
+          additionalProperties: true
+        messages:
+          type: array
+          items:
+            type: object
+        tool_calls:
+          type: array
+          items:
+            $ref: "#/components/schemas/AIToolCall"
+    AIPageContext:
+      type: object
+      additionalProperties: true
+      properties:
+        route:
+          type: string
+        pathname:
+          type: string
+        pageKind:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+        workflowId:
+          type: string
+          format: uuid
+        workflowRunId:
+          type: string
+          format: uuid
+        taskId:
+          type: string
+          format: uuid
+        clientId:
+          type: string
+          format: uuid
+        timestamp:
+          type: string
+    AIToolCall:
+      type: object
+      properties:
+        ai_tool_call_id:
+          type: string
+          format: uuid
+        tool_key:
+          type: string
+        risk_level:
+          type: string
+        status:
+          type: string
+        input_json:
+          type: object
+        output_json:
+          type: object
+        requires_approval:
+          type: boolean
+    AIModelList:
+      type: object
+      properties:
+        action_dependency_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        provider_key:
+          type: string
+        dependency_type_key:
+          type: string
+        models:
+          type: array
+          items:
+            type: object
+        source:
+          type: string
+        fetched_at:
+          type: string
+    AIModelEvaluationResult:
+      type: object
+      properties:
+        action_dependency_id:
+          type: string
+          format: uuid
+        provider_key:
+          type: string
+        selected_model_id:
+          type: string
+        score:
+          type: number
+        items:
+          type: array
+          items:
+            type: object

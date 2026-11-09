@@ -1,0 +1,166 @@
+@media (max-width: 640px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .app-header {
+    gap: 14px;
+    padding: 12px;
+  }
+
+  .sidebar-workspace,
+  .app-shell.is-sidebar-collapsed .sidebar-workspace,
+  .clients-toolbar,
+  .client-row-card,
+  .dadata-result {
+    grid-template-columns: 1fr;
+  }
+
+  .provider-card {
+    grid-template-columns: 48px minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .provider-card > svg:last-child {
+    display: none;
+  }
+
+  .provider-logo {
+    width: 48px;
+    height: 48px;
+  }
+
+  .integration-grid,
+  .provider-grid,
+  .integration-catalog-dialog .provider-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .client-row-actions {
+    justify-content: stretch;
+  }
+
+  .client-row-actions .ui-button {
+    width: 100%;
+  }
+
+  .payment-card-top,
+  .payment-document-slot,
+  .payment-run-groups {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-document-actions {
+    justify-content: flex-start;
+  }
+
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .brand-title strong {
+    font-size: 18px;
+  }
+
+  .main-nav {
+    width: 100%;
+    justify-content: flex-start;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+
+  .main-nav a {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 0 8px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .header-actions {
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .header-actions > select {
+    width: 100% !important;
+    min-width: 0;
+  }
+
+  .header-actions > .row {
+    justify-content: flex-start;
+  }
+
+  .header-actions > .header-link,
+  .header-actions > a {
+    min-width: 0;
+  }
+
+  .page {
+    width: 100%;
+    padding: 18px 12px 40px;
+  }
+
+  .page-title,
+  .flow-toolbar {
+    display: grid;
+    gap: 12px;
+  }
+
+  .chat-workspace-head,
+  .chat-composer {
+    grid-template-columns: 1fr;
+  }
+
+  .chat-workspace-head {
+    display: grid;
+  }
+
+  .chat-workspace-head .row,
+  .chat-composer .ui-button {
+    width: 100%;
+  }
+
+  .chat-workspace-head .row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .chat-bubble {
+    width: 100%;
+  }
+
+  .live-side-panel {
+    grid-template-columns: 1fr;
+  }
+
+
+  .incoming-call-strip > div {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+
+  .incoming-call-strip .ui-button {
+    width: 100%;
+  }
+
+  .cobrowse-stage {
+    padding: 10px;
+  }
+
+  .monitor-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .page-title h1 {
+    font-size: 28px;
+    line-height: 1.12;
+  }
+
+}

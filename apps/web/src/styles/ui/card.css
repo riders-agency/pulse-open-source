@@ -1,0 +1,36 @@
+.ui-card {
+  min-width: 0;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--card-foreground);
+  box-shadow: var(--shadow-sm);
+}
+
+.ui-card-header {
+  min-width: 0;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 20px 0;
+}
+
+.ui-card-title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.ui-card-description {
+  margin: 6px 0 0;
+  color: var(--foreground);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.ui-card-content {
+  min-width: 0;
+  padding: 20px;
+}

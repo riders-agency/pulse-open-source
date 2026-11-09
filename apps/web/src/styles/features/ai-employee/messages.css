@@ -1,0 +1,180 @@
+.ai-empty svg {
+  color: var(--ai-widget-primary);
+}
+
+.ai-empty p {
+  max-width: 340px;
+  margin: 0;
+}
+
+.ai-message {
+  display: grid;
+  gap: 7px;
+  justify-self: start;
+  max-width: 94%;
+  padding: 10px 12px;
+  border: 1px solid var(--ai-widget-border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--card) 94%, var(--accent));
+}
+
+.ai-message.is-optimistic {
+  opacity: 0.82;
+}
+
+.ai-message-user {
+  justify-self: end;
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
+  background: var(--accent);
+}
+
+.ai-message-assistant {
+  width: 100%; max-width: 100%;
+  padding: 4px 0; border: 0; background: transparent;
+}
+
+.ai-message-tool,
+.ai-message-approval {
+  background: color-mix(in srgb, var(--success) 8%, var(--card));
+}
+
+.ai-copy-prefix {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.ai-stream-text {
+  white-space: pre-wrap;
+}
+
+.ai-caret {
+  display: inline-block;
+  width: 6px;
+  height: 1.1em;
+  margin-left: 2px;
+  background: var(--primary);
+  vertical-align: -0.15em;
+  animation: ai-caret-blink 0.9s steps(2, start) infinite;
+}
+
+@keyframes ai-caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.ai-message p {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.ai-progress-lane {
+  display: grid;
+  gap: 7px;
+  margin: 0 14px 10px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--primary) 28%, var(--border));
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--primary) 6%, var(--card));
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--foreground) 6%, transparent);
+  flex: 0 0 auto;
+}
+
+.ai-progress-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--foreground);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.ai-progress-head svg {
+  color: var(--primary);
+}
+
+.ai-progress-steps {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+.ai-entity-link {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 30px;
+  padding: 5px 10px;
+  border: 1px solid color-mix(in srgb, var(--primary) 36%, var(--border));
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-foreground);
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.ai-entity-link:hover,
+.ai-entity-link:focus-visible {
+  border-color: var(--ai-widget-primary);
+  outline: none;
+}
+
+.ai-result-card {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--muted);
+}
+
+.ai-result-card > strong {
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.ai-result-list {
+  display: grid;
+  gap: 7px;
+}
+
+.ai-result-list .ai-entity-link {
+  display: grid;
+  justify-items: start;
+  gap: 2px;
+  width: 100%;
+}
+
+.ai-result-list .ai-entity-link em,
+.ai-result-list .ai-entity-link small {
+  color: var(--muted-foreground);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 650;
+}
+
+.ai-proposal-card {
+  display: grid;
+  gap: 10px;
+  margin-top: 4px;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
+  border-radius: var(--radius);
+  background: var(--card);
+  font-size: 12px;
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "name": "pulse_read.telegram_relay_configs_v1",
+    "owner": "telegramrelay",
+    "table": "telegram_relay_configs",
+    "columns": [
+      "action_dependency_id",
+      "relay_key",
+      "public_url",
+      "allowed_updates",
+      "status",
+      "updated_at",
+      "polling_enabled",
+      "polling_timeout_seconds",
+      "polling_limit",
+      "polling_next_offset",
+      "polling_last_update_id",
+      "polling_last_started_at",
+      "polling_last_ok_at",
+      "polling_last_error",
+      "polling_delete_webhook",
+      "polling_drop_pending_updates",
+      "polling_webhook_deleted_at"
+    ],
+    "consumers": [
+      "action_dependencies"
+    ]
+  }
+]

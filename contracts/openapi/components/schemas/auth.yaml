@@ -1,0 +1,84 @@
+SessionView:
+  type: object
+  additionalProperties: false
+  required:
+    - session_id
+    - client_type
+    - device_label
+    - created_at
+    - last_seen_at
+    - is_current
+  properties:
+    session_id:
+      type: string
+      format: uuid
+      example: 9d660b52-2e4e-4b0c-8ab0-ce0df8a3e550
+    client_type:
+      type: string
+      example: web
+    device_label:
+      type: string
+      example: Chrome on macOS
+    ip_address:
+      type: string
+      example: 203.0.113.10
+    created_at:
+      type: string
+      format: date-time
+    last_seen_at:
+      type: string
+      format: date-time
+    is_current:
+      type: boolean
+      example: true
+
+UserMe:
+  type: object
+  additionalProperties: false
+  required:
+    - user_id
+    - email
+    - current_company_id
+  properties:
+    user_id:
+      type: string
+      format: uuid
+      example: e2f0d908-03d7-4ba0-9c76-f0d1553f7428
+    email:
+      type: string
+      format: email
+      example: owner@example.test
+    current_company_id:
+      type: [string, 'null']
+      format: uuid
+
+WorkspaceContext:
+  type: object
+  additionalProperties: false
+  required:
+    - user_id
+    - active_company_id
+    - active_project_id
+  properties:
+    user_id:
+      type: string
+      format: uuid
+    active_company_id:
+      type: string
+      format: uuid
+      description: Empty string when no company is selected.
+    active_project_id:
+      type: string
+      format: uuid
+      description: Empty string when no project is selected.
+
+WorkspaceContextPatch:
+  type: object
+  additionalProperties: false
+  properties:
+    active_company_id:
+      type: [string, 'null']
+      format: uuid
+    active_project_id:
+      type: [string, 'null']
+      format: uuid

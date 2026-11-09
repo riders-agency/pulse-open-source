@@ -1,0 +1,154 @@
+{
+  "turnRequest": {
+    "requestId": "req-001",
+    "idempotencyKey": "turn:req-001",
+    "companyId": "company-001",
+    "projectId": "project-001",
+    "userId": "user-001",
+    "sessionId": "session-001",
+    "threadId": "thread-001",
+    "messageId": "message-001",
+    "body": "Покажи просроченные оплаты и подготовь напоминание",
+    "localDate": "2026-06-25",
+    "timezone": "Europe/Moscow",
+    "locale": "ru-RU",
+    "pageContextJson": {
+      "route": "/projects/project-001/clients",
+      "selection": {
+        "client_id": "client-042"
+      }
+    },
+    "clientContextJson": {
+      "surface": "dashboard",
+      "viewport": "desktop"
+    },
+    "uiStateJson": {
+      "active_panel": "payments",
+      "filters": {
+        "status": "overdue"
+      }
+    },
+    "activeCardId": "card-001",
+    "activeToolCallId": "tool-call-001",
+    "activeProposalId": "proposal-001",
+    "history": [
+      {
+        "messageId": "hist-001",
+        "role": "user",
+        "body": "Что с оплатами?",
+        "payloadJson": {
+          "source": "fixture"
+        },
+        "createdAt": "2026-06-25T04:00:00Z"
+      }
+    ],
+    "runtimePolicy": {
+      "runtime": "langgraph",
+      "maxGraphSteps": 8,
+      "maxModelCalls": 3,
+      "maxToolCalls": 4,
+      "maxWriteProposals": 1,
+      "timeoutMs": 30000,
+      "allowReadToolsWithoutApproval": true
+    },
+    "authContext": {
+      "companyId": "company-001",
+      "projectId": "project-001",
+      "userId": "user-001",
+      "permissions": ["ai.read", "clients.read", "payments.write"],
+      "role": "owner",
+      "policyJson": {
+        "risk_ceiling": "high"
+      }
+    },
+    "traceContext": {
+      "traceId": "trace-001",
+      "spanId": "span-001",
+      "requestId": "req-001",
+      "baggage": {
+        "tenant": "company-001"
+      }
+    }
+  },
+  "toolSpec": {
+    "toolKey": "clients.payment_reminder.create",
+    "displayName": "Create payment reminder",
+    "description": "Prepare a payment reminder proposal for overdue client invoices.",
+    "riskLevel": "RISK_LEVEL_HIGH",
+    "inputSchemaJson": {
+      "type": "object",
+      "required": ["client_id", "invoice_ids"],
+      "properties": {
+        "client_id": {
+          "type": "string"
+        },
+        "invoice_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "outputSchemaJson": {
+      "type": "object",
+      "required": ["proposal_id"]
+    },
+    "requiredPermissions": ["clients.read", "payments.write"],
+    "requiresApproval": true,
+    "supportsDryRun": true,
+    "idempotencyRequired": true,
+    "uiCardType": "payment_reminder_proposal",
+    "timeoutMs": 10000,
+    "retryPolicy": {
+      "maxAttempts": 2,
+      "initialBackoffMs": 250,
+      "maxBackoffMs": 1000
+    }
+  },
+  "modelChatRequest": {
+    "requestId": "model-req-001",
+    "companyId": "company-001",
+    "projectId": "project-001",
+    "userId": "user-001",
+    "sessionId": "session-001",
+    "threadId": "thread-001",
+    "purpose": "MODEL_PURPOSE_PLANNER",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Return a structured plan only.",
+        "metadataJson": {
+          "schema": "planner-v1"
+        }
+      },
+      {
+        "role": "user",
+        "content": "Подготовь напоминание по оплате",
+        "metadataJson": {
+          "locale": "ru-RU"
+        }
+      }
+    ],
+    "responseFormatJson": {
+      "type": "json_schema",
+      "name": "plan"
+    },
+    "toolSchemasJson": {
+      "allowed": ["clients.payment_reminder.create"]
+    },
+    "maxTokens": 512,
+    "temperature": 0.2,
+    "timeoutMs": 15000,
+    "traceContext": {
+      "traceId": "trace-model-001",
+      "spanId": "span-model-001",
+      "requestId": "model-req-001"
+    }
+  },
+  "expectedDeterministicSha256": {
+    "turnRequest": "9071337bef2159b37fc67ace780e55b77461ce5857873e1affc735db9f753761",
+    "toolSpec": "98fee858d6c1060c76f30474091445826566a2c7040a6ba1f57f94cd20cb5d5c",
+    "modelChatRequest": "bfbb66fd95cd3e18d277d7104f44b7038492b3f567f81c1b43689e3e04981584"
+  }
+}

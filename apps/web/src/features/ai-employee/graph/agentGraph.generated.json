@@ -1,0 +1,188 @@
+{
+  "schema": "pulse-agent-graph-v1",
+  "source": "apps/ai-agent/src/pulse_agent/graph/builder.py",
+  "nodes": [
+    "__end__",
+    "__start__",
+    "approval_decision",
+    "await_approval",
+    "calculator_reply",
+    "classify_intent",
+    "client_create_workflow",
+    "compound_workflow",
+    "conflict_choice",
+    "conversation_reply",
+    "finalizer",
+    "ingest_turn",
+    "proposal_editor",
+    "proposal_gate",
+    "read_context",
+    "recover_active_intent",
+    "task_create_workflow",
+    "task_move_workflow",
+    "workflow_patch_workflow",
+    "workflow_question"
+  ],
+  "edges": [
+    {
+      "source": "__start__",
+      "target": "ingest_turn",
+      "conditional": false
+    },
+    {
+      "source": "approval_decision",
+      "target": "finalizer",
+      "conditional": false
+    },
+    {
+      "source": "await_approval",
+      "target": "approval_decision",
+      "conditional": true
+    },
+    {
+      "source": "await_approval",
+      "target": "conversation_reply",
+      "conditional": true
+    },
+    {
+      "source": "await_approval",
+      "target": "proposal_editor",
+      "conditional": true
+    },
+    {
+      "source": "calculator_reply",
+      "target": "finalizer",
+      "conditional": false
+    },
+    {
+      "source": "classify_intent",
+      "target": "proposal_gate",
+      "conditional": false
+    },
+    {
+      "source": "client_create_workflow",
+      "target": "await_approval",
+      "conditional": false
+    },
+    {
+      "source": "compound_workflow",
+      "target": "await_approval",
+      "conditional": false
+    },
+    {
+      "source": "conflict_choice",
+      "target": "finalizer",
+      "conditional": false
+    },
+    {
+      "source": "conversation_reply",
+      "target": "finalizer",
+      "conditional": false
+    },
+    {
+      "source": "finalizer",
+      "target": "__end__",
+      "conditional": false
+    },
+    {
+      "source": "ingest_turn",
+      "target": "recover_active_intent",
+      "conditional": false
+    },
+    {
+      "source": "proposal_editor",
+      "target": "await_approval",
+      "conditional": false
+    },
+    {
+      "source": "proposal_gate",
+      "target": "approval_decision",
+      "conditional": true
+    },
+    {
+      "source": "proposal_gate",
+      "target": "calculator_reply",
+      "conditional": true
+    },
+    {
+      "source": "proposal_gate",
+      "target": "client_create_workflow",
+      "conditional": true
+    },
+    {
+      "source": "proposal_gate",
+      "target": "compound_workflow",
+      "conditional": true
+    },
+    {
+      "source": "proposal_gate",
+      "target": "conflict_choice",
+      "conditional": true
+    },
+    {
+      "source": "proposal_gate",
+      "target": "conversation_reply",
+      "conditional": true
+    },
+    {
+      "source": "proposal_gate",
+      "target": "proposal_editor",
+      "conditional": true
+    },
+    {
+      "source": "proposal_gate",
+      "target": "read_context",
+      "conditional": true
+    },
+    {
+      "source": "proposal_gate",
+      "target": "task_create_workflow",
+      "conditional": true
+    },
+    {
+      "source": "proposal_gate",
+      "target": "task_move_workflow",
+      "conditional": true
+    },
+    {
+      "source": "proposal_gate",
+      "target": "workflow_patch_workflow",
+      "conditional": true
+    },
+    {
+      "source": "proposal_gate",
+      "target": "workflow_question",
+      "conditional": true
+    },
+    {
+      "source": "read_context",
+      "target": "finalizer",
+      "conditional": false
+    },
+    {
+      "source": "recover_active_intent",
+      "target": "classify_intent",
+      "conditional": false
+    },
+    {
+      "source": "task_create_workflow",
+      "target": "await_approval",
+      "conditional": false
+    },
+    {
+      "source": "task_move_workflow",
+      "target": "await_approval",
+      "conditional": false
+    },
+    {
+      "source": "workflow_patch_workflow",
+      "target": "await_approval",
+      "conditional": false
+    },
+    {
+      "source": "workflow_question",
+      "target": "finalizer",
+      "conditional": false
+    }
+  ]
+}

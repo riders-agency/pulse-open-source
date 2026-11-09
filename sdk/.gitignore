@@ -1,0 +1,11 @@
+**/node_modules/
+**/dist/
+**/vendor/
+**/target/
+**/build/
+**/bin/
+**/obj/
+**/.dart_tool/
+**/.build/
+**/*.egg-info/
+*.tgz

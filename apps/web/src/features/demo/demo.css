@@ -1,0 +1,26 @@
+.demo-page { min-height: 100vh; background: var(--palette-surface); color: var(--palette-ink); padding: 36px max(24px, calc((100% - 1160px) / 2)); display: grid; grid-template-columns: 1.2fr 1fr; gap: 45px 70px; align-content: center; font-family: Arial, Helvetica, sans-serif; }
+.demo-logo { grid-column: 1 / -1; display: inline-flex; align-items: center; gap: 8px; font-size: 28px; font-weight: 700; color: inherit; text-decoration: none; width: fit-content; }
+.demo-logo svg { color: var(--palette-brand); }
+.demo-eyebrow { display: block; text-transform: uppercase; letter-spacing: 1.5px; font-size: 11px; font-weight: 600; }
+.demo-welcome h1 { margin: 20px 0; font-size: 44px; line-height: 1.15; font-weight: 550; }
+.demo-welcome > p { font-size: 16px; line-height: 1.65; }
+.demo-welcome ul { list-style: none; margin: 28px 0; padding: 0; display: grid; gap: 14px; font-size: 14px; }
+.demo-welcome li { display: flex; gap: 10px; align-items: center; }
+.demo-welcome li svg { flex-shrink: 0; color: var(--palette-brand); }
+.demo-enter { min-height: 50px; padding: 12px 22px; border: 0; border-radius: 5px; background: var(--palette-ink); color: var(--palette-surface); display: inline-flex; align-items: center; gap: 20px; font-size: 15px; cursor: pointer; }
+.demo-enter:disabled { opacity: .65; cursor: wait; }
+.demo-welcome .demo-note { margin-top: 22px; font-size: 12px; color: color-mix(in srgb, var(--palette-ink) 75%, var(--palette-surface)); }
+.demo-error { color: var(--palette-danger); }
+.demo-prompts { align-self: center; padding: 30px; border-left: 1px solid color-mix(in srgb, var(--palette-ink) 20%, transparent); }
+.demo-prompts h2 { margin: 14px 0 24px; font-size: 24px; font-weight: 550; }
+.demo-prompts blockquote { font-size: 18px; line-height: 1.5; margin: 0 0 24px; }
+.demo-prompts p { font-size: 13px; line-height: 1.6; }
+.demo-page :focus-visible { outline: 3px solid var(--palette-brand); outline-offset: 4px; }
+.demo-notice { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 10px 16px; background: var(--palette-surface); border-bottom: 1px solid color-mix(in srgb, var(--palette-ink) 15%, transparent); font-size: 12px; line-height: 1.5; }
+.demo-notice a { margin-left: auto; color: inherit; }
+@media (max-width: 760px) {
+ .demo-page { grid-template-columns: 1fr; padding: 24px; gap: 32px; }
+ .demo-welcome h1 { font-size: 35px; }
+ .demo-prompts { padding: 24px 0; border-left: none; border-top: 1px solid color-mix(in srgb, var(--palette-ink) 20%, transparent); }
+ .demo-notice a { margin-left: 0; }
+}

@@ -1,0 +1,158 @@
+.ai-proposal-note {
+  padding: 9px 10px;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--foreground) 4%, transparent);
+  color: var(--foreground);
+  line-height: 1.45;
+}
+
+.ai-proposal-checklist {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ai-proposal-checklist li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--foreground);
+}
+
+.ai-proposal-checklist svg {
+  color: var(--ai-widget-success);
+}
+
+.ai-missing-fields {
+  display: flex;
+  gap: 7px;
+  align-items: flex-start;
+  padding: 9px 10px;
+  border: 1px solid color-mix(in srgb, var(--warning) 32%, var(--border));
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--warning) 10%, transparent);
+  color: var(--foreground);
+}
+
+.ai-entity-snippets {
+  display: grid;
+  gap: 7px;
+}
+
+.ai-entity-snippet {
+  display: grid;
+  gap: 4px;
+  padding: 9px 10px;
+  border: 1px solid var(--ai-widget-border);
+  border-left: 3px solid var(--primary);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--card) 92%, var(--primary) 8%);
+}
+
+.ai-entity-snippet span,
+.ai-entity-snippet em {
+  color: var(--muted-foreground);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.ai-entity-snippet strong,
+.ai-entity-snippet a {
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.ai-entity-snippet a:hover,
+.ai-entity-snippet a:focus-visible {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.ai-risk-critical {
+  border-color: color-mix(in srgb, var(--danger) 45%, var(--border));
+}
+
+.ai-risk-write {
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+}
+
+.ai-proposal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ai-proposal-actions .ai-approve,
+.ai-proposal-actions .ai-edit,
+.ai-composer button {
+  border-color: color-mix(in srgb, var(--primary) 84%, var(--foreground));
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 850;
+  box-shadow: none;
+}
+
+.ai-proposal-actions .ai-reject {
+  border-color: color-mix(in srgb, var(--danger) 28%, var(--border));
+  background: color-mix(in srgb, var(--danger) 7%, transparent);
+  color: var(--ai-widget-danger);
+}
+
+.ai-composer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 12px 14px 14px;
+  border-top: 1px solid var(--ai-widget-border);
+  background: color-mix(in srgb, var(--background) 86%, transparent);
+}
+
+.ai-composer textarea {
+  width: 100%;
+  min-height: 44px;
+  resize: vertical;
+  border: 1px solid var(--ai-widget-border);
+  border-radius: var(--radius);
+  background: var(--input);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  padding: 10px 12px;
+}
+
+.ai-composer textarea:focus {
+  border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 12%, transparent);
+  outline: none;
+}
+
+.ai-composer button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 118px;
+  height: 44px;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.ai-composer button:disabled,
+.ai-command-row button:disabled,
+.ai-proposal-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  box-shadow: none;
+}
+
+.ai-composer .ai-stop {
+  border-color: color-mix(in srgb, var(--destructive) 38%, var(--border));
+  background: color-mix(in srgb, var(--destructive) 12%, var(--card));
+  color: var(--destructive);
+}

@@ -1,0 +1,71 @@
+.ai-proposal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ai-proposal-head p {
+  margin: 2px 0 0;
+  color: var(--muted-foreground);
+}
+
+.ai-proposal-head span {
+  min-height: 24px;
+  padding: 4px 9px;
+  border: 1px solid var(--ai-widget-border);
+  border-radius: var(--radius);
+  color: var(--muted-foreground);
+  background: color-mix(in srgb, var(--surface-subtle) 90%, transparent);
+  white-space: nowrap;
+}
+
+.ai-proposal-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.ai-proposal-fields label {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 2px 0;
+}
+
+.ai-tool-proposal-fields { min-width: 0; }
+.ai-tool-proposal-fields ol { padding-left: 20px; }
+.ai-tool-proposal-fields pre { max-width: 100%; overflow: auto; padding: 8px; background: var(--muted); font-size: 11px; }
+
+.ai-proposal-fields label:first-child,
+.ai-proposal-fields label:nth-child(2) {
+  grid-column: 1 / -1;
+}
+
+.ai-proposal-fields span {
+  color: var(--muted-foreground);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.ai-proposal-fields strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: var(--foreground);
+  line-height: 1.25;
+}
+
+.ai-proposal-fields input,
+.ai-proposal-fields select {
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid var(--ai-widget-border);
+  border-radius: var(--radius);
+  background: var(--input);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 13px;
+  padding: 6px 8px;
+}

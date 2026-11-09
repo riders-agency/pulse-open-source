@@ -1,0 +1,113 @@
+{
+  "request": "Запланируй задачу подготовить презентацию Pulse на завтра.",
+  "confirmation": "Да, создавай.",
+  "task_title": "Подготовить презентацию Pulse",
+  "tool": {
+    "name": "task.create",
+    "status": "succeeded"
+  },
+  "proposal": {
+    "status": "waiting_approval",
+    "nodes": [
+      {
+        "node": "ingest_turn",
+        "status": "completed",
+        "latency_ms": 0
+      },
+      {
+        "node": "recover_active_intent",
+        "status": "completed",
+        "latency_ms": 0
+      },
+      {
+        "node": "classify_intent",
+        "status": "completed",
+        "latency_ms": 1358
+      },
+      {
+        "node": "proposal_gate",
+        "status": "completed",
+        "latency_ms": 0
+      },
+      {
+        "node": "task_create_workflow",
+        "status": "completed",
+        "latency_ms": 0
+      },
+      {
+        "node": "await_approval",
+        "status": "waiting",
+        "latency_ms": 0
+      }
+    ],
+    "model_calls": [
+      {
+        "node": "classify_intent",
+        "provider": "apinet",
+        "model": "gpt-4.1-mini",
+        "input_tokens": 1859,
+        "output_tokens": 15
+      }
+    ],
+    "tools": [
+      {
+        "tool": "task.create",
+        "status": "proposed",
+        "event": "TOOL_PROPOSED"
+      }
+    ],
+    "input_tokens": 1859,
+    "output_tokens": 15
+  },
+  "completion": {
+    "status": "completed",
+    "nodes": [
+      {
+        "node": "ingest_turn",
+        "status": "completed",
+        "latency_ms": 0
+      },
+      {
+        "node": "recover_active_intent",
+        "status": "completed",
+        "latency_ms": 0
+      },
+      {
+        "node": "classify_intent",
+        "status": "completed",
+        "latency_ms": 0
+      },
+      {
+        "node": "proposal_gate",
+        "status": "completed",
+        "latency_ms": 0
+      },
+      {
+        "node": "approval_decision",
+        "status": "completed",
+        "latency_ms": 36
+      },
+      {
+        "node": "finalizer",
+        "status": "completed",
+        "latency_ms": 0
+      }
+    ],
+    "model_calls": [],
+    "tools": [
+      {
+        "tool": "approval.apply",
+        "status": "running",
+        "event": "TOOL_STARTED"
+      },
+      {
+        "tool": "approval.apply",
+        "status": "succeeded",
+        "event": "TOOL_RESULT"
+      }
+    ],
+    "input_tokens": 0,
+    "output_tokens": 0
+  },
+  "duration_seconds": 19
+}

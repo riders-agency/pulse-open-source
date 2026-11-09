@@ -1,0 +1,264 @@
+{
+  "status": "completed",
+  "events": [
+    {
+      "node": "monitor",
+      "status": "running",
+      "text": "Проверяю учебный почтовый ящик каждые полсекунды.",
+      "at_ms": 0,
+      "tool": "mailbox.poll"
+    },
+    {
+      "node": "monitor",
+      "status": "completed",
+      "text": "Получено новое письмо: «Обновление сайта и счёт».",
+      "at_ms": 2374,
+      "tool": "mailbox.poll",
+      "mail": {
+        "id": "demo-letter-001",
+        "sender": "Ксения · ООО «Демо»",
+        "subject": "Обновление сайта и счёт",
+        "body": "Здравствуйте! Добавьте на сайт услугу «Аудит интерфейса»: проверим путь клиента, найдём неудобные места и подготовим рекомендации. И подготовьте счёт по заказу DEMO-104. Спасибо!",
+        "order": {
+          "number": "DEMO-104",
+          "payer": "ООО «Демо»",
+          "amount_minor": 4500000,
+          "currency": "RUB"
+        }
+      }
+    },
+    {
+      "node": "classify",
+      "status": "running",
+      "text": "Читаю письмо и определяю, какие отделы нужны.",
+      "at_ms": 2390,
+      "tool": "model.classify"
+    },
+    {
+      "node": "classify",
+      "status": "completed",
+      "text": "Письмо содержит запрос на изменение сайта и просьбу о подготовке счёта.",
+      "at_ms": 4580,
+      "tool": "model.classify",
+      "usage": {
+        "provider_key": "apinet",
+        "model_id": "gpt-4.1-mini",
+        "input_tokens": 189,
+        "output_tokens": 31
+      }
+    },
+    {
+      "node": "route",
+      "status": "completed",
+      "text": "Передаю поручения: Бухгалтерия, ИИ-отдел.",
+      "at_ms": 4591,
+      "tool": "department.assign",
+      "departments": [
+        "accounting",
+        "content"
+      ]
+    },
+    {
+      "node": "content",
+      "status": "running",
+      "text": "ИИ-отдел готовит текст страницы по письму.",
+      "at_ms": 4608,
+      "tool": "website.prepare"
+    },
+    {
+      "node": "content",
+      "status": "completed",
+      "text": "Подготовлена страница «Услуга аудита интерфейса сайта». Публикация ждёт вашего решения.",
+      "at_ms": 7118,
+      "tool": "website.prepare",
+      "usage": {
+        "provider_key": "apinet",
+        "model_id": "gpt-4.1-mini",
+        "input_tokens": 182,
+        "output_tokens": 58
+      }
+    },
+    {
+      "node": "accounting",
+      "status": "completed",
+      "text": "Подготовлен счёт на 45 000 ₽. Сумма взята из заказа DEMO-104.",
+      "at_ms": 7126,
+      "tool": "invoice.prepare"
+    },
+    {
+      "node": "approval",
+      "status": "waiting",
+      "text": "Всё подготовлено. Обновить учебный сайт и сохранить черновик счёта?",
+      "at_ms": 7134,
+      "drafts": {
+        "website": {
+          "path": "/services/interface-audit",
+          "title": "Услуга аудита интерфейса сайта",
+          "body": "Проведём аудит интерфейса: проанализируем путь клиента и выявим неудобные места. По результатам подготовим рекомендации для улучшения пользовательского опыта.",
+          "status": "published_in_demo"
+        },
+        "invoice": {
+          "number": "DEMO-104",
+          "payer": "ООО «Демо»",
+          "amount_minor": 4500000,
+          "currency": "RUB",
+          "status": "draft",
+          "bank_connected": false
+        }
+      },
+      "tool": "human.approve"
+    },
+    {
+      "node": "approval",
+      "status": "completed",
+      "text": "Подтверждаю изменения.",
+      "at_ms": 12629,
+      "actor": "human"
+    },
+    {
+      "node": "apply",
+      "status": "completed",
+      "text": "Подтверждение принято. Изменения сохранены.",
+      "at_ms": 12680,
+      "tool": "office.apply"
+    },
+    {
+      "node": "done",
+      "status": "completed",
+      "text": "Готово: учебный сайт обновлён, черновик счёта сохранён. В банк ничего не отправлялось.",
+      "at_ms": 12781,
+      "tool": "receipt.read",
+      "results": {
+        "invoice": {
+          "number": "DEMO-104",
+          "payer": "ООО «Демо»",
+          "amount_minor": 4500000,
+          "currency": "RUB",
+          "status": "draft",
+          "bank_connected": false
+        },
+        "website": {
+          "path": "/services/interface-audit",
+          "title": "Услуга аудита интерфейса сайта",
+          "body": "Проведём аудит интерфейса: проанализируем путь клиента и выявим неудобные места. По результатам подготовим рекомендации для улучшения пользовательского опыта.",
+          "status": "published_in_demo"
+        }
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "id": "monitor",
+      "title": "Почта",
+      "detail": "Проверить учебный ящик. Не обрабатывать письмо дважды.",
+      "tool": "mailbox.poll"
+    },
+    {
+      "id": "classify",
+      "title": "Классификация",
+      "detail": "Прочитать письмо как данные. Выбрать только разрешённые отделы.",
+      "tool": "model.classify"
+    },
+    {
+      "id": "route",
+      "title": "Передать отделам",
+      "detail": "Создать поручения по результату классификации.",
+      "tool": "department.assign"
+    },
+    {
+      "id": "content",
+      "title": "ИИ-отдел",
+      "detail": "Подготовить изменение одной страницы учебного сайта.",
+      "tool": "website.prepare"
+    },
+    {
+      "id": "accounting",
+      "title": "Бухгалтерия",
+      "detail": "Взять сумму из заказа. Подготовить счёт без отправки в банк.",
+      "tool": "invoice.prepare"
+    },
+    {
+      "id": "approval",
+      "title": "Ваше решение",
+      "detail": "Остановить граф до подтверждения конкретных изменений.",
+      "tool": "human.approve"
+    },
+    {
+      "id": "apply",
+      "title": "Применить",
+      "detail": "Проверить права и атомарно сохранить одобренные результаты.",
+      "tool": "office.apply"
+    },
+    {
+      "id": "done",
+      "title": "Готово",
+      "detail": "Прочитать результат из хранилища и показать его в чате.",
+      "tool": "receipt.read"
+    }
+  ],
+  "edges": [
+    [
+      "__start__",
+      "monitor"
+    ],
+    [
+      "accounting",
+      "approval"
+    ],
+    [
+      "apply",
+      "done"
+    ],
+    [
+      "approval",
+      "apply"
+    ],
+    [
+      "approval",
+      "done"
+    ],
+    [
+      "classify",
+      "route"
+    ],
+    [
+      "content",
+      "accounting"
+    ],
+    [
+      "monitor",
+      "__end__"
+    ],
+    [
+      "monitor",
+      "classify"
+    ],
+    [
+      "route",
+      "content"
+    ],
+    [
+      "done",
+      "__end__"
+    ]
+  ],
+  "results": {
+    "invoice": {
+      "number": "DEMO-104",
+      "payer": "ООО «Демо»",
+      "amount_minor": 4500000,
+      "currency": "RUB",
+      "status": "draft",
+      "bank_connected": false
+    },
+    "website": {
+      "path": "/services/interface-audit",
+      "title": "Услуга аудита интерфейса сайта",
+      "body": "Проведём аудит интерфейса: проанализируем путь клиента и выявим неудобные места. По результатам подготовим рекомендации для улучшения пользовательского опыта.",
+      "status": "published_in_demo"
+    }
+  },
+  "graph_source_sha256": "9a3dc37968bd1b26bceb2bcebb50fbc5f40738a3bd44a49e9d8ce21728c11db9",
+  "duration_seconds": 20,
+  "mode": "executed-example-recording"
+}

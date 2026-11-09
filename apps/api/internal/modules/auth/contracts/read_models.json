@@ -1,0 +1,19 @@
+[
+  {
+    "name": "pulse_read.users_v1",
+    "owner": "auth",
+    "table": "users",
+    "columns": [
+      "user_id",
+      "email",
+      "first_name",
+      "created_at",
+      "updated_at",
+      "display_name"
+    ],
+    "consumers": [
+      "clients",
+      "worktracker"
+    ]
+  }
+]

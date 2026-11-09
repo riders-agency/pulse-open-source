@@ -1,0 +1,162 @@
+.payment-lane--primary {
+  border-color: color-mix(in srgb, var(--status-success-strong) 28%, var(--border));
+}
+
+.payment-lane > header {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.payment-lane h2 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.payment-lane p {
+  margin: 6px 0 0;
+  color: var(--foreground);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.payment-card-list {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.payment-card {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.payment-card--plan {
+  border-color: color-mix(in srgb, var(--status-warning-strong) 26%, var(--border));
+}
+
+.payment-card-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+}
+
+.payment-card-main {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.payment-client {
+  color: var(--primary);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.payment-client:hover {
+  text-decoration: underline;
+}
+
+.payment-card-main strong {
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.payment-card-main span {
+  color: var(--foreground);
+  font-size: 14px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.payment-doc-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.payment-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.payment-doc-slot {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 28px;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--background) 66%, var(--card));
+}
+
+.payment-doc-slot--upload {
+  cursor: pointer;
+}
+
+.payment-doc-slot--upload:hover {
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+  color: var(--primary);
+  background: var(--accent);
+}
+
+.payment-doc-slot.is-busy {
+  opacity: .65;
+  pointer-events: none;
+}
+
+.payment-doc-slot.is-done {
+  border-color: color-mix(in srgb, var(--status-success-strong) 35%, var(--border));
+  color: var(--status-success-text);
+  background: color-mix(in srgb, var(--status-success-strong) 11%, var(--card));
+}
+
+[data-theme="dark"] .payment-doc-slot.is-done {
+  color: var(--status-success-text-dark);
+}
+
+.payment-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.payment-next-step {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  min-width: 0;
+  color: var(--status-warning-text);
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.payment-next-step.is-done {
+  color: var(--status-success-text);
+}
+
+[data-theme="dark"] .payment-next-step.is-done {
+  color: var(--status-success-text-dark);
+}

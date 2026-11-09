@@ -1,0 +1,71 @@
+[
+  {
+    "name": "pulse_read.module_workflow_triggers_v1",
+    "owner": "workflows",
+    "table": "module_workflow_triggers",
+    "columns": [
+      "module_workflow_trigger_id",
+      "company_id",
+      "project_id",
+      "module_key",
+      "event_key",
+      "workflow_id",
+      "workflow_version_id",
+      "enabled",
+      "config_json",
+      "created_at"
+    ],
+    "consumers": [
+      "clients",
+      "sitechat",
+      "worktracker"
+    ]
+  },
+  {
+    "name": "pulse_read.workflow_versions_v1",
+    "owner": "workflows",
+    "table": "workflow_versions",
+    "columns": [
+      "workflow_version_id",
+      "project_id",
+      "workflow_id",
+      "status",
+      "definition_json",
+      "graph_json",
+      "created_by_user_id",
+      "created_at"
+    ],
+    "consumers": [
+      "clients",
+      "runs",
+      "telegramrelay",
+      "webhooks"
+    ]
+  },
+  {
+    "name": "pulse_read.workflows_v1",
+    "owner": "workflows",
+    "table": "workflows",
+    "columns": [
+      "workflow_id",
+      "project_id",
+      "name",
+      "slug",
+      "status",
+      "current_workflow_version_id",
+      "created_by_user_id",
+      "created_at",
+      "updated_at",
+      "test_input_json"
+    ],
+    "consumers": [
+      "ai",
+      "clients",
+      "runs",
+      "sitechat",
+      "telegramrelay",
+      "webhooks",
+      "worktracker"
+    ]
+  }
+]

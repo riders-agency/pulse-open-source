@@ -1,0 +1,45 @@
+.app-shell.is-sidebar-collapsed .app-sidebar {
+  flex-basis: 72px;
+  width: 72px;
+  padding: 14px 8px;
+  overflow-x: hidden;
+}
+
+.app-shell.is-sidebar-collapsed .sidebar-top {
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.app-shell.is-sidebar-collapsed .brand-lockup {
+  justify-content: center;
+}
+
+.app-shell.is-sidebar-collapsed .brand-title,
+.app-shell.is-sidebar-collapsed .sidebar-workspace,
+.app-shell.is-sidebar-collapsed .sidebar-section,
+.app-shell.is-sidebar-collapsed .sidebar-link span,
+.app-shell.is-sidebar-collapsed .sidebar-theme,
+.app-shell.is-sidebar-collapsed .sidebar-footer .sidebar-link:not(.sidebar-button) {
+  display: none;
+}
+
+.app-shell.is-sidebar-collapsed .sidebar-nav,
+.app-shell.is-sidebar-collapsed .sidebar-footer {
+  justify-items: center;
+}
+
+.app-shell.is-sidebar-collapsed .sidebar-link {
+  grid-template-columns: 1fr;
+  width: 44px;
+  min-height: 44px;
+  justify-items: center;
+  padding: 0;
+}
+
+.app-shell.is-sidebar-collapsed .sidebar-task-toggle svg:last-child {
+  display: none;
+}
+
+.app-shell.is-sidebar-collapsed .sidebar-button {
+  width: 44px;
+}

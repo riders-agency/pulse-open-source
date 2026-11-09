@@ -1,0 +1,12 @@
+.empty-state {
+  display: grid;
+  gap: 8px;
+  min-height: 120px;
+  place-items: center;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--foreground);
+  font-size: 16px;
+  font-weight: 650;
+  text-align: center;
+}

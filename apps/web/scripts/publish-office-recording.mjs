@@ -1,0 +1,24 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+
+const dir = path.resolve(process.argv[2] || '../../artifacts/tech/office');
+const evidence = JSON.parse(await fs.readFile(path.join(dir, 'evidence.json'), 'utf8'));
+const { timings: t, recording } = evidence;
+if (evidence.failure || evidence.errors.length || evidence.checks.length !== 5 || recording.status !== 'completed') throw new Error('A verified real execution is required');
+const phases = ['start', 'mail', 'approval', 'confirm', 'result', 'graph', 'end'];
+if (phases.some((name, i) => !Number.isFinite(t[name]) || t[name] < 0 || (i && t[name] <= t[phases[i - 1]]))) throw new Error('Invalid timeline');
+if (recording.events.some(event => event.mail && event.mail.id !== 'demo-letter-001')) throw new Error('Only the synthetic fixture can be published');
+const calls = recording.events.filter(event => event.usage);
+if (calls.length !== 2 || calls.some(event => !event.usage.input_tokens || !event.usage.output_tokens)) throw new Error('Provider usage is missing');
+const graph = await fs.readFile('../ai-agent/examples/office_demo/graph.py');
+const media = path.resolve('public/tech/recordings');
+const run = args => { const result = spawnSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', ...args], { stdio: 'inherit' }); if (result.status !== 0) throw new Error('Conversion failed'); };
+run(['-ss', String(t.start), '-i', path.join(dir, 'office.webm'), '-t', String(t.end - t.start), '-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', '21', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', path.join(media, 'office.mp4')]);
+run(['-i', path.join(dir, 'result.png'), '-frames:v', '1', '-quality', '86', path.join(media, 'office.webp')]);
+const stamp = seconds => new Date(Math.round(seconds * 1000)).toISOString().slice(11, 23);
+const captions = ['Агент наблюдает за учебной почтой', 'Письмо классифицировано и передано отделам', 'Граф остановлен: человек проверяет страницу и счёт', 'Подтверждаем изменения', 'Страница и черновик счёта сохранены', 'Путь, инструменты и токены — из реального запуска'];
+await fs.writeFile(path.join(media, 'office.vtt'), `WEBVTT\n\n${captions.map((text, index) => `${stamp(t[phases[index]] - t.start)} --> ${stamp(t[phases[index + 1]] - t.start)} line:4%\n${text}`).join('\n\n')}\n`);
+await fs.writeFile('src/features/tech/officeRecording.generated.json', JSON.stringify({ ...recording, graph_source_sha256: createHash('sha256').update(graph).digest('hex'), duration_seconds: Math.ceil(t.end - t.start), mode: 'executed-example-recording' }, null, 2) + '\n');
+console.log(JSON.stringify({ duration_seconds: t.end - t.start, model_calls: calls.length, input_tokens: calls.reduce((sum, event) => sum + event.usage.input_tokens, 0), output_tokens: calls.reduce((sum, event) => sum + event.usage.output_tokens, 0) }));

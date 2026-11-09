@@ -1,0 +1,12 @@
+.mobile-app-bar { display: none; }
+.mobile-nav-dialog { width: min(400px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto; }
+.mobile-nav-dialog .sidebar-nav, .mobile-nav-dialog .sidebar-footer { display: grid; grid-auto-flow: row; grid-auto-columns: auto; justify-items: stretch; overflow: visible; }
+.mobile-nav-dialog .sidebar-workspace { display: grid; grid-template-columns: 1fr; margin: 16px 0; }
+.mobile-nav-dialog .sidebar-section { display: block; }
+.mobile-nav-dialog .sidebar-nav > .sidebar-link, .mobile-nav-dialog .sidebar-nav > .sidebar-task-toggle { width: 100%; }
+@media (max-width: 1080px) {
+  .app-sidebar, .app-shell.is-sidebar-collapsed .app-sidebar { display: none; }
+  .mobile-app-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--card); }
+  .mobile-app-bar .sidebar-collapse-button { display: grid; }
+  .app-main { min-height: calc(100dvh - 64px); }
+}

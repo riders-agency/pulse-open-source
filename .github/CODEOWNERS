@@ -1,0 +1,32 @@
+# Default ownership.
+* @riders-agency
+
+# Runtime, worker, queueing, and side-effect safety.
+/apps/api/cmd/api/ @riders-agency
+/apps/api/cmd/worker/ @riders-agency
+/apps/api/internal/runtime/ @riders-agency
+/apps/api/internal/executor/ @riders-agency
+/apps/api/internal/platform/outbox/ @riders-agency
+/apps/api/internal/modules/*/runtime/ @riders-agency
+
+# Security-sensitive platform boundaries.
+/apps/api/internal/platform/authz/ @riders-agency
+/apps/api/internal/platform/config/ @riders-agency
+/apps/api/internal/platform/crypto/ @riders-agency
+/apps/api/internal/platform/httpserver/middleware/ @riders-agency
+/apps/api/internal/modules/auth/ @riders-agency
+/apps/api/internal/modules/apikeys/ @riders-agency
+/apps/api/internal/modules/action_dependencies/ @riders-agency
+/apps/ai-agent/src/pulse_agent/grpc_server.py @riders-agency
+/apps/ai-agent/src/pulse_agent/clients/ @riders-agency
+
+# Contracts and generated protocol surfaces.
+/contracts/ @riders-agency
+/apps/api/internal/gen/ @riders-agency
+/apps/ai-agent/src/pulse_agent/proto/ @riders-agency
+
+# Database and release/deploy controls.
+/db/migrations/ @riders-agency
+/deploy/ @riders-agency
+/.github/ @riders-agency
+/scripts/ @riders-agency

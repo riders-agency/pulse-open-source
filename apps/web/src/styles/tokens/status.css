@@ -1,0 +1,23 @@
+:root {
+  --success: var(--palette-success);
+  --info: var(--primary);
+  --warning: color-mix(in srgb, var(--palette-brand) 82%, var(--foreground));
+  --danger: var(--palette-danger);
+  --skipped: color-mix(in srgb, var(--foreground) 56%, var(--background));
+  --status-success-strong: color-mix(in srgb, var(--success) 92%, var(--foreground));
+  --status-success-solid: var(--success);
+  --status-success-vivid: color-mix(in srgb, var(--success) 84%, var(--background));
+  --status-success-vivid-2: color-mix(in srgb, var(--success) 78%, var(--background));
+  --status-success-text: color-mix(in srgb, var(--success) 78%, var(--foreground));
+  --status-success-text-dark: color-mix(in srgb, var(--success) 42%, var(--foreground));
+  --status-warning-strong: var(--warning);
+  --status-warning-text: color-mix(in srgb, var(--warning) 82%, var(--foreground));
+  --status-warning-vivid: color-mix(in srgb, var(--warning) 82%, var(--background));
+  --status-info-strong: var(--info);
+  --status-danger-strong: color-mix(in srgb, var(--danger) 92%, var(--foreground));
+  --status-danger-vivid: color-mix(in srgb, var(--danger) 82%, var(--background));
+  --surface-success: color-mix(in srgb, var(--success) 10%, var(--card));
+  --surface-warning: color-mix(in srgb, var(--warning) 10%, var(--card));
+  --surface-info: color-mix(in srgb, var(--info) 10%, var(--card));
+  --surface-danger: color-mix(in srgb, var(--danger) 10%, var(--card));
+}

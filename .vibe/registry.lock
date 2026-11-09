@@ -1,0 +1,19 @@
+registry_version: 1.1.0
+stack: go-next-postgres
+standards:
+  agent/base: 1.1.0
+  framework/lifecycle: 1.1.0
+  backend/go: 1.1.0
+  frontend/next: 1.1.0
+  database/postgres: 1.1.0
+  api/openapi-modular: 1.1.0
+  testing/tdd-strict: 1.1.0
+  security/no-secrets: 1.1.0
+  observability/three-signals: 1.1.0
+  ui/shadcn-compact: 1.1.0
+templates:
+  backend/go: 1.1.0
+  frontend/next: 1.1.0
+  database/postgres: 1.1.0
+  contracts/openapi: 1.1.0
+features: {}

@@ -1,0 +1,152 @@
+.section-panel {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.section-panel-spaced,
+.detail-layout-spaced {
+  margin-top: 16px;
+}
+
+.section-panel > header {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-panel > header h2 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.section-panel > header p {
+  margin: 4px 0 0;
+  color: var(--foreground);
+  font-size: 15px;
+}
+
+.section-panel-body {
+  padding: 16px;
+}
+
+.detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  align-items: start;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.form-grid .span-2 {
+  grid-column: 1 / -1;
+}
+
+.grid-align-center {
+  align-items: center;
+}
+
+.danger-zone {
+  border-color: color-mix(in srgb, var(--danger) 30%, var(--border));
+  background: color-mix(in srgb, var(--danger) 5%, var(--card));
+}
+
+.dadata-results {
+  display: grid;
+  gap: 8px;
+}
+
+.dadata-result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--background);
+}
+
+.entity-list {
+  display: grid;
+  gap: 10px;
+}
+
+.entity-item {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--background);
+}
+
+.compact-list {
+  display: grid;
+  gap: 8px;
+}
+
+.compact-list-spaced {
+  margin-top: 12px;
+}
+
+.compact-item {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+a.compact-item {
+  border: 1px solid var(--border);
+  background: var(--card);
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+a.compact-item:hover,
+button.compact-item:hover {
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  background: var(--accent);
+}
+
+button.compact-item {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+.compact-item:last-child {
+  border-bottom: 0;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.between {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+}

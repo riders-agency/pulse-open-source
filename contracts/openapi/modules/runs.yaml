@@ -1,0 +1,59 @@
+paths:
+  /api/v1/runs/{workflow_run_id}/actions:
+    get:
+      tags: [runs]
+      summary: Исполнения действий (узлов) в запуске workflow
+      description: |
+        Список записей `action_runs` для данного `workflow_run_id` — фактическое выполнение шагов графа с входом, выходом и статусом.
+      operationId: runActions
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: workflow_run_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Список исполнений узлов
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/ActionRunView
+        "401":
+          description: Unauthorized
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+        "403":
+          description: Нет доступа к запуску
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem

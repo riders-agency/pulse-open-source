@@ -1,0 +1,25 @@
+.ai-dev-details {
+  border-top: 1px solid var(--ai-widget-border);
+  padding-top: 8px;
+}
+
+.ai-dev-details summary {
+  cursor: pointer;
+  color: var(--muted-foreground);
+  font-weight: 800;
+}
+
+.ai-dev-details pre {
+  max-height: 220px;
+  margin: 8px 0 0;
+  padding: 9px;
+  border: 1px solid var(--ai-widget-border);
+  border-radius: var(--radius);
+  background: var(--input);
+  color: var(--foreground);
+  overflow: auto;
+  font-size: 11px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
