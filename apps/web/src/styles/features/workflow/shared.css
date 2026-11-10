@@ -1,0 +1,32 @@
+.mono {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.status-success {
+  color: var(--success);
+}
+
+.status-running {
+  color: var(--info);
+}
+
+.status-waiting {
+  color: var(--warning);
+}
+
+.status-failed {
+  color: var(--danger);
+}
+
+.status-skipped {
+  color: var(--skipped);
+}

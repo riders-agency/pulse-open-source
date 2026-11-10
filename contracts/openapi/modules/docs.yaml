@@ -1,0 +1,297 @@
+paths:
+  /api/v1/docs/openapi.json:
+    get:
+      tags: [docs]
+      summary: Download bundled OpenAPI JSON
+      operationId: docsOpenapiJson
+      description: Returns full bundled OpenAPI document for SDK generation and testing tools.
+      responses:
+        '200':
+          description: OpenAPI JSON
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            X-App-Action:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Action
+            X-App-Validate:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Validate
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                sample:
+                  value:
+                    openapi: 3.2.0
+                    info:
+                      title: Generated Stack API
+                      version: 1.1.0
+        '500':
+          description: Docs asset unavailable
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            X-App-Action:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Action
+            X-App-Validate:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Validate
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                docs_unavailable:
+                  value:
+                    status: error
+                    title: Docs storage unavailable
+                    detail: Повторите запрос позже или обратитесь в поддержку.
+                    action: Проверьте validate docs_storage
+                    validate: docs_storage
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+        '404':
+          description: Docs asset not found
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            X-App-Action:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Action
+            X-App-Validate:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Validate
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                docs_not_found:
+                  value:
+                    status: fix_required
+                    title: Docs path validate required
+                    detail: Проверьте путь документации и повторите запрос.
+                    action: Проверьте validate docs_path
+                    validate: docs_path
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -L https://api.example.test/api/v1/docs/openapi.json
+
+  /api/v1/docs/openapi.yaml:
+    get:
+      tags: [docs]
+      summary: Download bundled OpenAPI YAML
+      operationId: docsOpenapiYaml
+      responses:
+        '200':
+          description: OpenAPI YAML
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            X-App-Action:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Action
+            X-App-Validate:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Validate
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            text/yaml:
+              schema:
+                type: string
+              examples:
+                snippet:
+                  value: |
+                    openapi: 3.2.0
+                    info:
+                      title: Generated Stack API
+                      version: 1.1.0
+        '404':
+          description: Docs asset not found
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            X-App-Action:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Action
+            X-App-Validate:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Validate
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                docs_not_found:
+                  value:
+                    status: fix_required
+                    title: Docs path validate required
+                    detail: Проверьте путь документации и повторите запрос.
+                    action: Проверьте validate docs_path
+                    validate: docs_path
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -L https://api.example.test/api/v1/docs/openapi.yaml
+
+  /api/v1/docs/endpoints:
+    get:
+      tags: [docs]
+      summary: Endpoint catalog with examples and testing hints
+      operationId: docsEndpointsCatalog
+      description: |
+        Returns every endpoint with method/path/summary, multiple examples,
+        and testing hints (curl + scenario checklist).
+      parameters:
+        - name: tag
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [auth, company, docs]
+        - name: method
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS]
+      responses:
+        '200':
+          description: Endpoint catalog
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            X-App-Action:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Action
+            X-App-Validate:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Validate
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/EndpointDocList
+              examples:
+                catalog:
+                  value:
+                    generated_at: "2026-03-02T15:00:00Z"
+                    version: 1.1.0
+                    endpoints:
+                      - method: POST
+                        path: /api/v1/auth/login
+                        summary: Login with email/password
+                        tag: auth
+                        operation_id: authLogin
+                        curl_examples:
+                          - "curl -X POST https://api.example.test/api/v1/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"owner@example.test\",\"password\":\"example-password-only\"}'"
+                          - "curl -X POST https://api.example.test/api/v1/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"admin@example.test\",\"password\":\"example-password-only\"}'"
+                        test_hints:
+                          - "happy_path_valid_credentials"
+                          - "error_invalid_password"
+        '400':
+          description: Invalid filter values
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            X-App-Action:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Action
+            X-App-Validate:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Validate
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                invalid_filter:
+                  value:
+                    status: fix_required
+                    title: Docs filter validate required
+                    detail: Исправьте query-параметры и повторите запрос.
+                    action: Проверьте validate tag,method
+                    validate: tag,method
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -L https://api.example.test/api/v1/docs/endpoints?tag=auth
+
+  /api/v1/docs/testing/postman:
+    get:
+      tags: [docs]
+      summary: Postman testing collection metadata
+      operationId: docsTestingPostman
+      description: Returns metadata for generated Postman collection and download endpoint.
+      responses:
+        '200':
+          description: Testing collection
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            X-App-Action:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Action
+            X-App-Validate:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Validate
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/TestingCollection
+              examples:
+                postman:
+                  value:
+                    format: postman-v2.1
+                    version: 1.1.0
+                    download_url: https://api.example.test/api/v1/docs/testing/postman
+        '404':
+          description: Testing collection artifact not found
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            X-App-Action:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Action
+            X-App-Validate:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Validate
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                artifact_missing:
+                  value:
+                    status: fix_required
+                    title: Testing collection validate required
+                    detail: Повторите генерацию testing collection и повторите запрос.
+                    action: Проверьте validate collection_artifact
+                    validate: collection_artifact
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -L https://api.example.test/api/v1/docs/testing/postman

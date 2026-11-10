@@ -1,0 +1,13 @@
+.workload-meter {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--muted);
+}
+
+.workload-meter span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+}

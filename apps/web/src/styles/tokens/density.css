@@ -1,0 +1,13 @@
+:root {
+  --density-control-sm: 38px;
+  --density-control-md: 44px;
+  --density-field-md: 46px;
+  --density-panel-gap: 16px;
+}
+
+[data-density="compact"] {
+  --density-control-sm: 34px;
+  --density-control-md: 40px;
+  --density-field-md: 42px;
+  --density-panel-gap: 12px;
+}

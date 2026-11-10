@@ -1,0 +1,48 @@
+[
+  {
+    "name": "pulse_read.action_dependencies_v1",
+    "owner": "action_dependencies",
+    "table": "action_dependencies",
+    "columns": [
+      "action_dependency_id",
+      "project_id",
+      "action_dependency_type_id",
+      "name",
+      "status",
+      "metadata_json",
+      "created_by_user_id",
+      "created_at",
+      "updated_at",
+      "company_id"
+    ],
+    "consumers": [
+      "ai",
+      "integrationdocs",
+      "providers",
+      "runs",
+      "telegramrelay"
+    ]
+  },
+  {
+    "name": "pulse_read.action_dependency_types_v1",
+    "owner": "action_dependencies",
+    "table": "action_dependency_types",
+    "columns": [
+      "action_dependency_type_id",
+      "dependency_type_key",
+      "display_name",
+      "provider_key",
+      "auth_schema_json",
+      "metadata_schema_json",
+      "created_at",
+      "updated_at"
+    ],
+    "consumers": [
+      "ai",
+      "catalog",
+      "integrationdocs",
+      "providers",
+      "runs"
+    ]
+  }
+]

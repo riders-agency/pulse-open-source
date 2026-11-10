@@ -1,0 +1,204 @@
+paths:
+  /api/v1/companies:
+    get:
+      tags: [company]
+      summary: List user companies
+      operationId: companyList
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Companies list
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/CompanyView
+              examples:
+                list:
+                  value:
+                    - company_id: b98772dd-7cf7-455d-a750-9ef142546b37
+                      slug: example-core
+                      name: Example Core
+                      role: owner
+                    - company_id: 4e8b9d61-5f51-49e6-a9f6-7f95f5141525
+                      slug: example-labs
+                      name: Example Labs
+                      role: admin
+        '401':
+          description: Unauthorized
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                unauthorized:
+                  value:
+                    status: fix_required
+                    title: Session validate required
+                    detail: Выполните вход и повторите запрос.
+                    action: Проверьте validate access_token
+                    validate: access_token
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -L https://api.example.test/api/v1/companies \
+              -H 'Authorization: Bearer <access_token>'
+    post:
+      tags: [company]
+      summary: Create company
+      operationId: companyCreate
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, slug]
+              properties:
+                name:
+                  type: string
+                slug:
+                  type: string
+            examples:
+              create:
+                value:
+                  name: Example Logistics
+                  slug: example-logistics
+      responses:
+        '201':
+          description: Company created
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/CompanyView
+              examples:
+                created:
+                  value:
+                    company_id: d48c9e93-d699-45be-94f0-8040f67f487a
+                    slug: example-logistics
+                    name: Example Logistics
+                    role: owner
+        '409':
+          description: Slug conflict
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                conflict:
+                  value:
+                    status: fix_required
+                    title: Company slug validate required
+                    detail: Исправьте slug и повторите запрос.
+                    action: Проверьте validate slug
+                    validate: slug
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -X POST https://api.example.test/api/v1/companies \
+              -H 'Authorization: Bearer <access_token>' \
+              -H 'Content-Type: application/json' \
+              -d '{"name":"Example Logistics","slug":"example-logistics"}'
+
+  /api/v1/companies/{company_id}/switch:
+    post:
+      tags: [company]
+      summary: Switch active company
+      operationId: companySwitch
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: company_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Active company switched
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, current_company_id]
+                properties:
+                  status:
+                    type: string
+                    example: switched
+                  current_company_id:
+                    type: string
+                    format: uuid
+              examples:
+                switched:
+                  value:
+                    status: switched
+                    current_company_id: b98772dd-7cf7-455d-a750-9ef142546b37
+        '403':
+          description: No membership
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                forbidden:
+                  value:
+                    status: fix_required
+                    title: Membership validate required
+                    detail: Проверьте membership в выбранной компании.
+                    action: Проверьте validate company_id,membership
+                    validate: company_id,membership
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -X POST https://api.example.test/api/v1/companies/b98772dd-7cf7-455d-a750-9ef142546b37/switch \
+              -H 'Authorization: Bearer <access_token>'

@@ -1,0 +1,957 @@
+openapi: 3.0.3
+info:
+  description: "Reviewed JSON subset of Pulse API v1: authentication, tasks and AI\
+    \ proposals. Configure your own server origin."
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
+  title: Pulse SDK API
+  version: 0.1.0
+servers:
+- description: Replace with your installation origin
+  url: https://pulse.example.test
+security:
+- bearerAuth: []
+tags:
+- name: Auth
+- name: Tasks
+- name: AI
+paths:
+  /api/v1/auth/login:
+    post:
+      operationId: login
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginInput"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenPair"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      security: []
+      summary: login
+      tags:
+      - Auth
+  /api/v1/auth/me:
+    get:
+      operationId: getIdentity
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Identity"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: getIdentity
+      tags:
+      - Auth
+  /api/v1/auth/logout:
+    post:
+      operationId: logout
+      parameters: []
+      responses:
+        "204":
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: logout
+      tags:
+      - Auth
+  /api/v1/work/tasks:
+    get:
+      operationId: listTasks
+      parameters:
+      - explode: true
+        in: query
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: archived
+        required: false
+        schema:
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskPage"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: listTasks
+      tags:
+      - Tasks
+    post:
+      operationId: createTask
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskInput"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: createTask
+      tags:
+      - Tasks
+  /api/v1/work/tasks/{task_id}:
+    delete:
+      operationId: archiveTask
+      parameters:
+      - explode: false
+        in: path
+        name: task_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArchiveResult"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: archiveTask
+      tags:
+      - Tasks
+    get:
+      operationId: getTask
+      parameters:
+      - explode: false
+        in: path
+        name: task_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskEnvelope"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: getTask
+      tags:
+      - Tasks
+    patch:
+      operationId: updateTask
+      parameters:
+      - explode: false
+        in: path
+        name: task_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskPatch"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: updateTask
+      tags:
+      - Tasks
+  /api/v1/work/tasks/{task_id}/restore:
+    post:
+      operationId: restoreTask
+      parameters:
+      - explode: false
+        in: path
+        name: task_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArchiveResult"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: restoreTask
+      tags:
+      - Tasks
+  /api/v1/projects/{project_id}/ai/employee/sessions:
+    post:
+      operationId: createSession
+      parameters:
+      - explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SessionInput"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: createSession
+      tags:
+      - AI
+  /api/v1/projects/{project_id}/ai/employee/sessions/{session_id}:
+    get:
+      operationId: getSession
+      parameters:
+      - explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: session_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: getSession
+      tags:
+      - AI
+  /api/v1/projects/{project_id}/ai/employee/sessions/{session_id}/messages:
+    post:
+      operationId: sendMessage
+      parameters:
+      - explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: session_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageInput"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: sendMessage
+      tags:
+      - AI
+  /api/v1/projects/{project_id}/ai/employee/sessions/{session_id}/cancel:
+    post:
+      operationId: cancelSession
+      parameters:
+      - explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: session_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: cancelSession
+      tags:
+      - AI
+  /api/v1/projects/{project_id}/ai/tool-calls/{tool_call_id}:
+    patch:
+      operationId: editProposal
+      parameters:
+      - explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: tool_call_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProposalPatch"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: editProposal
+      tags:
+      - AI
+  /api/v1/projects/{project_id}/ai/tool-calls/{tool_call_id}/approve:
+    post:
+      operationId: approveProposal
+      parameters:
+      - explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: tool_call_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: approveProposal
+      tags:
+      - AI
+  /api/v1/projects/{project_id}/ai/tool-calls/{tool_call_id}/reject:
+    post:
+      operationId: rejectProposal
+      parameters:
+      - explode: false
+        in: path
+        name: project_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: tool_call_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Rejection"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+          description: Success
+        default:
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+          description: API error
+      summary: rejectProposal
+      tags:
+      - AI
+components:
+  schemas:
+    LoginInput:
+      example:
+        password: password
+        email: email
+      properties:
+        email:
+          type: string
+        password:
+          format: password
+          type: string
+      required:
+      - email
+      - password
+      type: object
+    TokenPair:
+      example:
+        access_token: access_token
+        token_type: token_type
+        expires_in: 0
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+        token_type:
+          type: string
+      required:
+      - access_token
+      - expires_in
+      type: object
+    Identity:
+      example:
+        user_id: user_id
+      properties:
+        user_id:
+          type: string
+      required:
+      - user_id
+      type: object
+    Task:
+      example:
+        severity: severity
+        task_workflow_status_id: task_workflow_status_id
+        project_id: project_id
+        task_key: task_key
+        due_date: due_date
+        description: description
+        task_id: task_id
+        title: title
+        type: type
+        priority: priority
+        billable: true
+        revision: 0
+      properties:
+        task_id:
+          type: string
+        task_key:
+          type: string
+        project_id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        priority:
+          type: string
+        severity:
+          type: string
+        task_workflow_status_id:
+          type: string
+        due_date:
+          type: string
+        revision:
+          type: integer
+        billable:
+          type: boolean
+      required:
+      - task_id
+      - title
+      type: object
+    TaskInput:
+      example:
+        severity: severity
+        task_workflow_status_id: task_workflow_status_id
+        project_id: project_id
+        due_date: due_date
+        description: description
+        title: title
+        type: type
+        priority: priority
+        billable: true
+        client_id: client_id
+      properties:
+        project_id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        priority:
+          type: string
+        severity:
+          type: string
+        task_workflow_status_id:
+          type: string
+        client_id:
+          type: string
+        due_date:
+          type: string
+        billable:
+          type: boolean
+      required:
+      - project_id
+      - title
+      type: object
+    TaskPatch:
+      example:
+        expected_revision: 0
+        due_date: due_date
+        description: description
+        title: title
+        priority: priority
+        billable: true
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        priority:
+          type: string
+        due_date:
+          type: string
+        billable:
+          type: boolean
+        expected_revision:
+          type: integer
+      type: object
+    TaskEnvelope:
+      example:
+        task:
+          severity: severity
+          task_workflow_status_id: task_workflow_status_id
+          project_id: project_id
+          task_key: task_key
+          due_date: due_date
+          description: description
+          task_id: task_id
+          title: title
+          type: type
+          priority: priority
+          billable: true
+          revision: 0
+      properties:
+        task:
+          $ref: "#/components/schemas/Task"
+      required:
+      - task
+      type: object
+    TaskList:
+      example:
+        total: 6
+        offset: 5
+        limit: 1
+        items:
+        - severity: severity
+          task_workflow_status_id: task_workflow_status_id
+          project_id: project_id
+          task_key: task_key
+          due_date: due_date
+          description: description
+          task_id: task_id
+          title: title
+          type: type
+          priority: priority
+          billable: true
+          revision: 0
+        - severity: severity
+          task_workflow_status_id: task_workflow_status_id
+          project_id: project_id
+          task_key: task_key
+          due_date: due_date
+          description: description
+          task_id: task_id
+          title: title
+          type: type
+          priority: priority
+          billable: true
+          revision: 0
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/Task"
+          type: array
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+      - items
+      - total
+      type: object
+    TaskPage:
+      example:
+        tasks:
+          total: 6
+          offset: 5
+          limit: 1
+          items:
+          - severity: severity
+            task_workflow_status_id: task_workflow_status_id
+            project_id: project_id
+            task_key: task_key
+            due_date: due_date
+            description: description
+            task_id: task_id
+            title: title
+            type: type
+            priority: priority
+            billable: true
+            revision: 0
+          - severity: severity
+            task_workflow_status_id: task_workflow_status_id
+            project_id: project_id
+            task_key: task_key
+            due_date: due_date
+            description: description
+            task_id: task_id
+            title: title
+            type: type
+            priority: priority
+            billable: true
+            revision: 0
+      properties:
+        tasks:
+          $ref: "#/components/schemas/TaskList"
+      required:
+      - tasks
+      type: object
+    ArchiveResult:
+      example:
+        archived: true
+      properties:
+        archived:
+          type: boolean
+      type: object
+    SessionInput:
+      example:
+        page_context_json:
+          key: ""
+        screen_scope: screen_scope
+        screen_entity_id: screen_entity_id
+        screen_entity_type: screen_entity_type
+      properties:
+        screen_scope:
+          type: string
+        screen_entity_type:
+          type: string
+        screen_entity_id:
+          type: string
+        page_context_json:
+          additionalProperties: true
+          type: object
+      required:
+      - screen_entity_id
+      - screen_entity_type
+      - screen_scope
+      type: object
+    MessageInput:
+      example:
+        client_context_json:
+          key: ""
+        page_context_json:
+          key: ""
+        active_tool_call_id: active_tool_call_id
+        timezone: timezone
+        body: body
+        local_date: local_date
+      properties:
+        body:
+          type: string
+        page_context_json:
+          additionalProperties: true
+          type: object
+        client_context_json:
+          additionalProperties: true
+          type: object
+        active_tool_call_id:
+          type: string
+        local_date:
+          type: string
+        timezone:
+          type: string
+      required:
+      - body
+      type: object
+    Message:
+      example:
+        role: role
+        body: body
+      properties:
+        role:
+          type: string
+        body:
+          type: string
+      required:
+      - body
+      - role
+      type: object
+    ToolCall:
+      example:
+        ai_tool_call_id: ai_tool_call_id
+        requires_approval: true
+        tool_key: tool_key
+        output_json:
+          key: ""
+        status: status
+        input_json:
+          key: ""
+      properties:
+        ai_tool_call_id:
+          type: string
+        tool_key:
+          type: string
+        status:
+          type: string
+        requires_approval:
+          type: boolean
+        input_json:
+          additionalProperties: true
+          type: object
+        output_json:
+          additionalProperties: true
+          type: object
+      required:
+      - ai_tool_call_id
+      - status
+      - tool_key
+      type: object
+    Session:
+      example:
+        project_id: project_id
+        messages:
+        - role: role
+          body: body
+        - role: role
+          body: body
+        tool_calls:
+        - ai_tool_call_id: ai_tool_call_id
+          requires_approval: true
+          tool_key: tool_key
+          output_json:
+            key: ""
+          status: status
+          input_json:
+            key: ""
+        - ai_tool_call_id: ai_tool_call_id
+          requires_approval: true
+          tool_key: tool_key
+          output_json:
+            key: ""
+          status: status
+          input_json:
+            key: ""
+        ai_chat_session_id: ai_chat_session_id
+        status: status
+      properties:
+        ai_chat_session_id:
+          type: string
+        project_id:
+          type: string
+        status:
+          type: string
+        messages:
+          items:
+            $ref: "#/components/schemas/Message"
+          type: array
+        tool_calls:
+          items:
+            $ref: "#/components/schemas/ToolCall"
+          type: array
+      required:
+      - ai_chat_session_id
+      - messages
+      - project_id
+      - status
+      type: object
+    ProposalPatch:
+      example:
+        edit_reason: edit_reason
+        input_json:
+          key: ""
+      properties:
+        input_json:
+          additionalProperties: true
+          type: object
+        edit_reason:
+          type: string
+      required:
+      - input_json
+      type: object
+    Rejection:
+      example:
+        reason: reason
+      properties:
+        reason:
+          type: string
+      type: object
+    Problem:
+      properties:
+        title:
+          type: string
+        detail:
+          type: string
+        status:
+          type: integer
+      type: object
+  securitySchemes:
+    bearerAuth:
+      scheme: bearer
+      type: http

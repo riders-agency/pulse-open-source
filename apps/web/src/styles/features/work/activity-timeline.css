@@ -1,0 +1,85 @@
+.work-timeline {
+  display: grid;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.work-timeline-row {
+  grid-template-columns: minmax(220px, 280px) minmax(560px, 1fr);
+  align-items: center;
+}
+
+.work-timeline-bar {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(42px, 1fr));
+  align-items: center;
+  min-height: 34px;
+}
+
+.work-timeline-bar span {
+  grid-column: 1 / span 2;
+  min-height: 28px;
+  padding: 5px 8px;
+  border-radius: 7px;
+  background: var(--accent);
+  color: var(--foreground);
+  font-size: 12px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.work-timeline-offset-0 span {
+  grid-column-start: 1;
+}
+
+.work-timeline-offset-1 span {
+  grid-column-start: 2;
+}
+
+.work-timeline-offset-2 span {
+  grid-column-start: 3;
+}
+
+.work-timeline-offset-3 span {
+  grid-column-start: 4;
+}
+
+.work-timeline-offset-4 span {
+  grid-column-start: 5;
+}
+
+.work-timeline-offset-5 span {
+  grid-column-start: 6;
+}
+
+.work-timeline-offset-6 span {
+  grid-column-start: 7;
+}
+
+.work-timeline-offset-7 span {
+  grid-column-start: 8;
+}
+
+.work-timeline-span-2 span {
+  grid-column-end: span 2;
+}
+
+.work-timeline-span-3 span {
+  grid-column-end: span 3;
+}
+
+.work-timeline-span-4 span {
+  grid-column-end: span 4;
+}
+
+.work-timeline-span-5 span {
+  grid-column-end: span 5;
+}
+
+.work-timeline-span-6 span {
+  grid-column-end: span 6;
+}
+
+.work-timeline-span-7 span {
+  grid-column-end: span 7;
+}

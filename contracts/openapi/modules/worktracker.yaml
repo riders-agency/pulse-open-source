@@ -1,0 +1,136 @@
+paths:
+  /api/v1/work/tasks:
+    get:
+      tags:
+      - worktracker
+      operationId: workTaskList
+      summary: Runtime inventory operation workTaskList
+      x-runtime-source: endpoints.inventory.tsv
+      responses:
+        '200':
+          description: Runtime response
+        '400':
+          description: Problem response
+      parameters:
+      - name: archived
+        in: query
+        description: Показывать только удалённые задачи. Недоступно гостям клиента.
+        schema:
+          type: boolean
+          default: false
+    post:
+      tags:
+      - worktracker
+      operationId: workTaskCreate
+      summary: Runtime inventory operation workTaskCreate
+      x-runtime-source: endpoints.inventory.tsv
+      responses:
+        '200':
+          description: Runtime response
+        '400':
+          description: Problem response
+  /api/v1/work/tasks/{task_id}:
+    delete:
+      tags:
+      - worktracker
+      operationId: workTaskArchive
+      summary: Переместить задачу в удалённые
+      parameters:
+      - name: task_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Состояние задачи сохранено
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - archived
+                properties:
+                  archived:
+                    type: boolean
+              example:
+                archived: true
+        '401':
+          description: Необходим вход
+        '403':
+          description: Нет права редактировать задачу
+        '404':
+          description: Задача не найдена
+        '409':
+          description: Остановите активный таймер перед удалением
+      description: Идемпотентная операция. Требует прав редактирования задач в процессе.
+        Удаление сохраняет комментарии, вложения и учёт времени. При активном таймере
+        возвращается 409. Доступ к чужому проекту запрещён.
+    get:
+      tags:
+      - worktracker
+      operationId: workTaskGet
+      summary: Runtime inventory operation workTaskGet
+      x-runtime-source: endpoints.inventory.tsv
+      parameters:
+      - name: task_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Runtime response
+        '400':
+          description: Problem response
+    patch:
+      tags:
+      - worktracker
+      operationId: workTaskPatch
+      summary: Runtime inventory operation workTaskPatch
+      x-runtime-source: endpoints.inventory.tsv
+      parameters:
+      - name: task_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Runtime response
+        '400':
+          description: Problem response
+  /api/v1/work/tasks/{task_id}/restore:
+    post:
+      tags:
+      - worktracker
+      operationId: workTaskRestore
+      summary: Восстановить удалённую задачу
+      parameters:
+      - name: task_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Состояние задачи сохранено
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - archived
+                properties:
+                  archived:
+                    type: boolean
+              example:
+                archived: false
+        '401':
+          description: Необходим вход
+        '403':
+          description: Нет права редактировать задачу
+        '404':
+          description: Задача не найдена
+      description: Идемпотентная операция. Требует прав редактирования задач в процессе.
+        Восстановление возвращает задачу в рабочие списки. Доступ к чужому проекту запрещён.

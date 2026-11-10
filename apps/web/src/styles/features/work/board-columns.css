@@ -1,0 +1,36 @@
+.work-board {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(200px, min(320px, calc((100% - 40px) / var(--work-board-visible-columns, 4))));
+  gap: 10px;
+  min-height: calc(100vh - 190px);
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.work-board-columns-1 {
+  --work-board-visible-columns: 1;
+}
+
+.work-board-columns-2 {
+  --work-board-visible-columns: 2;
+}
+
+.work-board-columns-3 {
+  --work-board-visible-columns: 3;
+}
+
+.work-board-columns-4 {
+  --work-board-visible-columns: 4;
+}
+
+.work-board-columns-5 {
+  --work-board-visible-columns: 5;
+}
+
+.work-column-list {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 80px;
+}

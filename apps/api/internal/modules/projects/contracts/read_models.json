@@ -1,0 +1,52 @@
+[
+  {
+    "name": "pulse_read.project_members_v1",
+    "owner": "projects",
+    "table": "project_members",
+    "columns": [
+      "project_id",
+      "user_id",
+      "role",
+      "created_at",
+      "client_id",
+      "status"
+    ],
+    "consumers": [
+      "clients",
+      "worktracker"
+    ]
+  },
+  {
+    "name": "pulse_read.projects_v1",
+    "owner": "projects",
+    "table": "projects",
+    "columns": [
+      "project_id",
+      "company_id",
+      "name",
+      "slug",
+      "hook_key",
+      "created_by_user_id",
+      "created_at",
+      "updated_at",
+      "description",
+      "status",
+      "priority",
+      "start_date",
+      "task_workflow_id"
+    ],
+    "consumers": [
+      "action_dependencies",
+      "ai",
+      "auth",
+      "clients",
+      "integrationdocs",
+      "runs",
+      "sitechat",
+      "templates",
+      "webhooks",
+      "workflows",
+      "worktracker"
+    ]
+  }
+]

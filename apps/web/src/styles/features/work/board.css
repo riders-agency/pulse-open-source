@@ -1,0 +1,136 @@
+.work-page {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  width: 100%;
+  min-height: 100vh;
+  padding: 22px clamp(14px, 2vw, 28px) 44px;
+  background: var(--background);
+}
+
+.work-topbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+}
+
+.work-topbar h1 {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.12;
+}
+
+.work-topbar p {
+  margin: 0;
+  color: var(--foreground);
+}
+
+.work-kicker {
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.work-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.work-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.work-metric {
+  display: grid;
+  gap: 5px;
+  min-height: 92px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-metric svg {
+  color: var(--primary);
+}
+
+.work-metric span {
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.work-metric strong {
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.work-metric.is-danger {
+  border-color: color-mix(in srgb, var(--danger) 30%, var(--border));
+}
+
+.work-focus-grid,
+.work-report-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.work-focus {
+  display: grid;
+  gap: 8px;
+  min-height: 116px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-focus:hover {
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+  background: var(--accent);
+}
+
+.work-risk-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.work-risk-list div,
+.work-buckets div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 38px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.work-risk-list div:last-child,
+.work-buckets div:last-child {
+  border-bottom: 0;
+}
+
+.work-column {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 8px;
+  min-height: 520px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--muted) 55%, var(--background));
+}
+
+.work-column > header {
+  display: flex;
+  gap: 8px;
+  align-items: start;
+  justify-content: space-between;
+}

@@ -1,0 +1,629 @@
+paths:
+  /site-chat/widget.js:
+    get:
+      tags: [site_chat]
+      summary: Lightweight site chat widget bootstrap
+      operationId: siteChatWidgetScript
+      responses:
+        '200':
+          description: JavaScript bootstrap
+          content:
+            application/javascript:
+              schema: {type: string}
+
+  /api/v1/public/site-chat/widgets/{public_key}/config:
+    get:
+      tags: [site_chat]
+      summary: Public widget config by public_key
+      operationId: siteChatPublicConfig
+      parameters:
+        - $ref: '#/components/parameters/public_key'
+      responses:
+        '200':
+          description: Widget config
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/SiteChatPublicConfig
+        '404':
+          $ref: '#/components/responses/problem'
+
+  /api/v1/public/site-chat/ws:
+    get:
+      tags: [site_chat]
+      summary: Public visitor Live Assist WebSocket
+      operationId: siteChatPublicWebSocket
+      parameters:
+        - name: public_key
+          in: query
+          required: true
+          schema: {type: string}
+        - name: visitor_id
+          in: query
+          required: true
+          schema: {type: string, format: uuid}
+        - name: visit_session_id
+          in: query
+          required: true
+          schema: {type: string, format: uuid}
+        - name: conversation_id
+          in: query
+          required: false
+          schema: {type: string, format: uuid}
+      responses:
+        '101':
+          description: WebSocket upgraded. Uses SiteChatWSEnvelope frames.
+        '400':
+          $ref: '#/components/responses/problem'
+
+  /api/v1/public/site-chat/presence:
+    post:
+      tags: [site_chat]
+      summary: Create/update visitor and visit session
+      operationId: siteChatPresence
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatPresenceRequest
+      responses:
+        '200':
+          description: Presence accepted
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/SiteChatPresenceResponse
+        '400':
+          $ref: '#/components/responses/problem'
+
+  /api/v1/public/site-chat/events:
+    post:
+      tags: [site_chat]
+      summary: Accept throttled/batched lightweight visitor events
+      operationId: siteChatEvents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatEventBatch
+      responses:
+        '202': {description: Accepted}
+        '400':
+          $ref: '#/components/responses/problem'
+
+  /api/v1/public/site-chat/conversations:
+    post:
+      tags: [site_chat]
+      summary: Public visitor starts chat conversation
+      operationId: siteChatPublicConversationCreate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatMessageInput
+      responses:
+        '400':
+          $ref: '#/components/responses/problem'
+        '201':
+          description: Conversation
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/SiteChatConversation
+
+  /api/v1/public/site-chat/messages:
+    post:
+      tags: [site_chat]
+      summary: Public visitor sends chat message
+      operationId: siteChatPublicMessageCreate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatMessageInput
+      responses:
+        '400':
+          $ref: '#/components/responses/problem'
+        '201':
+          description: Message id
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [message_id]
+                properties:
+                  message_id: {type: string, format: uuid}
+
+  /api/v1/public/site-chat/calls/request:
+    post:
+      tags: [site_chat]
+      summary: Visitor requests a call from Pulse operator
+      operationId: siteChatPublicCallRequest
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallInput
+      responses:
+        '400':
+          $ref: '#/components/responses/problem'
+        '201':
+          description: Call session
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallSession
+
+  /api/v1/public/site-chat/calls/{call_session_id}/accept:
+    post:
+      tags: [site_chat]
+      summary: Visitor accepts offered call after privacy/recording consent
+      operationId: siteChatPublicCallAccept
+      parameters:
+        - $ref: '#/components/parameters/call_session_id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallInput
+      responses:
+        '400':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Call session
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallSession
+
+  /api/v1/public/site-chat/calls/{call_session_id}/reject:
+    post:
+      tags: [site_chat]
+      summary: Visitor rejects offered call
+      operationId: siteChatPublicCallReject
+      parameters:
+        - $ref: '#/components/parameters/call_session_id'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallInput
+      responses:
+        '400':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Call session
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallSession
+
+  /api/v1/public/site-chat/calls/{call_session_id}/end:
+    post:
+      tags: [site_chat]
+      summary: Visitor ends active call
+      operationId: siteChatPublicCallEnd
+      parameters:
+        - $ref: '#/components/parameters/call_session_id'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallInput
+      responses:
+        '400':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Call session
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallSession
+
+  /api/v1/public/site-chat/conversations/{conversation_id}/messages:
+    get:
+      tags: [site_chat]
+      summary: Public visitor reads chat messages
+      operationId: siteChatPublicMessageList
+      parameters:
+        - $ref: '#/components/parameters/conversation_id'
+        - name: public_key
+          in: query
+          required: true
+          schema: {type: string}
+        - name: visitor_id
+          in: query
+          required: false
+          schema: {type: string, format: uuid}
+      responses:
+        '400':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/SiteChatMessage
+
+  /api/v1/projects/{project_id}/site-chat-widgets:
+    get:
+      tags: [site_chat]
+      summary: List project site chat widgets
+      operationId: siteChatWidgetList
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/project_id'
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Widgets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/SiteChatWidget
+    post:
+      tags: [site_chat]
+      summary: Create project site chat widget
+      operationId: siteChatWidgetCreate
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/project_id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatWidgetInput
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '201':
+          description: Widget id
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [chat_widget_id]
+                properties:
+                  chat_widget_id: {type: string, format: uuid}
+
+  /api/v1/site-chat-widgets/{chat_widget_id}:
+    patch:
+      tags: [site_chat]
+      summary: Update site chat widget
+      operationId: siteChatWidgetPatch
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/chat_widget_id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatWidgetPatch
+      responses:
+        '204': {description: Updated}
+        '404':
+          $ref: '#/components/responses/problem'
+
+  /api/v1/projects/{project_id}/site-visitors/active:
+    get:
+      tags: [site_chat]
+      summary: List active visitors with derived visitor_state_snapshot
+      operationId: siteChatActiveVisitors
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/project_id'
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Active visitors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/SiteVisitorSession
+
+  /api/v1/site-visit-sessions/{visit_session_id}/monitoring/start:
+    post:
+      tags: [site_chat]
+      summary: Start heavier live monitoring for a visit session
+      operationId: siteChatMonitoringStart
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/visit_session_id'
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '204': {description: Monitoring started}
+
+  /api/v1/site-visit-sessions/{visit_session_id}/monitoring/stop:
+    post:
+      tags: [site_chat]
+      summary: Stop heavier live monitoring for a visit session
+      operationId: siteChatMonitoringStop
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/visit_session_id'
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '204': {description: Monitoring stopped}
+
+  /api/v1/site-visit-sessions/{visit_session_id}/invite:
+    post:
+      tags: [site_chat]
+      summary: Operator invites visitor to chat
+      operationId: siteChatVisitorInvite
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/visit_session_id'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatInviteInput
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Conversation
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/SiteChatConversation
+
+  /api/v1/site-visit-sessions/{visit_session_id}/call-offer:
+    post:
+      tags: [site_chat]
+      summary: Operator offers a call to visitor
+      operationId: siteChatOperatorCallOffer
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/visit_session_id'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallInput
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '201':
+          description: Call session
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallSession
+
+  /api/v1/site-visit-sessions/{visit_session_id}/events:
+    get:
+      tags: [site_chat]
+      summary: Operator reads cobrowse frames as REST fallback
+      operationId: siteChatVisitEvents
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/visit_session_id'
+        - name: since_sequence
+          in: query
+          required: false
+          schema: {type: integer, format: int64, default: 0}
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Cobrowse frames
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/SiteCobrowseFrame
+
+  /api/v1/site-visit-sessions/{visit_session_id}/snapshot:
+    get:
+      tags: [site_chat]
+      summary: Operator reads current visitor_state_snapshot
+      operationId: siteChatVisitSnapshot
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/visit_session_id'
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Visitor state snapshot
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/VisitorStateSnapshot
+
+  /api/v1/site-chat/ws/operator:
+    get:
+      tags: [site_chat]
+      summary: Operator Live Assist WebSocket
+      operationId: siteChatOperatorWebSocket
+      security: [{bearerAuth: []}]
+      parameters:
+        - name: project_id
+          in: query
+          required: true
+          schema: {type: string, format: uuid}
+        - name: visit_session_id
+          in: query
+          required: false
+          schema: {type: string, format: uuid}
+        - name: conversation_id
+          in: query
+          required: false
+          schema: {type: string, format: uuid}
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '101':
+          description: WebSocket upgraded. Uses SiteChatWSEnvelope frames.
+
+  /api/v1/site-chat/calls/{call_session_id}/accept:
+    post:
+      tags: [site_chat]
+      summary: Operator accepts visitor-requested call
+      operationId: siteChatOperatorCallAccept
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/call_session_id'
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Call session
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallSession
+
+  /api/v1/site-chat/calls/{call_session_id}/reject:
+    post:
+      tags: [site_chat]
+      summary: Operator rejects call
+      operationId: siteChatOperatorCallReject
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/call_session_id'
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Call session
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallSession
+
+  /api/v1/site-chat/calls/{call_session_id}/end:
+    post:
+      tags: [site_chat]
+      summary: Operator ends active call
+      operationId: siteChatOperatorCallEnd
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/call_session_id'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallInput
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Call session
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/SiteChatCallSession
+
+  /api/v1/site-chat-conversations/{conversation_id}/messages:
+    get:
+      tags: [site_chat]
+      summary: List operator-visible chat messages
+      operationId: siteChatMessageList
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/conversation_id'
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '200':
+          description: Messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/SiteChatMessage
+    post:
+      tags: [site_chat]
+      summary: Operator sends chat message
+      operationId: siteChatMessageCreate
+      security: [{bearerAuth: []}]
+      parameters:
+        - $ref: '#/components/parameters/conversation_id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/SiteChatMessageInput
+      responses:
+        '401':
+          $ref: '#/components/responses/problem'
+        '201':
+          description: Message id
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [message_id]
+                properties:
+                  message_id: {type: string, format: uuid}
+
+components:
+  parameters:
+    public_key:
+      name: public_key
+      in: path
+      required: true
+      schema: {type: string}
+    project_id:
+      name: project_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    chat_widget_id:
+      name: chat_widget_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    visit_session_id:
+      name: visit_session_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    conversation_id:
+      name: conversation_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    call_session_id:
+      name: call_session_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+  responses:
+    problem:
+      description: Problem Details error
+      content:
+        application/json:
+          schema:
+            $ref: ../openapi.root.yaml#/components/schemas/Problem

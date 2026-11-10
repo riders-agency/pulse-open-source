@@ -1,0 +1,14 @@
+.monitor-workspace {
+  grid-template-rows: minmax(360px, 1fr) auto auto;
+  gap: 14px;
+  padding: 14px;
+}
+
+.monitor-preview {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-subtle);
+}

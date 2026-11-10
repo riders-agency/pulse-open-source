@@ -1,0 +1,9 @@
+.work-column > header div {
+  display: grid;
+  gap: 2px;
+}
+
+.work-column > header span {
+  color: var(--foreground);
+  font-size: 13px;
+}

@@ -1,0 +1,39 @@
+.tech-task-demo { max-width: 1200px; margin: 0 auto; padding: 42px 40px 0; scroll-margin-top: 20px; }
+.tech-platform-label { margin-bottom: 20px; font-size: 13px; color: var(--muted-foreground); }
+.tech-graph-engine { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin: 0 0 28px; }
+.tech-graph-engine a { display: inline-flex; padding-block: 8px; }
+.tech-graph-engine img { display: block; width: 189px; height: 40px; }
+.tech-page .tech-graph-engine p { max-width: 260px; font-size: 14px; line-height: 1.5; color: var(--muted-foreground); }
+.tech-task-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 28px; }
+.tech-task-heading h1 { font-size: clamp(34px, 4.4vw, 58px); line-height: 1.06; letter-spacing: -1.8px; font-weight: 550; }
+.tech-task-heading h1 span { color: color-mix(in srgb, var(--palette-brand) 78%, var(--palette-ink)); }
+.tech-task-heading p { max-width: 280px; padding-bottom: 4px; font-size: 15px; line-height: 1.7; color: var(--muted-foreground); }
+.tech-task-recording { margin: 0; }
+.tech-task-player { position: relative; }
+.tech-task-play { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; padding: 16px 24px; border: 1px solid var(--palette-brand); border-radius: 40px; background: var(--palette-brand); color: var(--palette-ink); font-size: 14px; font-weight: 600; box-shadow: 0 6px 24px color-mix(in srgb, var(--palette-ink) 25%, transparent); cursor: pointer; }
+.tech-task-play:hover { background: color-mix(in srgb, var(--palette-brand) 88%, var(--palette-surface)); }
+.tech-task-recording video { display: block; width: 100%; max-height: 620px; background: var(--palette-ink); border: 1px solid var(--border); border-radius: 14px; object-fit: contain; }
+.tech-task-recording video::cue { font-size: 14px; }
+.tech-task-recording figcaption { display: flex; justify-content: space-between; gap: 16px; padding-top: 14px; font-size: 12px; color: var(--muted-foreground); }
+.tech-task-recording figcaption a { display: inline-flex; align-items: center; gap: 6px; color: var(--palette-ink); }
+.tech-more { max-width: 1240px; margin: 36px auto 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.tech-more > summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 24px 40px; list-style: none; cursor: pointer; font-size: 20px; font-weight: 550; }
+.tech-more > summary::-webkit-details-marker { display: none; }
+.tech-more > summary small { display: block; margin-top: 5px; font-size: 12px; font-weight: 400; color: var(--muted-foreground); }
+.tech-more[open] > summary > svg { rotate: 180deg; }
+.tech-more .tech-section { padding-top: 24px; padding-bottom: 36px; }
+@media (max-width: 720px) {
+ .tech-header nav { order: initial; width: auto; gap: 14px; }
+ .tech-header { flex-wrap: nowrap; min-height: 74px; }
+ .tech-header .tech-logo { font-size: 28px; }
+ .tech-header .tech-cta { padding: 9px 12px; min-height: 42px; gap: 5px; font-size: 12px; }
+ .tech-task-demo { padding: 28px 20px 0; }
+ .tech-graph-engine { gap: 4px 20px; margin-bottom: 22px; }
+ .tech-task-heading { display: block; margin-bottom: 22px; }
+ .tech-task-heading p { margin-top: 14px; max-width: 340px; font-size: 14px; }
+ .tech-task-recording video { border-radius: 8px; }
+ .tech-task-recording figcaption { flex-direction: column; gap: 6px; font-size: 11px; }
+ .tech-more { margin: 26px 20px 0; }
+ .tech-more > summary { padding: 20px 0; font-size: 18px; }
+ .tech-more .tech-section { padding-left: 0; padding-right: 0; }
+}

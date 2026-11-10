@@ -1,0 +1,41 @@
+.runtime-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 390px;
+  height: 100vh;
+  min-height: 680px;
+}
+
+.runtime-canvas {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--background);
+}
+
+.runtime-node-badges {
+  margin-top: 8px;
+}
+
+.runtime-run-subtitle {
+  font-size: 13px;
+}
+
+.runtime-detail-stack {
+  margin-top: 16px;
+}
+
+.text-muted-foreground {
+  color: var(--foreground) !important;
+}
+
+.text-xs {
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+}
+
+.text-sm {
+  font-size: 15px !important;
+  line-height: 1.45 !important;
+}
+
+.runtime-canvas > .react-flow { flex: 1; min-height: 380px; }

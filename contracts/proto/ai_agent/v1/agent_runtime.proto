@@ -1,0 +1,132 @@
+syntax = "proto3";
+
+package ai_agent.v1;
+
+import "ai_agent/v1/common.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "riders.agency/pulse/api/internal/gen/ai_agent/v1;aiagentv1";
+
+service AgentRuntimeService {
+  rpc StartTurn(TurnRequest) returns (stream AgentEvent);
+  rpc ResumeTurn(ResumeRequest) returns (stream AgentEvent);
+  rpc CancelRun(CancelRunRequest) returns (CancelRunResponse);
+  rpc GetThreadState(GetThreadStateRequest) returns (ThreadStateResponse);
+}
+
+message TurnRequest {
+  string request_id = 1;
+  string idempotency_key = 2;
+  string company_id = 3;
+  string project_id = 4;
+  string user_id = 5;
+  string session_id = 6;
+  string thread_id = 7;
+  string message_id = 8;
+  string body = 9;
+  string local_date = 10;
+  string timezone = 11;
+  string locale = 12;
+  google.protobuf.Struct page_context_json = 13;
+  google.protobuf.Struct client_context_json = 14;
+  google.protobuf.Struct ui_state_json = 15;
+  string active_card_id = 16;
+  string active_tool_call_id = 17;
+  string active_proposal_id = 18;
+  repeated ChatMessage history = 19;
+  RuntimePolicy runtime_policy = 20;
+  AuthContext auth_context = 21;
+  TraceContext trace_context = 22;
+}
+
+message ApprovalDecision {
+  string action = 1;
+  string reason = 2;
+  int32 card_revision = 3;
+}
+
+message ResumeRequest {
+  string request_id = 1;
+  string idempotency_key = 2;
+  string company_id = 3;
+  string project_id = 4;
+  string user_id = 5;
+  string session_id = 6;
+  string thread_id = 7;
+  string run_id = 8;
+  string interrupt_id = 9;
+  ApprovalDecision decision = 10;
+  google.protobuf.Struct edited_card_json = 11;
+  string local_date = 12;
+  string timezone = 13;
+  AuthContext auth_context = 14;
+  TraceContext trace_context = 15;
+}
+
+message CancelRunRequest {
+  string request_id = 1;
+  string project_id = 2;
+  string session_id = 3;
+  string thread_id = 4;
+  string run_id = 5;
+  AuthContext auth_context = 6;
+  TraceContext trace_context = 7;
+}
+
+message CancelRunResponse {
+  bool ok = 1;
+  string status = 2;
+}
+
+message GetThreadStateRequest {
+  string request_id = 1;
+  string project_id = 2;
+  string session_id = 3;
+  string thread_id = 4;
+  AuthContext auth_context = 5;
+  TraceContext trace_context = 6;
+}
+
+message ThreadStateResponse {
+  string thread_id = 1;
+  string run_id = 2;
+  google.protobuf.Struct state_json = 3;
+  repeated google.protobuf.Struct cards = 4;
+}
+
+enum AgentEventType {
+  AGENT_EVENT_TYPE_UNSPECIFIED = 0;
+  AGENT_EVENT_TYPE_RUN_STARTED = 1;
+  AGENT_EVENT_TYPE_STATUS = 2;
+  AGENT_EVENT_TYPE_MESSAGE_DELTA = 3;
+  AGENT_EVENT_TYPE_MESSAGE_FINAL = 4;
+  AGENT_EVENT_TYPE_CARD_CREATED = 5;
+  AGENT_EVENT_TYPE_CARD_UPDATED = 6;
+  AGENT_EVENT_TYPE_CARD_PATCHED = 7;
+  AGENT_EVENT_TYPE_TOOL_PROPOSED = 8;
+  AGENT_EVENT_TYPE_TOOL_STARTED = 9;
+  AGENT_EVENT_TYPE_TOOL_RESULT = 10;
+  AGENT_EVENT_TYPE_INTERRUPT = 11;
+  AGENT_EVENT_TYPE_APPROVAL_REQUIRED = 12;
+  AGENT_EVENT_TYPE_MEMORY_UPDATED = 13;
+  AGENT_EVENT_TYPE_ERROR = 14;
+  AGENT_EVENT_TYPE_DONE = 15;
+}
+
+message AgentEvent {
+  int64 seq = 1;
+  string run_id = 2;
+  string thread_id = 3;
+  string session_id = 4;
+  AgentEventType event_type = 5;
+  google.protobuf.Timestamp created_at = 6;
+  string body_delta = 7;
+  string message = 8;
+  google.protobuf.Struct card = 9;
+  google.protobuf.Struct tool_call = 10;
+  google.protobuf.Struct interrupt = 11;
+  google.protobuf.Struct error = 12;
+  Usage usage = 13;
+  google.protobuf.Struct debug = 14;
+}

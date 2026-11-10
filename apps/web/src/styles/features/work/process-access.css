@@ -1,0 +1,153 @@
+.work-process-shell {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.work-process-nav {
+  display: grid;
+  gap: 6px;
+}
+
+.work-process-nav button {
+  display: grid;
+  gap: 3px;
+  min-height: 58px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--foreground);
+  text-align: left;
+  cursor: pointer;
+}
+
+.work-process-nav button.is-active {
+  border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
+  box-shadow: inset 3px 0 0 var(--primary);
+}
+
+.work-process-nav span {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+.work-process-detail,
+.work-roles-panel,
+.work-role-card {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-process-detail > header,
+.work-roles-panel > header,
+.work-role-card > header {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.work-process-detail h2,
+.work-roles-panel h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.work-process-detail p,
+.work-roles-panel p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.work-integration-note {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--primary) 28%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--primary) 7%, var(--card));
+  font-size: 13px;
+}
+
+.work-integration-note span {
+  color: var(--muted-foreground);
+}
+
+.work-role-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.work-role-create {
+  display: grid;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.work-role-list {
+  display: grid;
+  gap: 10px;
+}
+
+.work-role-card > header > div {
+  display: grid;
+  grid-template-columns: minmax(160px, 240px) minmax(0, 1fr);
+  gap: 8px;
+  flex: 1;
+}
+
+.work-permission-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.work-permission {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 8px;
+  align-items: flex-start;
+  min-height: 58px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--background);
+}
+
+.work-permission span {
+  display: grid;
+  gap: 2px;
+}
+
+.work-permission small {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.work-access-chips {
+  display: flex;
+  max-width: 360px;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.work-invite-result {
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--success) 35%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--success) 8%, var(--card));
+  font-size: 13px;
+  font-weight: 700;
+}

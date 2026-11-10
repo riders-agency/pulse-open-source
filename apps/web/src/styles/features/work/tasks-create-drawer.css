@@ -1,0 +1,47 @@
+.work-inline-create,
+.work-manual-time,
+.work-invite,
+.work-process-form {
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-checklist .work-inline-create {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.work-checklist .work-inline-create .ui-button {
+  align-self: center;
+  min-height: 38px;
+  padding-inline: 12px;
+}
+
+.work-manual-time,
+.work-invite,
+.work-process-form {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  align-items: end;
+}
+
+.work-task-drawer,
+.work-task-fullscreen-sheet {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 70;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--background);
+}

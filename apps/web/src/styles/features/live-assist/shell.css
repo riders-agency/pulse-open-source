@@ -1,0 +1,54 @@
+.live-assist-page { max-width: 1840px; min-width: 0; }
+.live-assist-topbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.live-assist-topbar h1 { margin: 0; }
+.live-assist-topbar p { margin: 4px 0 0; }
+.live-assist-statusbar, .visitor-actions, .live-card-badges { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.live-assist-shell { display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 1fr); gap: 0; height: calc(100dvh - 160px); min-height: 480px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--card); }
+.live-visitors { display: grid; grid-template-rows: auto auto minmax(0, 1fr); min-width: 0; overflow: hidden; border-right: 1px solid var(--border); background: var(--surface-subtle); }
+.live-search { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; align-items: center; padding: 12px; }
+.live-search input { min-width: 0; }
+.live-filters { display: flex; flex-wrap: wrap; gap: 4px; padding: 0 12px 12px; border-bottom: 1px solid var(--border); }
+.live-workspace { display: flex; flex-direction: column; min-width: 0; min-height: 0; overflow: hidden; }
+.visitor-workspace-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; justify-content: space-between; padding: 16px; border-bottom: 1px solid var(--border); }
+.visitor-workspace-head > div:first-child { display: grid; gap: 6px; min-width: 0; flex: 1 1 220px; }
+.visitor-workspace-head strong { font-size: 16px; }
+.visitor-workspace-head span { color: var(--muted-foreground); font-size: 12px; overflow-wrap: anywhere; }
+.visitor-actions { justify-content: flex-start; }
+.live-workspace-tabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+.live-main-grid { display: flex; flex: 1; min-height: 0; min-width: 0; overflow: hidden; }
+.live-primary-panel { flex: 1; min-width: 0; min-height: 0; overflow: hidden; }
+.live-side-panel { flex: 1; display: grid; align-content: start; gap: 12px; min-width: 0; padding: 16px; overflow: auto; }
+.live-main-grid > [hidden] { display: none; }
+.live-mobile-back { display: none; }
+.live-welcome { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px; text-align: center; color: var(--muted-foreground); }
+.live-welcome h2 { color: var(--foreground); font-size: 20px; margin-bottom: 0; }
+.live-welcome p { max-width: 380px; line-height: 1.6; }
+@media (max-width: 900px) {
+  .live-assist-shell { grid-template-columns: minmax(200px, 240px) minmax(0, 1fr); }
+  .visitor-actions .ui-button { min-height: 36px; }
+}
+@media (max-width: 680px) {
+  .live-assist-shell { grid-template-columns: minmax(0, 1fr); height: calc(100dvh - 220px); min-height: 420px; }
+  .live-assist-shell .live-workspace, .live-assist-shell .live-welcome { display: none; }
+  .live-assist-shell.is-conversation-open .live-workspace { display: flex; }
+  .live-assist-shell.is-conversation-open .live-visitors { display: none; }
+  .live-visitors { border-right: 0; }
+  .live-mobile-back { display: inline-flex; align-self: flex-start; margin: 8px; }
+  .visitor-workspace-head { padding: 12px; }
+  .live-assist-statusbar { gap: 6px; }
+  .live-workspace-tabs .ui-button { font-size: 12px; padding: 6px 8px; }
+}
+.live-assist-page { display: flex; flex-direction: column; height: 100dvh; padding-bottom: 92px; }
+.live-assist-shell { flex: 1; height: auto; min-height: 360px; }
+@media (max-width: 1080px) { .live-assist-page { height: calc(100dvh - 64px); } }
+@media (max-width: 680px) {
+  .live-assist-topbar { gap: 8px; margin-bottom: 10px; }
+  .live-assist-topbar h1 { font-size: 24px; }
+  .live-assist-statusbar .live-counter { display: none; }
+  .visitor-workspace-head > div:first-child { flex-basis: 100%; }
+  .visitor-workspace-head > div:first-child > span { display: none; }
+  .visitor-workspace-head .row { display: none; }
+  .visitor-actions { gap: 4px; }
+  .visitor-actions .ui-button { padding: 5px 8px; font-size: 12px; }
+  .live-assist-shell { min-height: 360px; }
+}

@@ -1,0 +1,32 @@
+.scenario-export {
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.scenario-help {
+  display: grid;
+  gap: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--background);
+  font-size: 13px;
+}
+
+.scenario-help p {
+  margin: 0;
+  color: var(--foreground);
+  line-height: 1.35;
+}
+
+.scenario-help a {
+  color: var(--info);
+  font-weight: 600;
+}
+
+.scenario-export-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}

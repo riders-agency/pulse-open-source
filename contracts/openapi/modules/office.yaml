@@ -1,0 +1,272 @@
+paths:
+  /api/v1/projects/{project_id}/office-demo:
+    get:
+      tags:
+      - workflows
+      summary: Состояние почтового сценария
+      operationId: officeDemoState
+      security:
+      - bearerAuth: []
+      description: Только владелец гостевой демо-компании. Изоляция по project_id
+        и членству. Опрос сервера каждые 30 секунд. До 30 исполнений, незавершённые
+        не удаляются. Повторная подготовка идемпотентна, доставка дедуплицируется
+        по delivery_key, повторное решение возвращает 409. Внешняя почта и банк не
+        подключаются.
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Состояние сценария или принятое решение
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                configured: true
+                interval_seconds: 30
+                retained_runs: 30
+                pending_mail: 0
+        '400':
+          description: Некорректный запрос
+        '401':
+          description: Требуется вход
+        '403':
+          description: Нет доступа к демо-проекту
+        '409':
+          description: Решение уже принято или очередь заполнена
+        '500':
+          description: Временная ошибка
+    post:
+      tags:
+      - workflows
+      summary: Подготовить сценарий в демо-компании
+      operationId: officeDemoEnsure
+      security:
+      - bearerAuth: []
+      description: Только владелец гостевой демо-компании. Изоляция по project_id
+        и членству. Опрос сервера каждые 30 секунд. До 30 исполнений, незавершённые
+        не удаляются. Повторная подготовка идемпотентна, доставка дедуплицируется
+        по delivery_key, повторное решение возвращает 409. Внешняя почта и банк не
+        подключаются.
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Состояние сценария или принятое решение
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                configured: true
+                interval_seconds: 30
+                retained_runs: 30
+                pending_mail: 0
+        '400':
+          description: Некорректный запрос
+        '401':
+          description: Требуется вход
+        '403':
+          description: Нет доступа к демо-проекту
+        '409':
+          description: Решение уже принято или очередь заполнена
+        '500':
+          description: Временная ошибка
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+              additionalProperties: false
+            example: {}
+    patch:
+      tags:
+      - workflows
+      summary: Включить или приостановить опрос
+      operationId: officeDemoToggle
+      security:
+      - bearerAuth: []
+      description: Только владелец гостевой демо-компании. Изоляция по project_id
+        и членству. Опрос сервера каждые 30 секунд. До 30 исполнений, незавершённые
+        не удаляются. Повторная подготовка идемпотентна, доставка дедуплицируется
+        по delivery_key, повторное решение возвращает 409. Внешняя почта и банк не
+        подключаются.
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Состояние сценария или принятое решение
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                configured: true
+                interval_seconds: 30
+                retained_runs: 30
+                pending_mail: 0
+        '400':
+          description: Некорректный запрос
+        '401':
+          description: Требуется вход
+        '403':
+          description: Нет доступа к демо-проекту
+        '409':
+          description: Решение уже принято или очередь заполнена
+        '500':
+          description: Временная ошибка
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+              additionalProperties: false
+              required:
+              - enabled
+            example:
+              enabled: true
+  /api/v1/projects/{project_id}/office-demo/messages:
+    post:
+      tags:
+      - workflows
+      summary: Добавить учебное письмо
+      operationId: officeDemoDeliver
+      security:
+      - bearerAuth: []
+      description: Только владелец гостевой демо-компании. Изоляция по project_id
+        и членству. Опрос сервера каждые 30 секунд. До 30 исполнений, незавершённые
+        не удаляются. Повторная подготовка идемпотентна, доставка дедуплицируется
+        по delivery_key, повторное решение возвращает 409. Внешняя почта и банк не
+        подключаются.
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Состояние сценария или принятое решение
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                configured: true
+                interval_seconds: 30
+                retained_runs: 30
+                pending_mail: 0
+        '400':
+          description: Некорректный запрос
+        '401':
+          description: Требуется вход
+        '403':
+          description: Нет доступа к демо-проекту
+        '409':
+          description: Решение уже принято или очередь заполнена
+        '500':
+          description: Временная ошибка
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                delivery_key:
+                  type: string
+                  format: uuid
+              additionalProperties: false
+              required:
+              - delivery_key
+            example:
+              delivery_key: 11111111-1111-4111-8111-111111111111
+  /api/v1/projects/{project_id}/office-demo/decisions/{workflow_run_id}:
+    post:
+      tags:
+      - workflows
+      summary: Подтвердить или отклонить результат
+      operationId: officeDemoDecide
+      security:
+      - bearerAuth: []
+      description: Только владелец гостевой демо-компании. Изоляция по project_id
+        и членству. Опрос сервера каждые 30 секунд. До 30 исполнений, незавершённые
+        не удаляются. Повторная подготовка идемпотентна, доставка дедуплицируется
+        по delivery_key, повторное решение возвращает 409. Внешняя почта и банк не
+        подключаются.
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: workflow_run_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Состояние сценария или принятое решение
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                configured: true
+                interval_seconds: 30
+                retained_runs: 30
+                pending_mail: 0
+        '400':
+          description: Некорректный запрос
+        '401':
+          description: Требуется вход
+        '403':
+          description: Нет доступа к демо-проекту
+        '409':
+          description: Решение уже принято или очередь заполнена
+        '500':
+          description: Временная ошибка
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                approved:
+                  type: boolean
+              additionalProperties: false
+              required:
+              - approved
+            example:
+              approved: true

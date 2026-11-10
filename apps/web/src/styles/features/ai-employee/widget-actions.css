@@ -1,0 +1,46 @@
+.ai-command-row {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 10px 14px;
+  max-height: 112px;
+  overflow-y: auto;
+  flex: 0 0 auto;
+  border-top: 1px solid var(--ai-widget-border);
+  background: var(--card);
+}
+
+.ai-command-row button,
+.ai-proposal-actions button,
+.ai-copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 30px;
+  border: 1px solid var(--ai-widget-border);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.2;
+  padding: 6px 10px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ai-command-row button {
+  flex: 0 1 auto;
+  max-width: 100%;
+  white-space: normal;
+  text-align: left;
+}
+
+.ai-command-row button:hover,
+.ai-proposal-actions button:hover,
+.ai-copy:hover {
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+  background: var(--accent);
+}

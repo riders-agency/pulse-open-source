@@ -1,0 +1,41 @@
+.chat-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  padding: 18px;
+  overflow: auto;
+  background:
+    linear-gradient(color-mix(in srgb, var(--card) 94%, var(--surface-info)), color-mix(in srgb, var(--card) 96%, var(--surface-subtle)));
+}
+
+.chat-bubble {
+  width: min(72%, 680px);
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.chat-bubble.mine {
+  align-self: flex-end;
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+  background: color-mix(in srgb, var(--accent) 86%, var(--card));
+}
+
+.chat-bubble.their {
+  align-self: flex-start;
+  border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
+}
+
+.chat-bubble span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+.chat-bubble p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}

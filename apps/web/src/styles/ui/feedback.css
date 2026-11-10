@@ -1,0 +1,9 @@
+.form-error {
+  border: 1px solid color-mix(in srgb, var(--destructive) 35%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--destructive) 8%, var(--card));
+  color: var(--destructive);
+  padding: 10px 12px;
+  font-size: 15px;
+  font-weight: 650;
+}

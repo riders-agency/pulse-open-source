@@ -1,0 +1,74 @@
+.live-visitor-list {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 0;
+  padding: 10px;
+  overflow: auto;
+}
+
+.live-visitor-card {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr) auto;
+  gap: 4px 10px;
+  width: 100%;
+  min-height: 116px;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--foreground);
+  text-align: left;
+  cursor: pointer;
+}
+
+.live-visitor-card:hover,
+.live-visitor-card.is-active,
+.live-visitor-card:focus-visible {
+  border-color: color-mix(in srgb, var(--primary) 38%, var(--border));
+  background: color-mix(in srgb, var(--accent) 82%, var(--card));
+}
+
+.live-visitor-card:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ring) 35%, transparent);
+  outline-offset: 2px;
+}
+
+.live-visitor-card strong,
+.live-visitor-card small,
+.live-visitor-card > span:not(.live-dot),
+.live-card-badges {
+  grid-column: 2 / span 2;
+  min-width: 0;
+}
+
+.live-visitor-card strong,
+.live-visitor-card small,
+.live-visitor-card > span:not(.live-dot) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.live-visitor-card .ui-button {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.live-dot {
+  grid-row: 1 / span 4;
+  width: 10px;
+  height: 10px;
+  margin-top: 3px;
+  border-radius: 999px;
+}
+
+.live-dot.is-online {
+  background: var(--status-success-solid);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--status-success-solid) 17%, transparent);
+}
+
+.live-dot.is-offline {
+  background: var(--neutral-muted);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--neutral-muted) 17%, transparent);
+}

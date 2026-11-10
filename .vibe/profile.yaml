@@ -1,0 +1,24 @@
+stack: go-next-postgres
+project_name: Riders Pulse
+registry_version: 1.1.0
+components:
+  backend: go
+  frontend: next
+  database: postgres
+  contracts: openapi
+enabled:
+  backend: true
+  frontend: true
+  database: true
+  contracts: true
+  testing: true
+  security: true
+  observability: true
+disabled:
+  mobile: true
+  desktop: false
+  worker: true
+  admin: true
+  payments: true
+  queue: true
+  ai: true

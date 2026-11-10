@@ -1,0 +1,111 @@
+.docs-page {
+  width: min(100%, 920px);
+  margin: 0 auto;
+  padding: 32px 18px 64px;
+}
+
+.docs-page h1 {
+  margin: 16px 0 10px;
+  font-size: 32px;
+  line-height: 1.15;
+}
+
+.docs-landing {
+  max-width: 560px;
+  padding-top: 32px;
+}
+
+.docs-landing-title {
+  margin-bottom: 8px;
+  font-size: 24px;
+}
+
+.docs-landing-copy {
+  margin-bottom: 24px;
+  color: var(--muted-foreground);
+}
+
+.docs-link-list {
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.docs-landing-back {
+  margin-top: 32px;
+}
+
+.docs-topline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  color: var(--foreground);
+  font-size: 15px;
+}
+
+.docs-topline a,
+.docs-result-actions a {
+  color: var(--info);
+  font-weight: 600;
+}
+
+.docs-search-input {
+  width: 100%;
+  min-height: 46px;
+  margin: 18px 0;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--foreground);
+}
+
+.docs-result-list {
+  display: grid;
+  gap: 10px;
+}
+
+.docs-result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.docs-result h2 {
+  margin: 0 0 6px;
+  font-size: 17px;
+}
+
+.docs-result p {
+  margin: 0 0 8px;
+  color: var(--foreground);
+  line-height: 1.45;
+}
+
+.docs-result small {
+  color: var(--foreground);
+}
+
+.docs-result-actions {
+  display: grid;
+  gap: 6px;
+  justify-items: end;
+  align-content: start;
+}
+
+.docs-markdown {
+  overflow: auto;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--foreground);
+  white-space: pre-wrap;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  line-height: 1.55;
+}

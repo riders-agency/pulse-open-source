@@ -1,0 +1,48 @@
+.ui-field {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.ui-field > span {
+  color: var(--foreground);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ui-field small {
+  color: var(--foreground);
+  font-size: 13px;
+}
+
+.ui-input,
+.ui-textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--input);
+  color: var(--foreground);
+  outline: none;
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease;
+}
+
+.ui-input {
+  height: 46px;
+  padding: 0 13px;
+}
+
+.ui-textarea {
+  min-height: 122px;
+  padding: 12px 13px;
+  resize: vertical;
+}
+
+.ui-input:focus,
+.ui-textarea:focus {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 20%, transparent);
+}

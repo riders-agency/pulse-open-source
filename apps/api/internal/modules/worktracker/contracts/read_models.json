@@ -1,0 +1,67 @@
+[
+  {
+    "name": "pulse_read.task_workflow_statuses_v1",
+    "owner": "worktracker",
+    "table": "task_workflow_statuses",
+    "columns": [
+      "task_workflow_status_id",
+      "task_workflow_id",
+      "name",
+      "category",
+      "position",
+      "is_start",
+      "is_done",
+      "updated_at"
+    ],
+    "consumers": [
+      "ai"
+    ]
+  },
+  {
+    "name": "pulse_read.task_workflows_v1",
+    "owner": "worktracker",
+    "table": "task_workflows",
+    "columns": [
+      "task_workflow_id",
+      "project_id",
+      "client_id",
+      "name",
+      "description",
+      "is_default"
+    ],
+    "consumers": [
+      "ai"
+    ]
+  },
+  {
+    "name": "pulse_read.tasks_v1",
+    "owner": "worktracker",
+    "table": "tasks",
+    "columns": [
+      "task_id",
+      "company_id",
+      "project_id",
+      "client_id",
+      "task_key",
+      "title",
+      "description",
+      "type",
+      "task_workflow_status_id",
+      "task_workflow_id",
+      "priority",
+      "assignee_user_id",
+      "due_date",
+      "archived_at",
+      "position",
+      "rank",
+      "client_visible",
+      "billable",
+      "labels",
+      "updated_at",
+      "search_vector"
+    ],
+    "consumers": [
+      "ai"
+    ]
+  }
+]

@@ -1,0 +1,5 @@
+.ai-completed-proposal { border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+.ai-completed-proposal > summary { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 12px; font-weight: 600; list-style: none; }
+.ai-completed-proposal > summary span { flex: 1; }
+.ai-completed-proposal > summary svg:first-child { color: var(--status-success-text); flex-shrink: 0; }
+.ai-completed-proposal > .ai-proposal-fields { margin-top: 14px; }

@@ -1,0 +1,1251 @@
+paths:
+  /api/v1/auth/register:
+    post:
+      tags: [auth]
+      summary: Register account
+      operationId: authRegister
+      description: Create inactive account and issue activation flow.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 12
+            examples:
+              owner:
+                value:
+                  email: owner@example.test
+                  password: "example-password-only"
+              admin:
+                value:
+                  email: admin@example.test
+                  password: "example-password-only"
+      responses:
+        '201':
+          description: Registration accepted
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status:
+                    type: string
+                    example: activation_required
+              examples:
+                created:
+                  value:
+                    status: activation_required
+        '422':
+          description: Validation error
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                invalid_email:
+                  value:
+                    status: fix_required
+                    title: Validation required
+                    detail: Исправьте email и повторите запрос.
+                    action: Проверьте validate email
+                    validate: email
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -X POST https://api.example.test/api/v1/auth/register \
+              -H 'Content-Type: application/json' \
+              -d '{"email":"owner@example.test","password":"example-password-only"}'
+
+  /api/v1/auth/activate:
+    post:
+      tags: [auth]
+      summary: Activate account
+      operationId: authActivate
+      x-runtime-status: preview
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token]
+              properties:
+                token:
+                  type: string
+            examples:
+              activation:
+                value:
+                  token: act_6d2f8e0a4f
+      responses:
+        '200':
+          description: Activated
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status:
+                    type: string
+                    example: activated
+              examples:
+                ok:
+                  value:
+                    status: activated
+        '400':
+          description: Bad token
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                invalid:
+                  value:
+                    status: fix_required
+                    title: Activation validate required
+                    detail: Проверьте activation token и повторите запрос.
+                    action: Проверьте validate token
+                    validate: token
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -X POST https://api.example.test/api/v1/auth/activate \
+              -H 'Content-Type: application/json' \
+              -d '{"token":"act_6d2f8e0a4f"}'
+
+  /api/v1/auth/login:
+    post:
+      tags: [auth]
+      summary: Login with email/password
+      operationId: authLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+            examples:
+              primary:
+                value:
+                  email: owner@example.test
+                  password: "example-password-only"
+              secondary:
+                value:
+                  email: admin@example.test
+                  password: "example-password-only"
+      responses:
+        '200':
+          description: Authenticated. Browser clients also receive HttpOnly `rp_access`, HttpOnly `rp_refresh`, and readable `rp_csrf` cookies.
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [access_token, token_type, expires_in, csrf_token, access_expires_at, refresh_expires_at]
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                    example: Bearer
+                  expires_in:
+                    type: integer
+                    example: 900
+                  csrf_token:
+                    type: string
+                    description: Double-submit token mirrored in the `rp_csrf` cookie for unsafe browser cookie requests.
+                  access_expires_at:
+                    type: string
+                    format: date-time
+                  refresh_expires_at:
+                    type: string
+                    format: date-time
+              examples:
+                success:
+                  value:
+                    access_token: eyJhbGciOi...
+                    token_type: Bearer
+                    expires_in: 900
+                    csrf_token: csrf_opaque_token
+                    access_expires_at: '2026-06-25T12:15:00Z'
+                    refresh_expires_at: '2026-07-25T12:00:00Z'
+        '401':
+          description: Invalid credentials
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                wrong_password:
+                  value:
+                    status: fix_required
+                    title: Sign-in validate required
+                    detail: Исправьте email или password и повторите вход.
+                    action: Проверьте validate email,password
+                    validate: email,password
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -X POST https://api.example.test/api/v1/auth/login \
+              -H 'Content-Type: application/json' \
+              -d '{"email":"owner@example.test","password":"example-password-only"}'
+
+  /api/v1/auth/logout:
+    post:
+      tags: [auth]
+      summary: Logout current session
+      operationId: authLogout
+      security:
+        - bearerAuth: []
+      responses:
+        '204':
+          description: Session revoked
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+        '401':
+          description: Unauthorized
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                unauthorized:
+                  value:
+                    status: fix_required
+                    title: Session validate required
+                    detail: Выполните вход и повторите запрос.
+                    action: Проверьте validate access_token
+                    validate: access_token
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -X POST https://api.example.test/api/v1/auth/logout \
+              -H 'Authorization: Bearer <access_token>'
+
+  /api/v1/auth/refresh:
+    post:
+      tags: [auth]
+      summary: Refresh access token
+      operationId: authRefresh
+      description: Uses the HttpOnly `rp_refresh` cookie and rotates access, refresh, and CSRF tokens. Browser clients must send `X-CSRF-Token` matching the readable `rp_csrf` cookie.
+      parameters:
+        - name: X-CSRF-Token
+          in: header
+          required: false
+          schema:
+            type: string
+          description: Required for browser cookie refresh requests.
+      responses:
+        '200':
+          description: Token refreshed. A reused old refresh token revokes the session family.
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [access_token, token_type, expires_in, csrf_token, access_expires_at, refresh_expires_at]
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                  expires_in:
+                    type: integer
+                  csrf_token:
+                    type: string
+                  access_expires_at:
+                    type: string
+                    format: date-time
+                  refresh_expires_at:
+                    type: string
+                    format: date-time
+              examples:
+                refreshed:
+                  value:
+                    access_token: eyJhbGciOi...
+                    token_type: Bearer
+                    expires_in: 900
+                    csrf_token: csrf_opaque_token
+                    access_expires_at: '2026-06-25T12:15:00Z'
+                    refresh_expires_at: '2026-07-25T12:00:00Z'
+        '403':
+          description: Missing or mismatched CSRF token for a browser cookie refresh request.
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+        '401':
+          description: Unauthorized
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                unauthorized:
+                  value:
+                    status: fix_required
+                    title: Session validate required
+                    detail: Выполните вход и повторите запрос.
+                    action: Проверьте validate access_token
+                    validate: access_token
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -X POST https://api.example.test/api/v1/auth/refresh \
+              -H 'X-CSRF-Token: <rp_csrf>' \
+              --cookie 'rp_refresh=<refresh_cookie>; rp_csrf=<rp_csrf>'
+
+  /api/v1/auth/refresh/csrf:
+    get:
+      tags: [auth]
+      summary: Renew browser CSRF token from refresh cookie
+      operationId: authRefreshCSRF
+      description: Issues a fresh readable `rp_csrf` cookie when the browser still has a valid refresh cookie but the short access cookie or readable CSRF cookie is missing. This endpoint does not rotate the refresh token and does not return an access token.
+      security: []
+      responses:
+        '200':
+          description: CSRF token renewed from refresh cookie.
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [csrf_token]
+                properties:
+                  csrf_token:
+                    type: string
+                    description: Double-submit token mirrored in the `rp_csrf` cookie.
+              examples:
+                renewed:
+                  value:
+                    csrf_token: csrf_opaque_token
+        '401':
+          description: Missing or invalid refresh cookie.
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -L https://api.example.test/api/v1/auth/refresh/csrf \
+              --cookie 'rp_refresh=<refresh_cookie>'
+
+  /api/v1/auth/csrf:
+    get:
+      tags: [auth]
+      summary: Renew browser CSRF token
+      operationId: authCSRF
+      description: Issues a fresh readable `rp_csrf` cookie for an already authenticated browser session. Used by same-origin clients to recover from a missing or stale CSRF cookie before retrying unsafe cookie-authenticated requests.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: CSRF token renewed.
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [csrf_token]
+                properties:
+                  csrf_token:
+                    type: string
+                    description: Double-submit token mirrored in the `rp_csrf` cookie.
+              examples:
+                renewed:
+                  value:
+                    csrf_token: csrf_opaque_token
+        '401':
+          description: Unauthorized
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -L https://api.example.test/api/v1/auth/csrf \
+              --cookie 'rp_access=<access_cookie>'
+
+  /api/v1/auth/me:
+    get:
+      tags: [auth]
+      summary: Current user profile
+      operationId: authMe
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Current authenticated user
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/UserMe
+              examples:
+                me:
+                  value:
+                    user_id: e2f0d908-03d7-4ba0-9c76-f0d1553f7428
+                    email: owner@example.test
+                    current_company_id: b98772dd-7cf7-455d-a750-9ef142546b37
+        '401':
+          description: Unauthorized
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                unauthorized:
+                  value:
+                    status: fix_required
+                    title: Session validate required
+                    detail: Выполните вход и повторите запрос.
+                    action: Проверьте validate access_token
+                    validate: access_token
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -L https://api.example.test/api/v1/auth/me \
+              -H 'Authorization: Bearer <access_token>'
+
+  /api/v1/auth/workspace-context:
+    get:
+      tags: [auth]
+      summary: Get persisted workspace context
+      operationId: authWorkspaceContextGet
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Persisted active company and project for this user
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/WorkspaceContext
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+    put:
+      tags: [auth]
+      summary: Persist active company and project context
+      operationId: authWorkspaceContextPut
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../openapi.root.yaml#/components/schemas/WorkspaceContextPatch
+      responses:
+        '200':
+          description: Updated workspace context
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/WorkspaceContext
+        '403':
+          description: Company or project is not available to the user
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+
+  /api/v1/auth/oauth/{provider}/start:
+    get:
+      tags: [auth]
+      summary: OAuth start
+      operationId: authOauthStart
+      x-runtime-status: preview
+      parameters:
+        - name: provider
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [google, yandex, vk]
+      responses:
+        '200':
+          description: OAuth start metadata
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [auth_url, state]
+                properties:
+                  auth_url:
+                    type: string
+                  state:
+                    type: string
+              examples:
+                metadata:
+                  value:
+                    auth_url: https://accounts.google.com/o/oauth2/v2/auth?...
+                    state: state_47f...
+        '302':
+          description: Redirect to provider auth page
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+        '400':
+          description: Unsupported provider
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                bad_provider:
+                  value:
+                    status: fix_required
+                    title: OAuth provider validate required
+                    detail: Исправьте provider и повторите запрос.
+                    action: Проверьте validate provider
+                    validate: provider
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -L 'https://api.example.test/api/v1/auth/oauth/google/start'
+
+  /api/v1/auth/oauth/{provider}/callback:
+    get:
+      tags: [auth]
+      summary: OAuth callback
+      operationId: authOauthCallback
+      x-runtime-status: preview
+      parameters:
+        - name: provider
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [google, yandex, vk]
+        - name: code
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: state
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Callback processed
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status:
+                    type: string
+                    example: callback_processed
+              examples:
+                processed:
+                  value:
+                    status: callback_processed
+        '302':
+          description: Redirect to app/deep-link after identity mapping
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+        '400':
+          description: Invalid callback payload
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                invalid:
+                  value:
+                    status: fix_required
+                    title: OAuth callback validate required
+                    detail: Проверьте validate code,state и повторите запрос.
+                    action: Проверьте validate code,state
+                    validate: code,state
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -L 'https://api.example.test/api/v1/auth/oauth/google/callback?code=abc&state=state_47f'
+
+  /api/v1/auth/telegram/miniapp:
+    post:
+      tags: [auth]
+      summary: Telegram Mini App sign-in
+      operationId: authTelegramMiniApp
+      x-runtime-status: preview
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [init_data]
+              properties:
+                init_data:
+                  type: string
+            examples:
+              tg:
+                value:
+                  init_data: "query_id=AAE...&user=%7B...%7D&hash=..."
+      responses:
+        '200':
+          description: Authenticated via Telegram
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [access_token, token_type, expires_in]
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                  expires_in:
+                    type: integer
+              examples:
+                success:
+                  value:
+                    access_token: eyJhbGciOi...
+                    token_type: Bearer
+                    expires_in: 900
+        '400':
+          description: Invalid Telegram init data
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                invalid_tg_data:
+                  value:
+                    status: fix_required
+                    title: Telegram payload validate required
+                    detail: Проверьте init_data и повторите запрос.
+                    action: Проверьте validate init_data
+                    validate: init_data
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -X POST https://api.example.test/api/v1/auth/telegram/miniapp \
+              -H 'Content-Type: application/json' \
+              -d '{"init_data":"query_id=AAE...&user=%7B...%7D&hash=..."}'
+
+  /api/v1/auth/native/exchange:
+    post:
+      tags: [auth]
+      summary: Native code exchange (Qt/Android)
+      operationId: authNativeExchange
+      x-runtime-status: preview
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [code, code_verifier, state]
+              properties:
+                code:
+                  type: string
+                code_verifier:
+                  type: string
+                state:
+                  type: string
+            examples:
+              qt:
+                value:
+                  code: oauth_code_abc
+                  code_verifier: qJ4...k3
+                  state: state_47f...
+      responses:
+        '200':
+          description: Session created for native app
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [access_token, token_type, expires_in, device_credential]
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                  expires_in:
+                    type: integer
+                  device_credential:
+                    type: string
+              examples:
+                success:
+                  value:
+                    access_token: eyJhbGciOi...
+                    token_type: Bearer
+                    expires_in: 900
+                    device_credential: dcred_932...
+        '400':
+          description: Invalid exchange payload
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                invalid_exchange:
+                  value:
+                    status: fix_required
+                    title: Native exchange validate required
+                    detail: Проверьте code, code_verifier и state, затем повторите запрос.
+                    action: Проверьте validate code,code_verifier,state
+                    validate: code,code_verifier,state
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -X POST https://api.example.test/api/v1/auth/native/exchange \
+              -H 'Content-Type: application/json' \
+              -d '{"code":"oauth_code_abc","code_verifier":"qJ4...k3","state":"state_47f..."}'
+
+  /api/v1/auth/sessions:
+    get:
+      tags: [auth]
+      summary: List user sessions
+      operationId: authSessionList
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Sessions list
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/SessionView
+              examples:
+                list:
+                  value:
+                    - session_id: 9d660b52-2e4e-4b0c-8ab0-ce0df8a3e550
+                      client_type: web
+                      device_label: Chrome on macOS
+                      ip_address: 203.0.113.10
+                      created_at: "2026-03-02T10:00:00Z"
+                      last_seen_at: "2026-03-02T10:15:00Z"
+                      is_current: true
+                    - session_id: 3d3d35f7-1502-449b-a756-ec2f8d3d7cb0
+                      client_type: qt-linux
+                      device_label: Qt App on Ubuntu
+                      ip_address: 203.0.113.11
+                      created_at: "2026-03-01T12:00:00Z"
+                      last_seen_at: "2026-03-02T09:55:00Z"
+                      is_current: false
+        '401':
+          description: Unauthorized
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                unauthorized:
+                  value:
+                    status: fix_required
+                    title: Session validate required
+                    detail: Выполните вход и повторите запрос.
+                    action: Проверьте validate access_token
+                    validate: access_token
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -L https://api.example.test/api/v1/auth/sessions \
+              -H 'Authorization: Bearer <access_token>'
+
+  /api/v1/auth/sessions/{session_id}:
+    delete:
+      tags: [auth]
+      summary: Revoke one session
+      operationId: authSessionDelete
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Session revoked
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: revoked
+              examples:
+                revoked:
+                  value:
+                    status: revoked
+        '404':
+          description: Session not found
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                session_missing:
+                  value:
+                    status: fix_required
+                    title: Session validate required
+                    detail: Проверьте session_id и повторите запрос.
+                    action: Проверьте validate session_id
+                    validate: session_id
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -X DELETE https://api.example.test/api/v1/auth/sessions/9d660b52-2e4e-4b0c-8ab0-ce0df8a3e550 \
+              -H 'Authorization: Bearer <access_token>'
+
+  /api/v1/auth/sessions/revoke-others:
+    post:
+      tags: [auth]
+      summary: Revoke all sessions except current
+      operationId: authSessionsRevokeOthers
+      x-runtime-status: preview
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Other sessions revoked
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, revoked_count]
+                properties:
+                  status:
+                    type: string
+                    example: revoked_others
+                  revoked_count:
+                    type: integer
+                    example: 2
+              examples:
+                done:
+                  value:
+                    status: revoked_others
+                    revoked_count: 2
+        '401':
+          description: Unauthorized
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                unauthorized:
+                  value:
+                    status: fix_required
+                    title: Session validate required
+                    detail: Выполните вход и повторите запрос.
+                    action: Проверьте validate access_token
+                    validate: access_token
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -X POST https://api.example.test/api/v1/auth/sessions/revoke-others \
+              -H 'Authorization: Bearer <access_token>'
+
+  /api/v1/auth/password-reset/request:
+    post:
+      tags: [auth]
+      summary: Request password reset
+      operationId: authPasswordResetRequest
+      x-runtime-status: preview
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+            examples:
+              request:
+                value:
+                  email: owner@example.test
+      responses:
+        '200':
+          description: Reset flow accepted
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: reset_requested
+              examples:
+                accepted:
+                  value:
+                    status: reset_requested
+        '422':
+          description: Email validation required
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                invalid_email:
+                  value:
+                    status: fix_required
+                    title: Email validate required
+                    detail: Исправьте email и повторите запрос.
+                    action: Проверьте validate email
+                    validate: email
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -X POST https://api.example.test/api/v1/auth/password-reset/request \
+              -H 'Content-Type: application/json' \
+              -d '{"email":"owner@example.test"}'
+
+  /api/v1/auth/password-reset/confirm:
+    post:
+      tags: [auth]
+      summary: Confirm password reset
+      operationId: authPasswordResetConfirm
+      x-runtime-status: preview
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token, new_password]
+              properties:
+                token:
+                  type: string
+                new_password:
+                  type: string
+                  minLength: 12
+            examples:
+              confirm:
+                value:
+                  token: rst_320ab...
+                  new_password: "example-password-only"
+      responses:
+        '200':
+          description: Password changed
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: password_updated
+              examples:
+                done:
+                  value:
+                    status: password_updated
+        '400':
+          description: Reset token validation required
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+              examples:
+                invalid_token:
+                  value:
+                    status: fix_required
+                    title: Reset token validate required
+                    detail: Проверьте token и повторите запрос.
+                    action: Проверьте validate token,new_password
+                    validate: token,new_password
+                    request_id: req_01HPX4K9V7F5Q3Q0M3X6B8N1TZ
+      x-codeSamples:
+        - lang: curl
+          source: |
+            curl -X POST https://api.example.test/api/v1/auth/password-reset/confirm \
+              -H 'Content-Type: application/json' \
+              -d '{"token":"rst_320ab...","new_password":"example-password-only"}'

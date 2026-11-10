@@ -1,0 +1,154 @@
+.cobrowse-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100%;
+  min-height: min(720px, calc(100vh - 250px));
+  background: var(--card);
+}
+
+.cobrowse-toolbar,
+.cobrowse-footer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cobrowse-footer {
+  justify-content: flex-start;
+  border-top: 1px solid var(--border);
+  border-bottom: 0;
+}
+
+.cobrowse-toolbar span {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+.cobrowse-stage {
+  min-height: 0;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 18px 18px, color-mix(in srgb, var(--foreground) 5%, transparent) 1px, transparent 1px),
+    color-mix(in srgb, var(--card) 96%, var(--surface-muted));
+  background-size: 24px 24px;
+  scrollbar-width: none;
+}
+
+.cobrowse-stage::-webkit-scrollbar {
+  display: none;
+}
+
+.remote-viewport-shell {
+  position: relative;
+  display: block;
+  min-width: 0;
+  min-height: 0;
+  width: var(--remote-shell-width, 0);
+  height: var(--remote-shell-height, 0);
+}
+
+.remote-viewport {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--remote-viewport-width, 1280px);
+  height: var(--remote-viewport-height, 720px);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--background);
+  box-shadow: 0 22px 60px color-mix(in srgb, var(--foreground) 16%, transparent);
+  transform-origin: top left;
+  transform: scale(var(--remote-viewport-scale, 1));
+  transition: none;
+}
+
+.remote-page {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--remote-preview-width, 100%);
+  height: var(--remote-preview-height, 100%);
+  transform: var(--remote-preview-transform, translate3d(0, 0, 0));
+  transform-origin: top left;
+  will-change: transform;
+}
+
+.remote-viewport iframe {
+  display: block;
+  width: var(--remote-preview-width, 100%);
+  height: var(--remote-preview-height, 100%);
+  border: 0;
+  background: var(--background);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cobrowse-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border: 2px solid color-mix(in srgb, var(--primary) 55%, transparent);
+}
+
+.remote-cursor,
+.remote-touch,
+.remote-click {
+  position: absolute;
+  left: var(--remote-pointer-x, 0);
+  top: var(--remote-pointer-y, 0);
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+}
+
+.remote-cursor {
+  width: 16px;
+  height: 16px;
+  background: var(--primary);
+  box-shadow: 0 0 0 7px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.remote-touch {
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--skipped);
+  background: color-mix(in srgb, var(--skipped) 16%, transparent);
+}
+
+.remote-click {
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--status-danger-strong);
+  background: color-mix(in srgb, var(--status-danger-strong) 16%, transparent);
+  animation: clickPulse 1.6s ease-in-out infinite;
+}
+
+.remote-scrollbar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  bottom: 8px;
+  width: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-inverse) 11%, transparent);
+}
+
+.remote-scrollbar span {
+  position: absolute;
+  left: 1px;
+  top: var(--remote-scrollbar-top, 0);
+  width: 6px;
+  height: var(--remote-scrollbar-height, 24px);
+  min-height: 24px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 78%, var(--background));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--surface-inverse) 10%, transparent);
+}

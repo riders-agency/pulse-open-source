@@ -1,0 +1,10 @@
+.office-workflow { display: grid; gap: 12px; padding: 16px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; }
+.office-workflow-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.office-workflow h2, .office-workflow p { margin: 0; }
+.office-workflow-heading p { margin-top: 6px; }
+.office-workflow-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.office-artifacts { display: grid; gap: 12px; margin-top: 12px; }
+.office-artifacts article { border-top: 1px solid var(--border); padding-top: 12px; }
+.office-decision { display: grid; gap: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; }
+.office-decision p { margin: 0; overflow-wrap: anywhere; }
+@media (max-width: 640px) { .office-workflow-heading { flex-direction: column; } .office-workflow { padding: 12px; } }

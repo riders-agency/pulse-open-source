@@ -1,0 +1,19 @@
+.ui-sheet {
+  min-width: 0;
+  max-width: 100%;
+  border-left: 1px solid var(--border);
+  background: var(--card);
+  padding: 18px;
+  overflow: auto;
+}
+
+.ui-sheet-title {
+  margin: 0;
+  font-size: 20px;
+}
+
+.ui-sheet-description {
+  margin: 6px 0 0;
+  color: var(--foreground);
+  font-size: 15px;
+}

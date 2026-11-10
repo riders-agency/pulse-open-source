@@ -1,0 +1,212 @@
+paths:
+  /api/v1/action-types:
+    get:
+      tags: [catalog]
+      summary: Список типов действий для конструктора workflow
+      description: |
+        Каталог поддерживаемых типов узлов (действий). Используйте `config_schema_json` / `result_schema_json`
+        при редактировании графа черновика и для валидации на стороне UI.
+      operationId: actionTypes
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Каталог действий
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/ActionTypeCatalogItem
+        "401":
+          description: Unauthorized
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+        "500":
+          description: Внутренняя ошибка загрузки каталога
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+  /api/v1/action-types/{action_type_key}:
+    get:
+      tags: [catalog]
+      summary: Детали типа действия
+      operationId: actionTypeGet
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: action_type_key
+          in: path
+          required: true
+          schema:
+            type: string
+          example: http.request
+      responses:
+        "200":
+          description: Тип действия
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/ActionTypeCatalogItem
+        "401":
+          description: Unauthorized
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+        "404":
+          description: Неизвестный action_key
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+  /api/v1/action-dependency-types:
+    get:
+      tags: [catalog]
+      summary: Список типов зависимостей проекта
+      description: |
+        Схемы для настройки SMTP, мессенджеров и других внешних интеграций, на которые ссылаются действия.
+      operationId: depTypes
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Каталог типов зависимостей
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../openapi.root.yaml#/components/schemas/DependencyTypeCatalogItem
+        "401":
+          description: Unauthorized
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+        "500":
+          description: Внутренняя ошибка загрузки каталога
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+  /api/v1/action-dependency-types/{dependency_type_key}:
+    get:
+      tags: [catalog]
+      summary: Детали типа зависимости
+      operationId: depTypeGet
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: dependency_type_key
+          in: path
+          required: true
+          schema:
+            type: string
+          example: smtp.generic
+      responses:
+        "200":
+          description: Тип зависимости
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/DependencyTypeCatalogItem
+        "401":
+          description: Unauthorized
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem
+        "404":
+          description: Неизвестный dependency_type_key
+          headers:
+            X-Request-Id:
+              $ref: ../openapi.root.yaml#/components/headers/X-Request-Id
+            X-App-Result:
+              $ref: ../openapi.root.yaml#/components/headers/X-App-Result
+            Content-Language:
+              $ref: ../openapi.root.yaml#/components/headers/Content-Language
+          content:
+            application/json:
+              schema:
+                $ref: ../openapi.root.yaml#/components/schemas/Problem

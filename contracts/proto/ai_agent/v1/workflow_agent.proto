@@ -1,0 +1,26 @@
+syntax = "proto3";
+package ai_agent.v1;
+
+import "ai_agent/v1/common.proto";
+import "google/protobuf/struct.proto";
+
+option go_package = "riders.agency/pulse/api/internal/gen/ai_agent/v1;aiagentv1";
+
+// Internal, authenticated, side-effect-free department actions.
+// Go owns authorization, durable workflow state, approval and writes.
+service WorkflowAgentService {
+  rpc Prepare(WorkflowAgentRequest) returns (WorkflowAgentResponse);
+}
+message WorkflowAgentRequest {
+  string request_id = 1;
+  string company_id = 2;
+  string project_id = 3;
+  string user_id = 4;
+  string action = 5;
+  google.protobuf.Struct mail = 6;
+}
+message WorkflowAgentResponse {
+  google.protobuf.Struct output = 1;
+  Usage usage = 2;
+  repeated string executed_nodes = 3;
+}

@@ -1,0 +1,3 @@
+.demo-notice { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 10px 16px; background: var(--palette-surface); border-bottom: 1px solid color-mix(in srgb, var(--palette-ink) 15%, transparent); font-size: 12px; line-height: 1.5; }
+.demo-notice a { margin-left: auto; color: inherit; }
+@media (max-width: 760px) { .demo-notice a { margin-left: 0; } }

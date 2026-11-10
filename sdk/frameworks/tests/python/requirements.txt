@@ -1,0 +1,4 @@
+fastapi==0.162.2
+django==6.1.3
+flask==3.1.3
+httpx==0.28.1

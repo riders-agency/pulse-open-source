@@ -1,0 +1,132 @@
+.work-task-drawer .ui-sheet-header {
+  display: grid;
+  gap: 10px;
+  padding-right: 52px;
+}
+
+.work-drawer-eyebrow {
+  width: max-content;
+  max-width: 100%;
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
+  border-radius: 999px;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.work-task-hero-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.work-task-hero-meta > span {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  padding: 0 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.work-drawer-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  cursor: pointer;
+}
+
+.work-task-screen {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  width: min(1280px, 100%);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.work-task-screen-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-task-screen-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  grid-column: 1 / -1;
+}
+
+.work-task-screen-title {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.work-task-screen-title h1 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 28px;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+.work-task-screen-title p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 14px;
+}
+
+.work-task-screen-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.work-icon-button {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--background);
+  color: var(--foreground);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.work-icon-button:hover {
+  background: var(--accent);
+}
+
+.work-success-note {
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--success) 36%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--success) 9%, var(--card));
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 750;
+}

@@ -1,0 +1,20 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+
+const dir = path.resolve(process.argv[2] || '../../artifacts/tech/task-story');
+const evidence = JSON.parse(await fs.readFile(path.join(dir, 'evidence.json'), 'utf8'));
+const { timings: t, recording } = evidence;
+if (evidence.failure || evidence.errors.length || evidence.checks.length < 3 || recording.tool.status !== 'succeeded' || recording.proposal.status !== 'waiting_approval' || recording.completion.status !== 'completed') throw new Error('Only a verified successful recording can be published');
+const phases = ['start', 'request', 'proposal', 'confirmation', 'result', 'graph', 'end'];
+if (phases.some((name, i) => !Number.isFinite(t[name]) || t[name] < 0 || (i > 0 && t[name] <= t[phases[i - 1]]))) throw new Error('Invalid recording timeline');
+const media = path.resolve('public/tech/recordings');
+const run = args => { const result = spawnSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', ...args], { stdio: 'inherit' }); if (result.status !== 0) throw new Error('Video conversion failed'); };
+run(['-ss', String(t.start), '-i', path.join(dir, 'ai-task.webm'), '-t', String(t.end - t.start), '-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', '21', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', path.join(media, 'ai-task.mp4')]);
+run(['-i', path.join(dir, 'result.png'), '-frames:v', '1', '-quality', '86', path.join(media, 'ai-task.webp')]);
+const stamp = seconds => new Date(Math.round(seconds * 1000)).toISOString().slice(11, 23);
+const captions = ['Пишем задачу обычными словами', 'Сотрудник готовит карточку', 'Проверяем и подтверждаем в чате', 'Подтверждение принято', 'Готово: задача создана', 'Открываем граф выполненного запроса'];
+const cues = captions.map((caption, i) => `${stamp(t[phases[i]] - t.start)} --> ${stamp(t[phases[i + 1]] - t.start)} line:4%\n${caption}`);
+await fs.writeFile(path.join(media, 'ai-task.vtt'), `WEBVTT\n\n${cues.join('\n\n')}\n`);
+await fs.writeFile(path.resolve('src/features/tech/taskRecording.generated.json'), JSON.stringify({ ...recording, duration_seconds: Math.ceil(t.end - t.start) }, null, 2) + '\n');
+console.log(JSON.stringify({ duration_seconds: t.end - t.start, model_tokens: recording.proposal.input_tokens + recording.proposal.output_tokens, tool: recording.tool.name, status: recording.tool.status }));

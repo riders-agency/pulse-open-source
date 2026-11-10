@@ -1,0 +1,21 @@
+[
+  {
+    "name": "pulse_read.workflow_runs_v1",
+    "owner": "runs",
+    "table": "workflow_runs",
+    "columns": [
+      "workflow_run_id",
+      "project_id",
+      "workflow_id",
+      "workflow_version_id",
+      "source_type",
+      "status",
+      "started_at",
+      "error"
+    ],
+    "consumers": [
+      "clients",
+      "workflows"
+    ]
+  }
+]

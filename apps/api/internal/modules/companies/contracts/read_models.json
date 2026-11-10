@@ -1,0 +1,44 @@
+[
+  {
+    "name": "pulse_read.companies_v1",
+    "owner": "companies",
+    "table": "companies",
+    "columns": [
+      "company_id",
+      "slug",
+      "name",
+      "status",
+      "created_at",
+      "updated_at",
+      "created_by_user_id"
+    ],
+    "consumers": [
+      "ai",
+      "workflows",
+      "worktracker"
+    ]
+  },
+  {
+    "name": "pulse_read.company_memberships_v1",
+    "owner": "companies",
+    "table": "company_memberships",
+    "columns": [
+      "company_id",
+      "user_id",
+      "role",
+      "created_at"
+    ],
+    "consumers": [
+      "action_dependencies",
+      "auth",
+      "clients",
+      "integrationdocs",
+      "projects",
+      "runs",
+      "templates",
+      "webhooks",
+      "workflows",
+      "worktracker"
+    ]
+  }
+]

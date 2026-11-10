@@ -1,0 +1,159 @@
+[data-theme="dark"] .monitor-preview {
+  background: var(--surface-inverse);
+}
+
+.browser-bar {
+  display: grid;
+  grid-template-columns: 10px 10px 10px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+}
+
+.browser-bar span {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--status-danger-vivid);
+}
+
+.browser-bar span:nth-child(2) {
+  background: var(--status-warning-vivid);
+}
+
+.browser-bar span:nth-child(3) {
+  background: var(--status-success-vivid);
+}
+
+.browser-bar strong {
+  min-width: 0;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viewport-canvas {
+  position: relative;
+  min-height: 360px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--primary) 9%, transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--primary) 8%, transparent) 1px, transparent 1px),
+    var(--card);
+  background-size: 36px 36px;
+}
+
+.viewport-url {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+  z-index: 2;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  color: var(--foreground);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.viewport-scroll {
+  position: absolute;
+  top: 96px;
+  left: 18px;
+  right: 18px;
+  height: 150px;
+  border: 1px solid color-mix(in srgb, var(--primary) 28%, var(--border));
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--primary) 18%, transparent), transparent),
+    color-mix(in srgb, var(--card) 78%, var(--surface-info));
+}
+
+.cursor-point,
+.click-point {
+  position: absolute;
+  z-index: 3;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-point {
+  background: var(--primary);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.click-point {
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--status-danger-strong);
+  background: color-mix(in srgb, var(--status-danger-strong) 18%, transparent);
+  animation: clickPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes clickPulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(0.82);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 1;
+  }
+}
+
+.monitor-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.monitor-metrics > div {
+  display: grid;
+  gap: 4px;
+  min-height: 72px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.monitor-metrics span {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+.monitor-metrics strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notice {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--foreground);
+}
+
+.notice.danger {
+  border-color: color-mix(in srgb, var(--danger) 35%, var(--border));
+  color: var(--danger);
+}
+
+.notice.success {
+  border-color: color-mix(in srgb, var(--success) 35%, var(--border));
+  color: var(--success);
+}

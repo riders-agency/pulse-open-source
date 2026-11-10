@@ -1,0 +1,13 @@
+{
+  "format": "pulse-public-export-v1",
+  "source_commit": "a642fa7cc52d6958b56de5a4a97c300a24e79a92",
+  "working_tree_changes_included": false,
+  "source_files": 1938,
+  "database_data_allowlist": [
+    "action_types",
+    "action_dependency_types"
+  ],
+  "history_included": false,
+  "deployment_files_included": false,
+  "tenant_migrations_included": false
+}

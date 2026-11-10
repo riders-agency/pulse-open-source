@@ -1,0 +1,146 @@
+.work-task-title-button {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+}
+
+.work-task-title-button:hover {
+  color: var(--primary);
+}
+
+.work-board-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 40px;
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.work-create-panel {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-create-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.work-create-grid .span-2 {
+  grid-column: span 2;
+}
+
+.work-template-preview {
+  display: grid;
+  gap: 8px;
+  grid-column: 1 / -1;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--muted);
+}
+
+.work-template-boards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.work-drawer-tabs {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  overflow-x: auto;
+  margin-top: 14px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-drawer-tabs button {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.work-drawer-tabs button.is-active,
+.work-drawer-tabs button:hover {
+  background: var(--accent);
+}
+
+.work-drawer-main,
+.work-properties-panel,
+.work-drawer-section,
+.work-checklist,
+.work-comments,
+.work-comment-form,
+.work-time-list {
+  display: grid;
+  gap: 10px;
+}
+
+.work-drawer-section {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-drawer-section > header {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 30px;
+  font-weight: 850;
+}
+
+.work-drawer-section summary {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 30px;
+  cursor: pointer;
+  font-weight: 850;
+}
+
+.work-drawer-section[open] summary {
+  margin-bottom: 10px;
+}
+
+.work-properties-panel {
+  align-content: start;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-property {
+  display: grid;
+  gap: 3px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}

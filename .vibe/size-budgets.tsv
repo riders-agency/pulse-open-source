@@ -1,0 +1,244 @@
+# path	max_lines	note
+apps/api/internal/platform/httpserver/router.go	120	router shell only
+apps/api/internal/platform/app/application.go	180	composition root wiring
+apps/api/internal/platform/app/http_modules.go	180	http module registration seam
+apps/api/internal/executor/engine.go	100	runtime compatibility facade only
+apps/api/internal/executor/action_io.go	130	runtime action IO helpers
+apps/api/internal/executor/action_result.go	130	runtime action result helpers
+apps/api/internal/executor/workflow_plan.go	410	runtime workflow plan helpers
+apps/api/internal/executor/template_rendering.go	410	runtime template rendering helpers
+apps/api/internal/executor/client_payment_trigger_config.go	40	client payment trigger config clamps
+apps/api/internal/modules/clients/runtime/actions.go	160	client payment runtime contracts and registration
+apps/api/internal/modules/clients/runtime/adapters.go	50	client payment runtime action adapters
+apps/api/internal/modules/clients/runtime/action_helpers.go	240	client payment runtime shared helpers
+apps/api/internal/modules/clients/runtime/manual_payment.go	60	client manual payment action adapter
+apps/api/internal/modules/clients/runtime/payment_cycle_collect.go	150	client payment cycle collect action
+apps/api/internal/modules/clients/runtime/payment_cycle_rows.go	190	client payment cycle row query contract
+apps/api/internal/modules/clients/runtime/payment_trigger.go	130	client payment due trigger sync handler
+apps/api/internal/modules/clients/runtime/payment_reminder_queue.go	350	client payment reminder queue handler
+apps/api/internal/modules/clients/runtime/payment_batch_queue.go	180	client payment batch trigger queue handler
+apps/api/internal/modules/clients/runtime/payment_due_actions.go	80	client payment due persistence helpers
+apps/api/internal/modules/clients/runtime/digest.go	100	client payment runtime digest builder entry
+apps/api/internal/modules/clients/runtime/digest_chunks.go	130	client payment runtime digest URL helpers
+apps/api/internal/modules/clients/runtime/digest_event.go	590	client payment runtime digest event context and labels
+apps/api/internal/modules/clients/runtime/digest_rows.go	300	client payment runtime digest row rendering
+apps/api/internal/modules/clients/runtime/digest_types.go	80	client payment runtime digest types
+apps/api/internal/executor/bot_actions.go	130	bot state compatibility action
+apps/api/internal/modules/providers/runtime/actions.go	500	provider runtime shared contracts and result helpers
+apps/api/internal/modules/providers/runtime/telegram.go	360	Telegram provider runtime adapter implementation
+apps/api/internal/modules/providers/runtime/max.go	280	MAX provider runtime adapter implementation
+apps/api/internal/modules/providers/runtime/email.go	330	SMTP/email provider runtime adapter implementation
+apps/api/internal/modules/providers/runtime/uon.go	280	U-ON provider runtime adapter implementation
+apps/api/internal/modules/providers/runtime/template_helpers.go	400	provider runtime template helpers
+apps/api/internal/executor/registered_triggers.go	40	executor trigger registration facade
+apps/api/internal/runtime/kernel/triggers.go	70	runtime event-driven trigger handlers
+apps/api/internal/runtime/kernel/schedule_trigger.go	320	schedule trigger sync and queue handler
+apps/api/internal/modules/ai/repository/tools.go	20	AI tools package root only
+apps/api/internal/modules/ai/repository/tools_models.go	460	AI provider model catalog and chat transport
+apps/api/internal/modules/ai/repository/tools_turns.go	330	AI assistant turn planner
+apps/api/internal/modules/ai/repository/tools_pending.go	330	AI pending tool follow-up lifecycle
+apps/api/internal/modules/ai/repository/tools_task_client.go	420	AI task and client tool execution
+apps/api/internal/modules/ai/repository/tools_workflow_patch.go	340	AI workflow and task-process patch execution
+apps/api/internal/modules/ai/repository/tools_payment_context.go	440	AI payment lookup and context rules
+apps/api/internal/modules/ai/repository/tools_prompt_snapshot.go	40	AI redacted prompt snapshot persistence
+apps/api/internal/modules/ai/repository/tools_types.go	90	AI tool orchestration DTOs
+apps/api/internal/modules/ai/repository/tools_helpers.go	900	AI model, proposal, text, and workflow helper logic
+apps/api/internal/modules/ai/transport/http/runtime.go	30	AI runtime selection helper
+apps/api/internal/modules/ai/transport/http/employee_handlers.go	120	AI employee and model HTTP handlers
+apps/api/internal/modules/ai/transport/http/session_handlers.go	220	AI session and message HTTP handlers
+apps/api/internal/modules/ai/transport/http/ai_rollout.go	320	AI LangGraph v3 rollout policy and gates
+apps/api/internal/modules/ai/transport/http/langgraph_stream.go	300	AI LangGraph SSE stream orchestration
+apps/api/internal/modules/ai/transport/http/langgraph_helpers.go	280	AI LangGraph card and read tool helpers
+apps/api/internal/modules/ai/transport/http/sse_helpers.go	140	AI SSE serialization helpers
+apps/api/internal/modules/ai/transport/http/tool_call_handlers.go	100	AI tool approval HTTP handlers
+apps/api/internal/modules/ai/transport/http/handler_helpers.go	70	AI HTTP shared request helpers
+apps/api/internal/modules/ai/transport/http/langgraph_tool_gateway.go	130	LangGraph read tool gateway adapter
+apps/api/internal/modules/ai/repository/tool_lifecycle.go	260	AI tool approval/outbox lifecycle
+apps/api/internal/modules/ai/repository/repository.go	40	AI repository root only
+apps/api/internal/modules/ai/repository/repository_types.go	70	AI repository request DTOs
+apps/api/internal/modules/ai/repository/model_catalog.go	150	AI model catalog orchestration
+apps/api/internal/modules/ai/repository/employees.go	240	AI employee profile persistence
+apps/api/internal/modules/ai/repository/sessions.go	180	AI chat session persistence
+apps/api/internal/modules/ai/repository/chat_turns.go	340	AI chat turn persistence
+apps/api/internal/modules/ai/repository/langgraph_read_tools.go	340	AI LangGraph read tool boundary
+apps/api/internal/modules/ai/repository/workflow_summary.go	120	AI workflow draft summary helpers
+apps/api/internal/modules/ai/repository/repository_helpers.go	180	AI repository shared helpers
+apps/api/internal/modules/action_dependencies/repository/pg.go	30	action dependency repository root only
+apps/api/internal/modules/action_dependencies/repository/types.go	50	action dependency request DTOs
+apps/api/internal/modules/action_dependencies/repository/access.go	90	action dependency authorization guards
+apps/api/internal/modules/action_dependencies/repository/list_read.go	140	action dependency read queries
+apps/api/internal/modules/action_dependencies/repository/create.go	150	action dependency create persistence
+apps/api/internal/modules/action_dependencies/repository/patch.go	250	action dependency patch and secret rotation
+apps/api/internal/modules/action_dependencies/repository/telegram_relay_metadata.go	330	telegram relay metadata normalization
+apps/api/internal/modules/action_dependencies/repository/telegram_relay_controls.go	180	telegram relay runtime controls
+apps/api/internal/modules/action_dependencies/repository/smtp_metadata.go	70	SMTP dependency metadata validation
+apps/api/internal/modules/action_dependencies/repository/test_connection.go	40	action dependency connection test stub
+apps/api/internal/modules/clients/repository/pg.go	40	clients repository root only
+apps/api/internal/modules/clients/repository/access_control.go	130	clients repository authorization helpers
+apps/api/internal/modules/clients/repository/clients.go	310	clients repository client CRUD
+apps/api/internal/modules/clients/repository/legal_entities.go	200	clients repository legal entity CRUD
+apps/api/internal/modules/clients/repository/client_responsibles.go	170	clients repository responsible CRUD
+apps/api/internal/modules/clients/repository/contacts.go	140	clients repository contact CRUD
+apps/api/internal/modules/clients/repository/client_projects.go	80	clients repository project links
+apps/api/internal/modules/clients/repository/services.go	440	clients repository service CRUD
+apps/api/internal/modules/clients/repository/dadata.go	500	clients repository DaData integration
+apps/api/internal/modules/clients/repository/manual_payments.go	390	clients repository manual payment transaction
+apps/api/internal/modules/clients/repository/payment_module_triggers.go	310	clients payment module trigger outbox producer
+apps/api/internal/modules/clients/repository/payment_state_changes.go	240	clients payment state transitions
+apps/api/internal/modules/clients/repository/payment_schedule.go	210	clients payment date scheduling helpers
+apps/api/internal/modules/clients/repository/payment_actions.go	160	clients payment action queries
+apps/api/internal/modules/clients/repository/payment_documents.go	130	clients payment document persistence
+apps/api/internal/modules/clients/repository/payment_query_helpers.go	160	clients payment query helpers
+apps/api/internal/modules/clients/repository/payment_types.go	160	clients payment DTOs
+apps/api/internal/modules/clients/repository/normalization.go	200	clients normalization helpers
+apps/api/internal/modules/clients/repository/payment_dates.go	190	clients payment date helpers
+apps/api/internal/modules/clients/repository/payment_links.go	170	clients payment link presentation helpers
+apps/api/internal/modules/clients/repository/payment_metadata.go	70	clients payment metadata labels
+apps/api/internal/modules/clients/repository/dadata_mapping.go	90	clients DaData mapping helpers
+apps/api/internal/modules/clients/repository/query_args.go	130	clients SQL argument helpers
+apps/api/internal/modules/clients/repository/client_types.go	80	clients DTOs
+apps/api/internal/modules/clients/repository/legal_entity_types.go	80	legal entity DTOs
+apps/api/internal/modules/clients/repository/client_responsible_types.go	60	client responsible DTOs
+apps/api/internal/modules/clients/repository/contact_types.go	60	client contact DTOs
+apps/api/internal/modules/clients/repository/client_project_types.go	20	client project link DTOs
+apps/api/internal/modules/clients/repository/dadata_types.go	30	DaData DTOs
+apps/api/internal/modules/clients/repository/service_types.go	110	client service DTOs
+apps/api/internal/modules/clients/transport/http/handlers.go	20	clients HTTP package root only
+apps/api/internal/modules/clients/transport/http/client_handlers.go	190	clients HTTP client CRUD handlers
+apps/api/internal/modules/clients/transport/http/dadata_handlers.go	190	clients HTTP DaData handlers
+apps/api/internal/modules/clients/transport/http/legal_entity_handlers.go	150	clients HTTP legal entity handlers
+apps/api/internal/modules/clients/transport/http/responsible_handlers.go	130	clients HTTP responsible handlers
+apps/api/internal/modules/clients/transport/http/contact_project_handlers.go	180	clients HTTP contact and project link handlers
+apps/api/internal/modules/clients/transport/http/service_type_handlers.go	150	clients HTTP service type handlers
+apps/api/internal/modules/clients/transport/http/service_handlers.go	160	clients HTTP service handlers
+apps/api/internal/modules/clients/transport/http/payment_action_handlers.go	190	clients HTTP payment action handlers
+apps/api/internal/modules/clients/transport/http/handler_helpers.go	120	clients HTTP shared response helpers
+apps/api/internal/modules/worktracker/repository/write.go	20	worktracker write package root only
+apps/api/internal/modules/worktracker/repository/task_write.go	300	worktracker task mutations
+apps/api/internal/modules/worktracker/repository/workflow_write.go	300	worktracker workflow and board mutations
+apps/api/internal/modules/worktracker/repository/task_detail_write.go	230	worktracker task detail mutations
+apps/api/internal/modules/worktracker/repository/member_invites.go	210	worktracker member invite mutation
+apps/api/internal/modules/worktracker/repository/transition_helpers.go	150	worktracker transition validation and timer automation
+apps/api/internal/modules/worktracker/repository/task_write_helpers.go	180	worktracker task activity and outbox helpers
+apps/api/internal/modules/worktracker/repository/workflow_write_helpers.go	140	worktracker workflow template write helpers
+apps/api/internal/modules/worktracker/repository/write_helpers.go	80	worktracker write scalar helpers
+apps/api/internal/modules/telegramrelay/transport/http/handlers.go	820	telegram relay webhook and polling transport
+apps/api/internal/modules/sitechat/repository/pg.go	40	site chat repository root only
+apps/api/internal/modules/sitechat/repository/types.go	220	site chat repository DTOs
+apps/api/internal/modules/sitechat/repository/widgets.go	230	site chat widget persistence
+apps/api/internal/modules/sitechat/repository/presence.go	540	site chat presence and visitor session persistence
+apps/api/internal/modules/sitechat/repository/conversations.go	500	site chat conversation/message persistence
+apps/api/internal/modules/sitechat/repository/triggers.go	120	site chat workflow trigger outbox producer
+apps/api/internal/modules/sitechat/repository/snapshots.go	330	site chat visitor snapshot normalization
+apps/api/internal/modules/sitechat/repository/helpers.go	220	site chat repository JSON/hash helpers
+apps/ai-agent/src/pulse_agent/graph/builder.py	420	LangGraph wiring only; node logic lives in graph modules
+apps/ai-agent/src/pulse_agent/dialogue_state.py	320	AI DialogueStateV1 reducer and migration policy
+apps/ai-agent/src/pulse_agent/clients/grpc_security.py	80	AI agent internal gRPC channel policy helper
+apps/web/src/lib/api.ts	20	frontend API compatibility barrel only
+apps/web/src/lib/api/base.ts	20	frontend API base URL constants
+apps/web/src/lib/api/http.ts	380	frontend API HTTP and error handling client
+apps/web/src/lib/api/client-service-types.ts	40	client service type fallback API helper
+apps/web/src/lib/api/utils.ts	20	frontend API serialization helpers
+apps/web/src/lib/api/types.ts	20	frontend API domain type barrel
+apps/web/src/lib/api/domain-types/common.ts	40	frontend common DTOs
+apps/web/src/lib/api/domain-types/ai.ts	180	frontend AI DTOs
+apps/web/src/lib/api/domain-types/work.ts	360	frontend worktracker DTOs
+apps/web/src/lib/api/domain-types/site-chat.ts	270	frontend site chat DTOs
+apps/web/src/lib/api/domain-types/workflow.ts	120	frontend workflow and run DTOs
+apps/web/src/lib/api/domain-types/clients.ts	260	frontend client and payment DTOs
+apps/web/src/lib/api/domain-types/providers.ts	70	frontend provider and integration doc DTOs
+apps/web/src/app/shell-header.tsx	540	app shell workspace/navigation orchestration ratchet
+apps/web/src/app/auth-gate.tsx	360	auth gate orchestration ratchet
+apps/web/src/features/auth/api/authApi.ts	40	auth API adapter only
+apps/web/src/features/shell/api/shellApi.ts	50	shell workspace API adapter only
+apps/web/src/app/(public)/docs/page.tsx	70	public docs landing route ratchet
+apps/web/src/app/(public)/docs/integrations/page.tsx	90	public integration docs route ratchet
+apps/web/src/app/(public)/docs/integrations/[slug]/page.tsx	60	public integration doc route ratchet
+apps/web/src/features/public-docs/api/publicDocsApi.ts	60	public docs API adapter only
+apps/web/src/app/(pulse)/site-chat/page.tsx	40	Live Assist route shell only
+apps/web/src/features/site-chat-console/SiteChatConsole.tsx	1300	Live Assist console orchestration ratchet
+apps/web/src/features/site-chat-console/api/siteChatConsoleApi.ts	140	Live Assist API adapter only
+apps/web/src/features/site-chat-console/model/live-snapshot.ts	190	Live Assist webvisor event parser
+apps/web/src/features/site-chat-console/model/cobrowse.ts	140	Live Assist cobrowse DOM helpers
+apps/web/src/features/site-chat-console/ui/cobrowse-viewport.tsx	240	Live Assist cobrowse viewport UI
+apps/web/src/features/site-chat-console/ui/cobrowse-style.ts	80	Live Assist cobrowse dynamic CSS variable bridge
+apps/web/src/features/site-chat-console/ui/chat-panel.tsx	160	Live Assist chat panel UI
+apps/web/src/features/site-chat-console/ui/fullscreen-cobrowse.tsx	140	Live Assist fullscreen layout
+apps/web/src/app/(pulse)/clients/[clientId]/page.tsx	900	client detail route orchestration ratchet
+apps/web/src/features/client-detail/api/clientDetailApi.ts	170	client detail API adapter only
+apps/web/src/features/client-detail/model/clientDetailModel.ts	130	client detail form and payment helpers
+apps/web/src/app/(pulse)/projects/[projectId]/page.tsx	240	project detail route orchestration ratchet
+apps/web/src/features/project-detail/api/projectDetailApi.ts	70	project detail API adapter only
+apps/web/src/app/(pulse)/client-services/[clientServiceId]/page.tsx	230	client service detail route orchestration ratchet
+apps/web/src/app/(pulse)/clients/[clientId]/services/new/page.tsx	190	client service create route orchestration ratchet
+apps/web/src/features/client-service-detail/api/clientServiceDetailApi.ts	60	client service detail API adapter only
+apps/web/src/features/client-service-detail/model/clientServiceDetailModel.ts	90	client service detail form helpers
+apps/web/src/app/(pulse)/projects/[projectId]/integrations/page.tsx	420	project integrations route orchestration ratchet
+apps/web/src/app/(pulse)/projects/[projectId]/integrations/new/page.tsx	150	project integration create route orchestration ratchet
+apps/web/src/app/(pulse)/projects/[projectId]/integrations/[integrationId]/edit/page.tsx	180	project integration edit route orchestration ratchet
+apps/web/src/features/project-integrations/api/projectIntegrationsApi.ts	45	project integrations API adapter only
+apps/web/src/features/project-integrations/model/projectIntegrationsModel.ts	70	project integrations payload and labels
+apps/web/src/features/project-integrations/registry/integrationTypes.ts	360	project integration provider descriptors
+apps/web/src/app/(pulse)/companies/[companyId]/clients/page.tsx	160	company clients route orchestration ratchet
+apps/web/src/app/(pulse)/companies/[companyId]/clients/new/page.tsx	270	company client create route orchestration ratchet
+apps/web/src/app/(pulse)/companies/[companyId]/legal-entities/page.tsx	270	company legal entities route orchestration ratchet
+apps/web/src/features/company-clients/api/companyClientsApi.ts	70	company clients API adapter only
+apps/web/src/features/company-clients/model/companyPartyForms.ts	120	company party form mapping helpers
+apps/web/src/app/(pulse)/projects/[projectId]/payments/page.tsx	440	project payments route orchestration ratchet
+apps/web/src/app/(pulse)/payment-actions/[paymentActionId]/page.tsx	280	payment action route orchestration ratchet
+apps/web/src/features/payments/api/paymentsApi.ts	70	payments API adapter only
+apps/web/src/features/payments/model/paymentsModel.ts	90	payments document and presentation helpers
+apps/web/src/app/(pulse)/webhook-events/[webhookEventId]/page.tsx	80	webhook event route orchestration ratchet
+apps/web/src/app/(pulse)/webhook-endpoints/[webhookEndpointId]/page.tsx	90	webhook endpoint route orchestration ratchet
+apps/web/src/features/webhooks/api/webhooksApi.ts	40	webhook API adapter only
+apps/web/src/app/(pulse)/status/page.tsx	140	status route orchestration ratchet
+apps/web/src/features/status/api/statusApi.ts	40	status API adapter only
+apps/web/src/app/(pulse)/workflows/[workflowId]/runs/page.tsx	90	workflow runs list route orchestration ratchet
+apps/web/src/app/(pulse)/account/page.tsx	360	account route orchestration ratchet
+apps/web/src/features/account/api/accountApi.ts	80	account API adapter only
+apps/web/src/app/(pulse)/dashboard/page.tsx	280	dashboard route orchestration ratchet
+apps/web/src/features/dashboard/api/dashboardApi.ts	40	dashboard API adapter only
+apps/web/src/app/(pulse)/companies/page.tsx	120	companies list route orchestration ratchet
+apps/web/src/app/(pulse)/companies/[companyId]/page.tsx	90	company detail route orchestration ratchet
+apps/web/src/app/(pulse)/companies/[companyId]/projects/page.tsx	100	company projects route orchestration ratchet
+apps/web/src/app/(pulse)/companies/[companyId]/projects/new/page.tsx	90	company project create route orchestration ratchet
+apps/web/src/app/(pulse)/companies/new/page.tsx	100	company create route orchestration ratchet
+apps/web/src/features/companies/api/companiesApi.ts	40	companies API adapter only
+apps/web/src/app/(pulse)/projects/[projectId]/workflows/page.tsx	140	project workflows route orchestration ratchet
+apps/web/src/app/(pulse)/projects/[projectId]/workflows/new/page.tsx	100	project workflow create route orchestration ratchet
+apps/web/src/features/project-workflows/api/projectWorkflowsApi.ts	30	project workflows API adapter only
+apps/web/src/app/(pulse)/runs/[workflowRunId]/page.tsx	40	workflow run route shell only
+apps/web/src/features/workflow-run-detail/WorkflowRunDetailScreen.tsx	740	workflow run detail orchestration screen
+apps/web/src/features/workflow-run-detail/api/workflowRunApi.ts	60	workflow run detail API adapter
+apps/web/src/app/(pulse)/workflows/[workflowId]/edit/page.tsx	80	workflow editor route shell only
+apps/web/src/features/workflow-editor/WorkflowEditorScreen.tsx	600	workflow editor orchestration screen
+apps/web/src/features/workflow-editor/api/workflowEditorApi.ts	130	workflow editor API adapter
+apps/web/src/features/workflow-editor/ui/action-node.tsx	80	workflow editor React Flow node UI
+apps/web/src/features/workflow-editor/ui/editor-toolbar.tsx	90	workflow editor toolbar UI
+apps/web/src/features/workflow-editor/ui/editor-palette-sidebar.tsx	100	workflow editor palette/export/history sidebar
+apps/web/src/features/workflow-editor/ui/editor-settings-sheet.tsx	260	workflow editor selected action settings shell
+apps/web/src/features/workflow-editor/model/actionRules.ts	40	workflow editor action behavior constants
+apps/web/src/features/workflow-editor/ui/panels.tsx	260	workflow editor scenario/version/test panels facade
+apps/web/src/features/workflow-editor/ui/runtime-action-settings.tsx	250	workflow editor runtime action settings
+apps/web/src/features/workflow-editor/ui/integration-settings.tsx	120	workflow editor integration action settings
+apps/web/src/features/workflow-editor/ui/success-criteria-settings.tsx	140	workflow editor success criteria settings
+apps/web/src/features/workflow-editor/ui/telegram-relay-settings.tsx	140	workflow editor telegram relay settings shell
+apps/web/src/features/workflow-editor/ui/telegram-relay-snippets.ts	300	workflow editor telegram relay snippet builder
+apps/web/src/features/workflow-editor/ui/telegram-relay-secret-card.tsx	90	workflow editor telegram relay secret card
+apps/web/src/features/workflow-editor/ui/telegram-relay-polling-card.tsx	170	workflow editor telegram relay polling card
+apps/web/src/features/workflow-editor/ui/webhook-settings.tsx	240	workflow editor webhook settings
+apps/web/src/features/workflow-editor/model/editorDraft.tsx	440	workflow editor draft graph and patch model
+apps/web/src/features/workflow-editor/model/scenarioExport.ts	180	workflow editor scenario export model
+apps/web/src/features/workflow-editor/model/actionPresentation.tsx	60	workflow editor action labels and icons
+apps/web/src/features/workflow-editor/ai/promptContext.ts	240	workflow editor AI prompt/catalog context
+apps/web/src/features/workflow-editor/registry/actions.ts	420	workflow editor fallback action registry
+apps/web/src/features/workflow-editor/model/types.ts	140	workflow editor shared types
+apps/web/src/features/ai-employee/ProjectAIEmployeeWidget.tsx	440	legacy AI widget ratchet, split into feature components
+apps/web/src/features/ai-employee/api/aiEmployeeApi.ts	150	AI employee API/SSE adapter only
+apps/ai-agent/src/pulse_agent/topic_policy.py	380	AI employee deterministic topic switch and referent policy
+apps/web/src/features/work/api/workApi.ts	230	work feature API adapter only
+apps/web/src/features/work/model/workStyle.ts	40	work feature style class helpers
+apps/web/src/features/work/work-task-drawer.tsx	560	work task card orchestration ratchet
+apps/web/src/features/work/work-processes.tsx	300	work process UI ratchet
+apps/web/src/features/work/work-board.tsx	280	work board UI ratchet
+apps/web/src/features/work/work-tasks.tsx	250	work task list UI ratchet

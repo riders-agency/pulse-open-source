@@ -1,0 +1,30 @@
+:root {
+  --background: var(--palette-surface);
+  --foreground: var(--palette-ink);
+  --card: color-mix(in srgb, var(--palette-surface) 98%, var(--palette-ink));
+  --card-foreground: var(--palette-ink);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --primary: var(--palette-brand);
+  --primary-foreground: var(--palette-surface);
+  --secondary: color-mix(in srgb, var(--palette-surface) 94%, var(--palette-ink));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--palette-surface) 96%, var(--palette-ink));
+  --muted-foreground: color-mix(in srgb, var(--palette-ink) 72%, var(--palette-surface));
+  --accent: color-mix(in srgb, var(--palette-brand) 10%, var(--palette-surface));
+  --accent-foreground: color-mix(in srgb, var(--palette-brand) 70%, var(--palette-ink));
+  --destructive: var(--palette-danger);
+  --destructive-foreground: var(--palette-surface);
+  --border: color-mix(in srgb, var(--palette-ink) 26%, var(--palette-surface));
+  --input: var(--palette-surface);
+  --ring: var(--palette-brand);
+  --radius: var(--radius-sm);
+  --surface-subtle: color-mix(in srgb, var(--palette-surface) 92%, var(--palette-ink));
+  --surface-muted: color-mix(in srgb, var(--palette-surface) 86%, var(--palette-ink));
+  --surface-raised: var(--palette-surface);
+  --surface-inverse: color-mix(in srgb, var(--palette-ink) 94%, var(--palette-surface));
+  --neutral-muted: color-mix(in srgb, var(--foreground) 44%, var(--background));
+  --shadow-sm: 0 1px 2px color-mix(in srgb, var(--foreground) 4%, transparent);
+  --shadow-md: 0 12px 34px color-mix(in srgb, var(--foreground) 10%, transparent);
+  --shadow-lg: 0 24px 80px color-mix(in srgb, var(--foreground) 22%, transparent);
+}

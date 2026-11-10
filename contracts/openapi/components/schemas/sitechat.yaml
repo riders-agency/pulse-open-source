@@ -1,0 +1,326 @@
+SiteChatWidget:
+  type: object
+  additionalProperties: false
+  required: [chat_widget_id, company_id, project_id, public_key, name, status, title, subtitle, accent_color, position, heavy_tracking_default, sampling_rate]
+  properties:
+    chat_widget_id: {type: string, format: uuid}
+    company_id: {type: string, format: uuid}
+    project_id: {type: string, format: uuid}
+    public_key: {type: string}
+    name: {type: string}
+    status: {type: string, enum: [active, paused, archived]}
+    title: {type: string}
+    subtitle: {type: string}
+    accent_color: {type: string}
+    position: {type: string, enum: [left, right]}
+    heavy_tracking_default: {type: boolean}
+    sampling_rate: {type: number, minimum: 0, maximum: 1}
+    settings_json: {type: object}
+    embed_script: {type: string}
+    created_at: {type: string, format: date-time}
+    updated_at: {type: string, format: date-time}
+
+SiteChatWidgetInput:
+  type: object
+  additionalProperties: false
+  properties:
+    name: {type: string}
+    title: {type: string}
+    subtitle: {type: string}
+    accent_color: {type: string}
+    position: {type: string, enum: [left, right], default: right}
+    heavy_tracking_default: {type: boolean, default: false}
+    sampling_rate: {type: number, minimum: 0, maximum: 1, default: 1}
+    settings_json: {type: object}
+
+SiteChatWidgetPatch:
+  allOf:
+    - $ref: '#/SiteChatWidgetInput'
+    - type: object
+      properties:
+        status: {type: string, enum: [active, paused, archived]}
+
+SiteChatPublicConfig:
+  type: object
+  additionalProperties: false
+  required: [chat_widget_id, project_id, public_key, title, subtitle, accent_color, position, heavy_tracking_default, sampling_rate, endpoint_base]
+  properties:
+    chat_widget_id: {type: string, format: uuid}
+    project_id: {type: string, format: uuid}
+    public_key: {type: string}
+    title: {type: string}
+    subtitle: {type: string}
+    accent_color: {type: string}
+    position: {type: string, enum: [left, right]}
+    heavy_tracking_default: {type: boolean}
+    sampling_rate: {type: number}
+    endpoint_base: {type: string}
+
+SiteChatPresenceRequest:
+  type: object
+  additionalProperties: false
+  required: [public_key]
+  properties:
+    public_key: {type: string}
+    anonymous_id: {type: string}
+    visit_session_id: {type: string, format: uuid}
+    url: {type: string}
+    title: {type: string}
+    referrer: {type: string}
+    utm: {type: object}
+    viewport_width: {type: integer}
+    viewport_height: {type: integer}
+    scroll_x: {type: integer}
+    scroll_y: {type: integer}
+    browser: {type: string}
+    browser_version: {type: string}
+    os: {type: string}
+    device_type: {type: string}
+    screen_width: {type: integer}
+    screen_height: {type: integer}
+    language: {type: string}
+    timezone: {type: string}
+    metrika_client_id: {type: string}
+    metrika_user_id: {type: string}
+    metrika_session_id: {type: string}
+    user_agent: {type: string}
+    metadata: {type: object}
+
+SiteChatPresenceResponse:
+  type: object
+  additionalProperties: false
+  required: [visitor_id, visit_session_id, chat_widget_id, project_id, conversation_id, conversation_url, panel_url, call_url, is_first_visit, monitoring_status, operator_invited, visitor_state_snapshot]
+  properties:
+    visitor_id: {type: string, format: uuid}
+    visit_session_id: {type: string, format: uuid}
+    chat_widget_id: {type: string, format: uuid}
+    project_id: {type: string, format: uuid}
+    conversation_id: {type: string, format: uuid}
+    conversation_url: {type: string}
+    panel_url: {type: string}
+    call_url: {type: string}
+    is_first_visit: {type: boolean}
+    monitoring_status: {type: string}
+    operator_invited: {type: boolean}
+    visitor_state_snapshot:
+      $ref: '#/VisitorStateSnapshot'
+
+SiteChatEventBatch:
+  type: object
+  additionalProperties: false
+  required: [public_key, visitor_id, visit_session_id, events]
+  properties:
+    public_key: {type: string}
+    visitor_id: {type: string, format: uuid}
+    visit_session_id: {type: string, format: uuid}
+    events:
+      type: array
+      maxItems: 50
+      items:
+        type: object
+        additionalProperties: false
+        required: [event_type]
+        properties:
+          event_type: {type: string}
+          occurred_at: {type: string, format: date-time}
+          payload: {type: object}
+          priority: {type: string, enum: [low, normal, high]}
+
+VisitorStateSnapshot:
+  type: object
+  additionalProperties: true
+  properties:
+    visitor_id: {type: string, format: uuid}
+    visit_session_id: {type: string, format: uuid}
+    chat_widget_id: {type: string, format: uuid}
+    current_url: {type: string}
+    current_title: {type: string}
+    viewport: {type: object}
+    scroll: {type: object}
+    analytics: {type: object}
+    activity: {type: object}
+    signals: {type: object}
+    suggested_actions:
+      type: array
+      items: {type: string}
+
+SiteVisitorSession:
+  type: object
+  additionalProperties: false
+  required: [visitor_id, visit_session_id, chat_widget_id, project_id, conversation_id, conversation_url, panel_url, call_url, current_url, current_title, last_activity_at, monitoring_status, operator_invited, chat_open, visitor_state_snapshot]
+  properties:
+    visitor_id: {type: string, format: uuid}
+    visit_session_id: {type: string, format: uuid}
+    chat_widget_id: {type: string, format: uuid}
+    project_id: {type: string, format: uuid}
+    conversation_id: {type: string, format: uuid}
+    conversation_url: {type: string}
+    panel_url: {type: string}
+    call_url: {type: string}
+    current_url: {type: string}
+    current_title: {type: string}
+    last_activity_at: {type: string, format: date-time}
+    monitoring_status: {type: string, enum: [idle, requested, active, stopped]}
+    operator_invited: {type: boolean}
+    chat_open: {type: boolean}
+    visitor_state_snapshot:
+      $ref: '#/VisitorStateSnapshot'
+
+SiteChatConversation:
+  type: object
+  additionalProperties: false
+  required: [conversation_id, project_id, chat_widget_id, visitor_id, status, title, created_at, updated_at]
+  properties:
+    conversation_id: {type: string, format: uuid}
+    project_id: {type: string, format: uuid}
+    chat_widget_id: {type: string, format: uuid}
+    visitor_id: {type: string, format: uuid}
+    visit_session_id: {type: string, format: uuid}
+    status: {type: string, enum: [open, closed]}
+    title: {type: string}
+    visitor_name: {type: string}
+    visitor_contact: {type: string}
+    operator_url: {type: string}
+    call_url: {type: string}
+    created_at: {type: string, format: date-time}
+    updated_at: {type: string, format: date-time}
+
+SiteChatMessage:
+  type: object
+  additionalProperties: false
+  required: [message_id, conversation_id, author_kind, author_name, body, created_at]
+  properties:
+    message_id: {type: string, format: uuid}
+    conversation_id: {type: string, format: uuid}
+    author_kind: {type: string, enum: [visitor, operator, system]}
+    author_user_id: {type: string, format: uuid}
+    author_name: {type: string}
+    body: {type: string}
+    created_at: {type: string, format: date-time}
+
+SiteChatMessageInput:
+  type: object
+  additionalProperties: false
+  required: [body]
+  properties:
+    public_key: {type: string}
+    conversation_id: {type: string, format: uuid}
+    visit_session_id: {type: string, format: uuid}
+    visitor_id: {type: string, format: uuid}
+    author_name: {type: string}
+    visitor_contact: {type: string}
+    body: {type: string}
+
+SiteChatInviteInput:
+  type: object
+  additionalProperties: false
+  properties:
+    message: {type: string}
+    template: {type: string}
+    force: {type: boolean, default: false}
+
+SiteChatCallInput:
+  type: object
+  additionalProperties: false
+  properties:
+    public_key: {type: string}
+    visitor_id: {type: string, format: uuid}
+    visit_session_id: {type: string, format: uuid}
+    conversation_id: {type: string, format: uuid}
+    media_kind: {type: string, enum: [audio, video], default: audio}
+    recording_enabled: {type: boolean}
+    privacy_consent_accepted: {type: boolean}
+    recording_consent_accepted: {type: boolean}
+    end_reason: {type: string}
+
+SiteChatCallSession:
+  type: object
+  additionalProperties: false
+  required: [call_session_id, company_id, project_id, chat_widget_id, visitor_id, direction, requested_by, status, recording_enabled, media_kind, created_at, updated_at]
+  properties:
+    call_session_id: {type: string, format: uuid}
+    company_id: {type: string, format: uuid}
+    project_id: {type: string, format: uuid}
+    chat_widget_id: {type: string, format: uuid}
+    visitor_id: {type: string, format: uuid}
+    visit_session_id: {type: string, format: uuid}
+    conversation_id: {type: string, format: uuid}
+    direction: {type: string, enum: [operator_to_visitor, visitor_to_operator]}
+    requested_by: {type: string, enum: [operator, visitor]}
+    requested_by_user_id: {type: string, format: uuid}
+    status: {type: string, enum: [offered, ringing, accepted, rejected, missed, ended, failed, cancelled]}
+    privacy_consent_accepted_at: {type: string, format: date-time}
+    recording_consent_accepted_at: {type: string, format: date-time}
+    recording_enabled: {type: boolean}
+    media_kind: {type: string, enum: [audio, video]}
+    started_at: {type: string, format: date-time}
+    ended_at: {type: string, format: date-time}
+    last_signal_at: {type: string, format: date-time}
+    end_reason: {type: string}
+    metadata_json: {type: object}
+    created_at: {type: string, format: date-time}
+    updated_at: {type: string, format: date-time}
+
+SiteCobrowseFrame:
+  type: object
+  additionalProperties: false
+  required: [frame_id, visit_session_id, sequence, kind, occurred_at, payload_json, created_at]
+  properties:
+    frame_id: {type: string, format: uuid}
+    visit_session_id: {type: string, format: uuid}
+    sequence: {type: integer, format: int64}
+    kind: {type: string, enum: [snapshot, mutation, cursor, touch, scroll, viewport, navigation, click, diagnostic]}
+    occurred_at: {type: string, format: date-time}
+    payload_json: {type: object}
+    created_at: {type: string, format: date-time}
+
+SiteChatWSEnvelope:
+  type: object
+  additionalProperties: false
+  required: [id, type, sent_at]
+  properties:
+    id: {type: string}
+    type:
+      type: string
+      enum:
+        - visitor.heartbeat
+        - visitor.left
+        - presence.update
+        - event.batch
+        - chat.message
+        - chat.typing
+        - operator.invite
+        - invite.seen
+        - invite.accepted
+        - invite.declined
+        - monitoring.start
+        - monitoring.stop
+        - monitoring.snapshot
+        - monitoring.incremental
+        - cursor.move
+        - touch.move
+        - click
+        - scroll
+        - viewport
+        - page.navigate
+        - call.request
+        - call.offer
+        - call.accept
+        - call.reject
+        - call.cancel
+        - call.end
+        - webrtc.offer
+        - webrtc.answer
+        - webrtc.ice
+        - consent.accepted
+        - consent.declined
+        - ack
+        - error
+    sent_at: {type: string, format: date-time}
+    project_id: {type: string, format: uuid}
+    chat_widget_id: {type: string, format: uuid}
+    visitor_id: {type: string, format: uuid}
+    visit_session_id: {type: string, format: uuid}
+    conversation_id: {type: string, format: uuid}
+    call_session_id: {type: string, format: uuid}
+    payload: {type: object}

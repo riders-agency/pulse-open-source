@@ -1,0 +1,30 @@
+[
+  {
+    "name": "pulse_read.email_templates_v1",
+    "owner": "templates",
+    "table": "email_templates",
+    "columns": [
+      "email_template_id",
+      "subject_template",
+      "body_template",
+      "body_format"
+    ],
+    "consumers": [
+      "providers"
+    ]
+  },
+  {
+    "name": "pulse_read.message_templates_v1",
+    "owner": "templates",
+    "table": "message_templates",
+    "columns": [
+      "message_template_id",
+      "body_template",
+      "body_format",
+      "metadata_json"
+    ],
+    "consumers": [
+      "providers"
+    ]
+  }
+]

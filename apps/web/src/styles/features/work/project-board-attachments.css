@@ -1,0 +1,59 @@
+.work-task-tab-grid,
+.work-attachment-list {
+  display: grid;
+  gap: 10px;
+}
+
+.work-access-card {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.work-access-card > div {
+  display: grid;
+  gap: 2px;
+}
+
+.work-access-card span {
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+
+.work-attachment-drop {
+  display: grid;
+  gap: 6px;
+  place-items: center;
+  min-height: 150px;
+  padding: 18px;
+  border: 1px dashed color-mix(in srgb, var(--primary) 45%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--card));
+  cursor: pointer;
+  text-align: center;
+}
+
+.work-attachment-drop span {
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+
+.work-attachment-drop.is-busy {
+  opacity: .72;
+  pointer-events: none;
+}
+
+.work-attachment-list article {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}

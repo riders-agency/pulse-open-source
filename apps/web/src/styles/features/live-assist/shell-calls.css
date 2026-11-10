@@ -1,0 +1,14 @@
+.incoming-call-strip {
+  display: grid;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--danger) 9%, var(--card));
+}
+
+.incoming-call-strip > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
